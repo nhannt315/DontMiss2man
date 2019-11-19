@@ -1,27 +1,34 @@
-# This is rubocop configuration file for Framgia"s coding style. Enabling and disabling is configured
+# This is rubocop configuration file for Money Forward's coding style.. Enabling and disabling is configured
 # in separate files. This file adds all other parameters apart from Enabled.
 
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
 # Put the following files into the same directory as this file.
-# frozen_string_literal: true
 inherit_from:
   - .rubocop_enabled.yml
   - .rubocop_disabled.yml
 
 # Common configuration.
 AllCops:
+  DisplayStyleGuide: true
+  StyleGuideBaseURL: https://github.com/fortissimo1997/ruby-style-guide
   # Include gemspec and Rakefile
   Include:
-    - "**/*.gemspec"
+    - '**/*.rb'
+    - '**/*.gemspec'
+    - '**/Rakefile'
+    - '**/config.ru'
   Exclude:
-    - "vendor/**/*"
-    - "config/unicorn.rb"
-    - "bin/*"
-    - "db/**/*"
-    - "spec/**/*"
-    - "script/rails"
-    - "config/**/*"
-    - "lib/**/*"
-
+    - 'vendor/**/*'
+    - 'config/unicorn.rb'
+    - 'bin/*'
+    - 'db/*'
+    - 'spec/*'
+    - 'config/**/*'
+    - 'node_modules/**/*'
+    - 'db/migrate/*'
 # Indent private/protected/public as deep as method definitions
 Layout/AccessModifierIndentation:
   EnforcedStyle: indent
@@ -31,18 +38,20 @@ Layout/AccessModifierIndentation:
 
 # Align the elements of a hash literal if they span more than one line.
 Layout/AlignHash:
+  Exclude:
+    - 'spec/**/*.rb'
   # Alignment of entries using hash rocket as separator. Valid values are:
   #
   # key - left alignment of keys
-  #   "a" => 2
-  #   "bb" => 3
+  #   'a' => 2
+  #   'bb' => 3
   # separator - alignment of hash rockets, keys are right aligned
-  #    "a" => 2
-  #   "bb" => 3
+  #    'a' => 2
+  #   'bb' => 3
   # table - left alignment of keys, hash rockets, and values
-  #   "a"  => 2
-  #   "bb" => 3
-  EnforcedHashRocketStyle: key
+  #   'a'  => 2
+  #   'bb' => 3
+  EnforcedHashRocketStyle: table
   # Alignment of entries using colon as separator. Valid values are:
   #
   # key - left alignment of keys
@@ -54,7 +63,7 @@ Layout/AlignHash:
   # table - left alignment of keys and values
   #   a:  0
   #   bb: 1
-  EnforcedColonStyle: key
+  EnforcedColonStyle: table
   # Select whether hashes that are the last argument in a method call should be
   # inspected? Valid values are:
   #
@@ -116,9 +125,10 @@ Metrics/BlockNesting:
   Max: 3
 
 Metrics/AbcSize:
-  # The ABC size is a calculated magnitude, so this number can be a Fixnum or
-  # a Float.
-  Max: 20
+  Max: 50
+
+Metrics/PerceivedComplexity:
+  Max: 15
 
 Style/BracesAroundHashParameters:
   EnforcedStyle: no_braces
@@ -174,11 +184,11 @@ Style/CollectionMethods:
   #   PreferredMethods:
   #     find: detect
   PreferredMethods:
-    collect: "map"
-    collect!: "map!"
-    inject: "reduce"
-    detect: "find"
-    find_all: "select"
+    collect: 'map'
+    collect!: 'map!'
+    inject: 'reduce'
+    detect: 'find'
+    find_all: 'select'
 
 # Checks formatting of special comments
 Style/CommentAnnotation:
@@ -202,7 +212,7 @@ Layout/DotPosition:
 
 # Use empty lines between defs.
 Layout/EmptyLineBetweenDefs:
-  # If true, this parameter means that single line method definitions don"t
+  # If true, this parameter means that single line method definitions don't
   # need an empty line between them.
   AllowAdjacentOneLineDefs: false
 
@@ -221,11 +231,17 @@ Layout/EmptyLinesAroundModuleBody:
   SupportedStyles:
     - no_empty_lines
 
-Naming/FileName:
+Naming:
   Exclude:
-    - "**/Rakefile"
-    - "**/Gemfile"
-    - "**/Capfile"
+    - '**/Rakefile'
+    - '**/Gemfile'
+    - '**/Capfile'
+  EnforcedStyle: snake_case
+  SupportedStyles:
+    - snake_case
+    - camelCase
+  NamePrefixBlacklist:
+    - get_
 
 # Checks use of for or each in multiline loops.
 Style/For:
@@ -258,7 +274,7 @@ Style/HashSyntax:
     - hash_rockets
 
 # Checks the indentation of the first key in a hash literal.
-Layout/IndentHash:
+Layout/IndentFirstHashElement:
   # The value `special_inside_parentheses` means that hash literals with braces
   # that have their opening brace on the same line as a surrounding opening
   # round parenthesis, shall have their first key indented relative to the
@@ -271,6 +287,10 @@ Layout/IndentHash:
     - special_inside_parentheses
     - consistent
 
+Layout/MultilineMethodCallIndentation:
+  Exclude:
+    - 'spec/**/*.rb'
+
 Style/LambdaCall:
   EnforcedStyle: call
   SupportedStyles:
@@ -278,7 +298,7 @@ Style/LambdaCall:
     - braces
 
 Metrics/LineLength:
-  Max: 80
+  Max: 120
   AllowURI: true
   Exclude:
     - config/routes.rb
@@ -287,7 +307,7 @@ Metrics/LineLength:
 Style/Next:
   # With `always` all conditions at the end of an iteration needs to be
   # replace by next - with `skip_modifier_ifs` the modifier if like this one
-  # are ignored: [1, 2].each { |a| return "yes" if a == 1 }
+  # are ignored: [1, 2].each { |a| return 'yes' if a == 1 }
   EnforcedStyle: skip_modifier_ifs
   SupportedStyles:
     - skip_modifier_ifs
@@ -303,7 +323,7 @@ Style/NonNilCheck:
   IncludeSemanticChanges: false
 
 Style/MethodDefParentheses:
-  EnforcedStyle: require_no_parentheses
+  EnforcedStyle: require_parentheses
   SupportedStyles:
     - require_parentheses
     - require_no_parentheses
@@ -312,11 +332,6 @@ Metrics/MethodLength:
   CountComments: false  # count full line comments?
   Max: 10
 
-Naming/MethodName:
-  EnforcedStyle: snake_case
-  SupportedStyles:
-    - snake_case
-    - camelCase
 
 Style/NumericLiterals:
   MinDigits: 5
@@ -331,19 +346,17 @@ Style/ParenthesesAroundCondition:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    "%":  ()
-    "%i": ()
-    "%q": ()
-    "%Q": ()
-    "%r": "{}"
-    "%s": ()
-    "%w": ()
-    "%W": ()
-    "%x": ()
+    '%':  ()
+    '%i': ()
+    '%q': ()
+    '%Q': ()
+    '%r': '{}'
+    '%s': ()
+    '%w': ()
+    '%W': ()
+    '%x': ()
 
-Naming/PredicateName:
-  NamePrefixBlacklist:
-    - get_
+
 
 Style/RaiseArgs:
   EnforcedStyle: exploded
@@ -355,11 +368,6 @@ Style/RaiseArgs:
 Style/RedundantReturn:
   # When true allows code like `return x, y`.
   AllowMultipleReturnValues: false
-
-#Style/RegexpLiteral:
-#  # The maximum number of (escaped) slashes that a slash-delimited regexp is
-#  # allowed to have. If there are more slashes, a %r regexp shall be used.
-#  MaxSlashes: 0
 
 Style/Semicolon:
   # Allow ; to separate several expressions on the same line.
@@ -403,15 +411,11 @@ Layout/SpaceBeforeBlockBraces:
     - space
     - no_space
 
-Layout/SpaceInsideBlockBraces:
+Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: no_space
   SupportedStyles:
     - space
     - no_space
-  # Valid values are: space, no_space
-  EnforcedStyleForEmptyBraces: no_space
-  # Space between { and |. Overrides EnforcedStyle if there is a conflict.
-  SpaceBeforeBlockParameters: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
@@ -426,22 +430,14 @@ Layout/TrailingBlankLines:
     - final_newline
     - final_blank_line
 
-Style/TrailingCommaInArguments:
-  # If `comma`, the cop requires a comma after the last argument, but only for
-  # parenthesized method calls where each argument is on its own line.
-  # If `consistent_comma`, the cop requires a comma after the last argument,
-  # for all parenthesized method calls with arguments.
-  EnforcedStyleForMultiline: no_comma
-  SupportedStylesForMultiline:
-    - comma
-    - consistent_comma
-    - no_comma
+Style/FrozenStringLiteralComment:
+  Exclude:
+    - spec/**/*.rb
+    - db/**/*.rb
 
 Style/TrailingCommaInArrayLiteral:
-  # If `comma`, the cop requires a comma after the last item in an array,
-  # but only when each item is on its own line.
-  # If `consistent_comma`, the cop requires a comma after the last item of all
-  # non-empty array literals.
+  # If EnforcedStyleForMultiline is comma, the cop allows a comma after the
+  # last item of a list, but only for lists where each item is on its own line.
   EnforcedStyleForMultiline: no_comma
   SupportedStylesForMultiline:
     - comma
@@ -449,22 +445,18 @@ Style/TrailingCommaInArrayLiteral:
     - no_comma
 
 Style/TrailingCommaInHashLiteral:
-  # If `comma`, the cop requires a comma after the last item in a hash,
-  # but only when each item is on its own line.
-  # If `consistent_comma`, the cop requires a comma after the last item of all
-  # non-empty hash literals.
   EnforcedStyleForMultiline: no_comma
   SupportedStylesForMultiline:
     - comma
     - consistent_comma
     - no_comma
 
-# TrivialAccessors doesn"t require exact name matches and doesn"t allow
+# TrivialAccessors doesn't require exact name matches and doesn't allow
 # predicated methods by default.
 Style/TrivialAccessors:
   ExactNameMatch: false
   AllowPredicates: false
-  # Allows trivial writers that don"t end in an equal sign. e.g.
+  # Allows trivial writers that don't end in an equal sign. e.g.
   #
   # def on_exception(action)
   #   @on_exception=action
@@ -492,11 +484,7 @@ Style/TrivialAccessors:
     - to_s
     - to_sym
 
-Naming/VariableName:
-  EnforcedStyle: snake_case
-  SupportedStyles:
-    - snake_case
-    - camelCase
+
 
 Style/WordArray:
   MinSize: 0
@@ -515,6 +503,15 @@ Layout/EndAlignment:
   # with the start of the variable on the left hand side of `=`. In all other
   # situations, `end` should still be aligned with the keyword.
   EnforcedStyleAlignWith: keyword
+  SupportedStylesAlignWith:
+    - keyword
+    - variable
+    - start_of_line
+  AutoCorrect: false
+
+Layout/BlockAlignment:
+  Exclude:
+    - spec/**/*.rb
 
 Layout/DefEndAlignment:
   # The value `def` means that `end` should be aligned with the def keyword.
@@ -522,8 +519,17 @@ Layout/DefEndAlignment:
   # calls like `private`, `public`, etc, if present in front of the `def`
   # keyword on the same line.
   EnforcedStyleAlignWith: start_of_line
+  SupportedStylesAlignWith:
+    - start_of_line
+    - def
 
 ##################### Rails ##################################
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
 
 Rails/ActionFilter:
   EnforcedStyle: action

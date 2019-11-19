@@ -1,10 +1,19 @@
 # These are all the cops that are disabled in the default configuration.
-# frozen_string_literal: true
+# encrypt email function uses dynamic finder method, so disabling this check
+Rails/InverseOf:
+  Enabled: false
 
-Style/FrozenStringLiteralComment:
-  Description: >-
-                 Add the frozen_string_literal comment to the top of files
-                 to help transition from Ruby 2.3.0 to Ruby 3.0.
+Rails/DynamicFindBy:
+  Enabled: false
+
+# TODO faced rubocop bug https://github.com/bbatsov/rubocop/issues/4751
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/CreateTableWithTimestamps:
   Enabled: false
 
 Style/InlineComment:
@@ -53,15 +62,37 @@ Metrics/CyclomaticComplexity:
 
 Layout/AlignArray:
   Description: >-
-                 Align the elements of an array literal if they span more than
-                 one line.
+    Align the elements of an array literal if they span more than
+    one line.
   Enabled: false
 
-Style/UnneededPercentQ:
+Layout/EmptyLineAfterGuardClause:
+  Description: "Add empty line after guard clause."
+  Enabled: false
+
+Layout/SpaceBeforeBlockBraces:
+  Description: >-
+    Checks that the left block brace has or doesn't have space
+    before it.
+  Enabled: false
+
+Style/RedundantCondition:
+  Enabled: false
+
+Rails/HelperInstanceVariable:
+  Enabled: false
+
+Layout/AlignArguments:
+  Enabled: false
+
+Rails/LinkToBlank:
+  Enabled: false
+
+Style/RedundantPercentQ:
   Description: "Checks for %q/%Q when single quotes or double quotes would do."
   Enabled: false
 
-Naming/AccessorMethodName:
+Naming:
   Description: Check the naming of accessor methods for get_/set_.
   Enabled: false
 
@@ -71,3 +102,11 @@ Lint/AssignmentInCondition:
   Description: "Don't use assignment in conditions."
   Enabled: false
 
+Metrics/ModuleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
