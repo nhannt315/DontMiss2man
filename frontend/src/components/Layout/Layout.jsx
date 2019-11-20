@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import { Layout, Menu, Icon, Button } from 'antd';
 import PropTypes from 'prop-types';
 
+import i18n from '../../config/i18n';
 import './Layout.scss';
 
 const { Header, Sider, Content } = Layout;
@@ -41,7 +42,7 @@ const MainLayout = props => {
             />
           </div>
           <div className="vertical-align">
-            <Button>Login</Button>
+            <Button>{i18n.t('common.login')}</Button>
           </div>
         </Header>
         <Content

@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "antd": "^3.25.2",
+    "axios": "^0.19.0",
     "babel-plugin-emotion": "^10.0.23",
     "craco": "^0.0.3",
     "craco-antd": "^1.14.1",
+    "i18next": "^19.0.1",
     "loadable-components": "^2.2.3",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.0",
