@@ -3,9 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "antd": "^3.25.2",
+    "babel-plugin-emotion": "^10.0.23",
+    "craco": "^0.0.3",
+    "craco-antd": "^1.14.1",
+    "loadable-components": "^2.2.3",
+    "lodash": "^4.17.15",
+    "node-sass": "^4.13.0",
+    "prop-types": "^15.7.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-scripts": "3.2.0"
+    "react-redux": "^7.1.3",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.2.0",
+    "redux-saga": "^1.1.3",
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "eslint": "^6.1.0",
@@ -19,11 +32,12 @@
     "prettier": "^1.18.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "server": "node server.js",
     "eject": "react-scripts eject",
-    "eslint": "eslint src --ext=.jsx,.js"
+    "eslint": "eslint --ext .js,.jsx  ./src --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
