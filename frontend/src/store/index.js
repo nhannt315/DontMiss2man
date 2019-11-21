@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
 import {routerReducer, routerMiddleware} from 'react-router-redux';
-import reducers from './reducers';
 import createSagaMiddleware from 'redux-saga';
+import reducers from './reducers';
 
 const composeEnhancers =
   typeof window === 'object' &&

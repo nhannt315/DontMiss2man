@@ -13,3 +13,18 @@
 html {
   font-size: 62.5%;
 }
+
+
+.clearfix {
+  overflow: auto;
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+
+.text-center {
+  text-align: center;
+}

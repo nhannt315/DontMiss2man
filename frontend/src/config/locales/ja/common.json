@@ -1,4 +1,13 @@
 {
   "site_name": "DontMiss2man",
-  "login": "ログイン"
+  "login": "ログイン",
+  "floor_number": "{{floor}}階",
+  "floor": "階",
+  "reikin": "礼金",
+  "shikikin": "敷金",
+  "layout": "間取り",
+  "size": "専有面積",
+  "like": "お気に入り",
+  "rent_fee": "賃料/管理費",
+  "add": "追加"
 }
