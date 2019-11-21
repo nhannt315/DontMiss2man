@@ -7,7 +7,7 @@ import './Layout.scss';
 
 const { Header, Sider, Content } = Layout;
 
-const MainLayout = props => {
+const MainLayout = ({children}) => {
 
   const [collapsed, setCollapsed] = useState(false);
 
@@ -16,8 +16,7 @@ const MainLayout = props => {
   return (
     <Layout id="app-bar">
       <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="logo">
-        </div>
+        <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
             <Icon type="user" />
@@ -48,7 +47,7 @@ const MainLayout = props => {
         <Content
           className="main-content"
         >
-          {props.children}
+          {children}
         </Content>
       </Layout>
     </Layout>
@@ -60,7 +59,7 @@ MainLayout.propTypes = {
 };
 
 MainLayout.defaultProps = {
-  children: <> </>
+  children: <React.Fragment> </React.Fragment>
 };
 
 export default MainLayout;

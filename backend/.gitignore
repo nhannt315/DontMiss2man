@@ -13,10 +13,15 @@
 !/log/.keep
 !/tmp/.keep
 
+/config/database.yml
+/config/master.key
+/config/credentials.yml.enc
+/config/secrets.yml
+/config/cable.yml
+
 # Ignore uploaded files in development.
 /storage/*
 !/storage/.keep
 .byebug_history
 
 # Ignore master key for decrypting credentials and more.
-/config/master.key
