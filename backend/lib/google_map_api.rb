@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GoogleMapApi
-  API_KEY = "AIzaSyDgkKg98IqQL1oHJ7LUYc_fTO-wKq-YUnY"
+  API_KEY = ENV["google_api_key"]
   def self.get_lat_lng_from_address(address)
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{URI.encode(address)}&key=#{API_KEY}"
     response = RestClient.get url
