@@ -1,6 +1,7 @@
-import { applyMiddleware, combineReducers, compose, createStore } from 'redux';
+import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {routerReducer, routerMiddleware} from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
+import {watchBuilding} from './sagas';
 import reducers from './reducers';
 
 const composeEnhancers =
@@ -12,16 +13,19 @@ const composeEnhancers =
 
 const sagaMiddleware = createSagaMiddleware();
 
+
 const configureStore = history => {
   const reducer = combineReducers({
     ...reducers,
-    routing: routerReducer
+    routing: routerReducer,
   });
 
-  return createStore(
+  const store = createStore(
     reducer,
-    composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history)))
+    composeEnhancers(applyMiddleware(sagaMiddleware, routerMiddleware(history))),
   );
+  store.sagaTask = sagaMiddleware.run(watchBuilding);
+  return store;
 };
 
 export default configureStore;

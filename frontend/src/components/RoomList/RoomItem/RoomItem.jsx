@@ -8,7 +8,7 @@ import CommonHelper from '../../../helpers/common';
 const RoomItem = ({room}) => {
   return (
     <tr className="roomitem">
-      <td><img className="room-image" src={room.images[0].url} alt={room.images[0].url} /></td>
+      <td><img className="room-image" src={room.layout_image_url} alt={room.images[0].url} /></td>
       <td>{i18n.t('common.floor_number', {floor: room.floor})}</td>
       <td>
         <div>

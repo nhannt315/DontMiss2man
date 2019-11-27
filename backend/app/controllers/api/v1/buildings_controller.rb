@@ -11,6 +11,6 @@ class Api::V1::BuildingsController < ApplicationController
   private
   def pagination_params
     @page = params[:page] || Settings.building_list.default_page
-    @per_page = params[:limit] || Settings.building_list.default_items_per_page
+    @per_page = params[:per_page] || Settings.building_list.default_items_per_page
   end
 end
