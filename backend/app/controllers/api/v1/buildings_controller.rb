@@ -12,5 +12,6 @@ class Api::V1::BuildingsController < ApplicationController
   def pagination_params
     @page = params[:page] || Settings.building_list.default_page
     @per_page = params[:per_page] || Settings.building_list.default_items_per_page
+    @sort = params[:sort]
   end
 end

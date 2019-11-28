@@ -13,7 +13,7 @@ import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 
 
-const HomePage = ({list, loading, totalPages, fetchBuildings}) => {
+const HomePage = ({list, loading, totalCount, fetchBuildings}) => {
   const firstElement = useRef(null);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(NUMBER_OF_ITEMS[0].key);
@@ -21,7 +21,6 @@ const HomePage = ({list, loading, totalPages, fetchBuildings}) => {
     scrollToComponent(firstElement.current);
     fetchBuildings(page, perPage);
   }, [page, perPage]);
-  console.log(totalPages, perPage);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
     <div className="homepage">
@@ -60,7 +59,7 @@ const HomePage = ({list, loading, totalPages, fetchBuildings}) => {
         <Col className="building-list-pagination" span={16}>
           <Pagination size="small" current={page} pageSize={perPage}
                       onChange={currentPage => setPage(currentPage)}
-                      total={totalPages} />
+                      total={totalCount} />
         </Col>
       </Row>
     </div>
@@ -70,14 +69,14 @@ const HomePage = ({list, loading, totalPages, fetchBuildings}) => {
 HomePage.propTypes = {
   list: PropTypes.array,
   loading: PropTypes.bool,
-  totalPages: PropTypes.number,
+  totalCount: PropTypes.number,
   fetchBuildings: PropTypes.func,
 };
 
 HomePage.defaultProps = {
   list: [],
   loading: false,
-  totalPages: 1,
+  totalCount: 1,
   fetchBuildings: () => {
   },
 };
@@ -85,7 +84,7 @@ HomePage.defaultProps = {
 const mapStateToProps = state => ({
   list: state.building.list,
   loading: state.building.loading,
-  totalPages: state.building.totalPages,
+  totalCount: state.building.totalCount,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -13,10 +13,10 @@ export const fetchBuildingsStart = () => {
   };
 };
 
-export const fetchBuildingsSuccess = (list, totalPages, page) => {
+export const fetchBuildingsSuccess = (list, totalCount, page) => {
   return {
     type: actionTypes.FETCH_BUILDINGS_SUCCESS,
-    payload: {list, totalPages, page},
+    payload: {list, totalCount, page},
   };
 };
 

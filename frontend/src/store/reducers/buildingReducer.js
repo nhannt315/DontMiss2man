@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   list: [],
-  totalPages: 1,
+  totalCount: 1,
   currentPage: 1,
   error: null,
   loading: false,
@@ -17,7 +17,7 @@ const buildingReducer = (state = initialState, {type, payload}) => {
     case FETCH_BUILDINGS_START:
       return {...state, loading: true};
     case FETCH_BUILDINGS_SUCCESS:
-      return {...state, list: payload.list, currentPage: payload.page, totalPages: payload.totalPages, loading: false};
+      return {...state, list: payload.list, currentPage: payload.page, totalCount: payload.totalCount, loading: false};
     case FETCH_BUILDINGS_FAILURE:
       return {...state, error: payload.error, loading: false};
     default:

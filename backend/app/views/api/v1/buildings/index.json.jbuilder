@@ -3,9 +3,9 @@ json.data do
     json.merge! building.attributes
     json.rooms building.rooms do |room|
       json.merge! room.attributes
-      json.images room.images
     end
   end
   json.total_pages @building_list.total_pages
+  json.total @building_list.total_count
   json.page @page
 end

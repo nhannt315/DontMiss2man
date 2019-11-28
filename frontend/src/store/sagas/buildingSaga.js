@@ -7,7 +7,7 @@ export function* fetchBuildingsSaga(action) {
   yield put(actions.fetchBuildingsStart());
   try {
     const response = yield BuildingService.getBuildingList(page, perPage);
-    yield put(actions.fetchBuildingsSuccess(response.list, response.total_pages, response.page));
+    yield put(actions.fetchBuildingsSuccess(response.list, response.total, response.page));
   } catch (error) {
     yield put(actions.fetchBuildingFailure(error));
   }
