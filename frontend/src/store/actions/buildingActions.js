@@ -2,7 +2,7 @@ import * as actionTypes from './actionTypes';
 
 export const fetchBuildings = (page, perPage) => {
   return {
-    type: actionTypes.FETCH_BUILDINGS,
+    type: actionTypes.FETCH_BUILDINGS_REQUEST,
     payload: {page, perPage},
   };
 };

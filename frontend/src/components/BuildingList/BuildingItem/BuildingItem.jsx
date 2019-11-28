@@ -5,7 +5,7 @@ import {Col, Row} from 'antd';
 import './BuildingItem.scss';
 import RoomList from '../../RoomList';
 
-const BuildingItem = ({item}) => {
+const BuildingItem = ({item, history}) => {
   return (
     <div className="buildingitem">
       <Row className="buildingitem-detail">
@@ -35,7 +35,7 @@ const BuildingItem = ({item}) => {
         </Col>
       </Row>
       <Row className="buildingitem-rooms">
-        <RoomList list={item.rooms} />
+        <RoomList list={item.rooms} history={history} />
       </Row>
     </div>
   );
@@ -43,6 +43,7 @@ const BuildingItem = ({item}) => {
 
 BuildingItem.propTypes = {
   item: PropTypes.object,
+  history: PropTypes.object.isRequired,
 };
 
 BuildingItem.defaultProps = {

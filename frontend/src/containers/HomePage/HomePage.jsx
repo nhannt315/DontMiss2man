@@ -13,7 +13,7 @@ import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 
 
-const HomePage = ({list, loading, totalCount, fetchBuildings}) => {
+const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
   const firstElement = useRef(null);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(NUMBER_OF_ITEMS[0].key);
@@ -49,7 +49,8 @@ const HomePage = ({list, loading, totalCount, fetchBuildings}) => {
           <Row />
           <Row>
             <div className="list">
-              {loading ? <ListPlaceholder itemCount={perPage} /> : <BuildingList buildingList={list} />}
+              {loading ? <ListPlaceholder itemCount={perPage} /> :
+                <BuildingList history={history} buildingList={list} />}
             </div>
           </Row>
         </Col>
@@ -71,12 +72,14 @@ HomePage.propTypes = {
   loading: PropTypes.bool,
   totalCount: PropTypes.number,
   fetchBuildings: PropTypes.func,
+  history: PropTypes.object,
 };
 
 HomePage.defaultProps = {
   list: [],
   loading: false,
   totalCount: 1,
+  history: {},
   fetchBuildings: () => {
   },
 };

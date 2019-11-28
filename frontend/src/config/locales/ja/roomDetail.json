@@ -1,0 +1,15 @@
+{
+  "general_info": "概要情報",
+  "detail_info": "詳細情報",
+  "map": "地図",
+  "images": "写真",
+  "agent": "不動産屋",
+  "current_address": "所在地",
+  "walk_to_station": "駅徒歩",
+  "layout": "間取り",
+  "size": "専有面積",
+  "year_built": "築年数",
+  "floor": "階",
+  "direction": "向き",
+  "building_type": "建物種別"
+}

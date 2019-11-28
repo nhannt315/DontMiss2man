@@ -23,6 +23,7 @@
       text-align: center;
       line-height: 16px;
     }
+
     margin-bottom: 7px;
   }
 
@@ -44,5 +45,17 @@
     color: #f82055;
     font-weight: bold;
     font-size: 18px;
+  }
+
+  &-detail-link {
+    color: #004CCA;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      color: #048ADE;
+    }
   }
 }

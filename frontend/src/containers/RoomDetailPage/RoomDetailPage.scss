@@ -1,0 +1,66 @@
+@import "../../styles/variables";
+.roomdetail {
+  &-title {
+    color: #E13427;
+    font-size: 2rem;
+  }
+
+  .navigation-post {
+    width: 100%;
+    background-color: #f3f3f3;
+    padding: 1.5rem 0 1.5rem 0;
+    ul {
+      margin: 0;
+      display: inline-block;
+      li {
+        display: inline;
+        font-size: 1.5rem;
+        cursor: pointer;
+        padding: 1.5rem;
+        text-transform: uppercase;
+        &:hover {
+          text-decoration: underline;
+          background-color: #E13427;
+          color: $color-white;
+        }
+      }
+
+    }
+  }
+
+  &-image-list {
+    padding-top: 2rem;
+    .slick-slide {
+      text-align: center;
+      min-height: 160px;
+      line-height: 160px;
+      background: $color-white;
+      overflow: hidden;
+    }
+
+    & > div {
+      width: 60%;
+    }
+
+    .carousel-image-wrapper {
+      display: flex !important;
+      flex-direction: row;
+      justify-content: center;
+    }
+    img {
+      height: 160px;
+    }
+  }
+
+  &-general-info {
+    padding-top: 2rem;
+    .title {
+      white-space: nowrap;
+      font-weight: 700;
+      background: #f9f9f9;
+    }
+    table {
+      width: 60%;
+    }
+  }
+}

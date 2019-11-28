@@ -1,6 +1,6 @@
 import {put} from 'redux-saga/effects';
 import BuildingService from '../../services/buildingService';
-import * as actions from '../actions/index';
+import * as actions from '../actions';
 
 export function* fetchBuildingsSaga(action) {
   const {page, perPage} = action.payload;

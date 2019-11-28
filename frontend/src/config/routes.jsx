@@ -8,7 +8,8 @@ const buildRoutes = history => {
   return (
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Containers.HomePage}/>
+        <Route exact path="/" component={Containers.HomePage} />
+        <Route exact path="/chintai/:id" component={Containers.RoomDetailPage} />
       </Switch>
     </Router>
   );

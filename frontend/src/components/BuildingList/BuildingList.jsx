@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import './BuildingList.scss';
 import BuildingItem from './BuildingItem';
 
-const BuildingList = ({buildingList}) => {
+const BuildingList = ({buildingList, history}) => {
   return (
     <div>
       {buildingList.map(item => {
-        return <BuildingItem key={item.id} item={item} />;
+        return <BuildingItem key={item.id} history={history} item={item} />;
       })}
     </div>
   );
@@ -16,6 +16,7 @@ const BuildingList = ({buildingList}) => {
 
 BuildingList.propTypes = {
   buildingList: PropTypes.array,
+  history: PropTypes.object.isRequired,
 };
 
 BuildingList.defaultProps = {
