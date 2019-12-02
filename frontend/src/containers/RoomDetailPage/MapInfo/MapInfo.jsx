@@ -11,7 +11,7 @@ const MapInfo = ({room}) => {
       <Title content={i18n.t('roomDetail.map')} />
       <div style={{ height: '200px', width: '100%' }}>
         <GoogleMapReact
-          bootstrapURLKeys={{ key: 'AIzaSyDMRiIuhVoM64aSk2gAyhyWhuOGNGBMHWU'}}
+          bootstrapURLKeys={{ key: process.env.REACT_APP_GG_MAP_API_KEY}}
           defaultCenter={{lat: room.building.latitude, lng: room.building.longitude}}
           defaultZoom={14}
         >

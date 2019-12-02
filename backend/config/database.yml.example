@@ -16,6 +16,7 @@ default: &default
   username: nhannt
   password: nhan1412
   socket: /tmp/mysql.sock
+#  socket: /var/run/mysqld/mysqld.sock
 
 development:
   <<: *default
