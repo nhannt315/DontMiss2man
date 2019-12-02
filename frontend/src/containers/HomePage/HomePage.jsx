@@ -20,7 +20,7 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
   useEffect(() => {
     scrollToComponent(firstElement.current);
     fetchBuildings(page, perPage);
-  }, [page, perPage]);
+  }, [page, perPage, fetchBuildings]);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
     <div className="homepage">

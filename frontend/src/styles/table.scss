@@ -1,3 +1,5 @@
+@import "./variables";
+
 .table {
   width: 100%;
   margin-bottom: 1rem;
@@ -5,7 +7,7 @@
 }
 
 .table-bordered {
-  border: 1px solid #dee2e6;
+  border: 1px solid $border-color;
 }
 
 table {
@@ -18,15 +20,15 @@ table {
 
 .table thead th {
   vertical-align: bottom;
-  border-bottom: 2px solid #dee2e6;
+  border-bottom: 2px solid $border-color;
 }
 
 .table-bordered td, .table-bordered th {
-  border: 1px solid #dee2e6;
+  border: 1px solid $border-color;
 }
 
 .table td, .table th {
   padding: .75rem;
   vertical-align: top;
-  border-top: 1px solid #dee2e6;
+  border-top: 1px solid $border-color;
 }

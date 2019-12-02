@@ -11,5 +11,19 @@
   "year_built": "築年数",
   "floor": "階",
   "direction": "向き",
-  "building_type": "建物種別"
+  "building_type": "建物種別",
+  "facilities": "部屋の特徴・設備",
+  "building_info": "物件概要",
+  "detail_layout": "間取り詳細",
+  "structure": "構造",
+  "number_of_floor": "階建",
+  "time_built": "築年月",
+  "car_parking": "駐車場",
+  "move_in": "入居",
+  "deal_type": "取引態様",
+  "condition": "条件",
+  "guarantor": "保証人代行",
+  "other_fees": "ほか諸費用",
+  "note": "備考",
+  "current_agent": "この物件を取り扱う店舗"
 }

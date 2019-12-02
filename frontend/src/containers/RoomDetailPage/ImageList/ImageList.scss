@@ -1,0 +1,23 @@
+@import "../../../styles/variables";
+
+.roomdetail-image-list {
+  padding-top: 2rem;
+  max-height: 400px;
+  .slick-slide {
+    text-align: center;
+    min-height: 30rem;
+    line-height: 160px;
+    background: $border-color;
+    overflow: hidden;
+  }
+
+  .carousel-image-wrapper {
+    display: flex !important;
+    flex-direction: row;
+    justify-content: center;
+    //height: 100%;
+  }
+  img {
+    object-fit: contain;
+  }
+}
