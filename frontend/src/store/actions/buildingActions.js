@@ -1,9 +1,9 @@
 import * as actionTypes from './actionTypes';
 
-export const fetchBuildings = (page, perPage) => {
+export const fetchBuildings = (page, perPage, sort) => {
   return {
     type: actionTypes.FETCH_BUILDINGS_REQUEST,
-    payload: {page, perPage},
+    payload: {page, perPage, sort},
   };
 };
 

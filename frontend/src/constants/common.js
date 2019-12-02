@@ -6,7 +6,7 @@ export const SORT_OPTIONS = {
     value: i18n.t('homepage.sort_options.cheapest_fee')
   },
   most_expensive: {
-    key: 'expensive',
+    key: 'most_expensive',
     value: i18n.t('homepage.sort_options.most_expensive_fee')
   },
   recommended: {
@@ -14,11 +14,11 @@ export const SORT_OPTIONS = {
     value: i18n.t('homepage.sort_options.recommended')
   },
   newest_building: {
-    key: 'newest_building',
+    key: 'newly_built',
     value: i18n.t('homepage.sort_options.newest_building')
   },
   most_largest: {
-    key: 'most_largest',
+    key: 'largest',
     value: i18n.t('homepage.sort_options.most_largest')
   }
 };

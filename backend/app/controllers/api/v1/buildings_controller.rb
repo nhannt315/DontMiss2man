@@ -4,7 +4,20 @@ class Api::V1::BuildingsController < ApplicationController
   before_action :pagination_params, only: [:index]
 
   def index
-    @building_list = Building.all.page(@page).per(@per_page).eager_load :rooms
+    case @sort
+    when "newly_built"
+      @building_list = Building.newly_built
+    when "cheapest"
+      @building_list = Building.cheapest
+    when "most_expensive"
+      @building_list = Building.most_expensive
+    when "largest"
+      @building_list = Building.largest
+    else
+      @building_list = Building.all
+      puts "ALLLLL"
+    end
+    @building_list = @building_list.page(@page).per(@per_page).eager_load :rooms
   end
 
 

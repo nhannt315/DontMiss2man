@@ -1,25 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import ImageSlider from '../../../components/ImageSlider';
 import './ImageList.scss';
-import {Carousel} from 'antd';
+import i18n from '../../../config/i18n';
+import Title from '../../../components/Title';
 
 const ImageList = ({room}) => {
   return (
-    <div className="roomdetail-image-list">
-      <Carousel>
-        {room.images.map(image => (
-          <div key={image.id} className="carousel-image-wrapper">
-            <div style={{
-              backgroundImage: `url(${image.url})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }} />
-          </div>
-        ))}
-      </Carousel>
+    <div>
+      <Title content={i18n.t('roomDetail.images')} />
+      <ImageSlider images={room.images} />
     </div>
-  );
+  )
 };
 
 ImageList.propTypes = {

@@ -1,6 +1,6 @@
 import React, {useRef, useEffect} from 'react';
 import PropTypes from 'prop-types';
-import {Carousel, Affix, Col, Row} from 'antd';
+import {Affix, Col, Row} from 'antd';
 import scrollToComponent from 'react-scroll-to-component';
 import {connect} from 'react-redux';
 import i18n from '../../config/i18n';
@@ -8,7 +8,7 @@ import './RoomDetailPage.scss';
 import {fetchRoom} from '../../store/actions';
 import ListPlaceholder from '../../components/ListPlaceholder';
 import Title from '../../components/Title';
-import GenerailInfo from './GeneralInfo';
+import GeneralInfo from './Generalnfo';
 import DetailInfo from './DetailInfo';
 import AgentInfo from './AgentInfo';
 import MapInfo from './MapInfo/MapInfo';
@@ -17,12 +17,12 @@ import ImageList from './ImageList';
 const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match}) => {
   const imageElement = useRef(null);
   const generalInfoElement = useRef(null);
+  const facilityElement = useRef(null);
   const detailInfoElement = useRef(null);
   const mapElement = useRef(null);
   useEffect(() => {
     fetchRoomDetail(match.params.id);
   }, [fetchRoomDetail, match]);
-  console.log(process.env);
   if (loading)
     return <ListPlaceholder itemCount={5} />;
   return (
@@ -34,8 +34,9 @@ const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match}) => {
         <Affix offsetTop={0}>
           <div className="navigation-post">
             <ul>
-              <li onClick={() => scrollToComponent(generalInfoElement.current)}>{i18n.t('roomDetail.general_info')}</li>
               <li onClick={() => scrollToComponent(imageElement.current)}>{i18n.t('roomDetail.images')}</li>
+              <li onClick={() => scrollToComponent(generalInfoElement.current)}>{i18n.t('roomDetail.general_info')}</li>
+              <li onClick={() => scrollToComponent(facilityElement.current)}>{i18n.t('roomDetail.facilities')}</li>
               <li onClick={() => scrollToComponent(detailInfoElement.current)}>{i18n.t('roomDetail.detail_info')}</li>
               <li onClick={() => scrollToComponent(mapElement.current)}>{i18n.t('roomDetail.map')}</li>
             </ul>
@@ -45,9 +46,9 @@ const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match}) => {
           <ImageList room={room} />
         </div>
         <div ref={generalInfoElement}>
-          <GenerailInfo room={room} />
+          <GeneralInfo room={room} />
         </div>
-        <div>
+        <div ref={facilityElement}>
           <Title content={i18n.t('roomDetail.facilities')} />
           <div className="roomdetail-facilities">
             {room.facilities}

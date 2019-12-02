@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {Col, Row} from 'antd';
 
 import './BuildingItem.scss';
+import i18n from '../../../config/i18n';
 import RoomList from '../../RoomList';
+import CommonHelper from '../../../helpers/common';
 
 const BuildingItem = ({item, history}) => {
   return (
@@ -28,7 +30,8 @@ const BuildingItem = ({item, history}) => {
                 {item.access.map(ele => <div key={ele}>{ele}</div>)}
               </Col>
               <Col className="buildingitem_detail-col3" span={4}>
-                {item.year_built}
+                <div>{CommonHelper.getYearBuiltInJap(item.year_built)}</div>
+                <div>{i18n.t('common.number_of_storeys', {storeys: item.storeys + item.underground_storeys})}</div>
               </Col>
             </Row>
           </div>

@@ -17,10 +17,11 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
   const firstElement = useRef(null);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(NUMBER_OF_ITEMS[0].key);
+  const [sortOption, setSortOption] = useState(SORT_OPTIONS.recommended.key);
   useEffect(() => {
     scrollToComponent(firstElement.current);
-    fetchBuildings(page, perPage);
-  }, [page, perPage, fetchBuildings]);
+    fetchBuildings(page, perPage, sortOption);
+  }, [page, perPage, fetchBuildings, sortOption]);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
     <div className="homepage">
@@ -30,7 +31,9 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
           <Row>
             <Col span={8}>
               {i18n.t('homepage.sort')}
-              <Select className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}>
+              <Select className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
+                      onChange={value => setSortOption(value)}
+              >
                 {sortOptionList.map(item => {
                   return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
                 })}
@@ -91,7 +94,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchBuildings: (page, perPage) => dispatch(actions.fetchBuildings(page, perPage)),
+  fetchBuildings: (page, perPage, sortOption) => dispatch(actions.fetchBuildings(page, perPage, sortOption)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

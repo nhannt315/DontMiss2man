@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import { Layout, Menu, Icon, Button } from 'antd';
+import {Layout, Menu, Icon, Button} from 'antd';
+import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import i18n from '../../config/i18n';
 import './Layout.scss';
 
-const { Header, Sider, Content } = Layout;
+const {Header, Sider, Content} = Layout;
 
 const MainLayout = ({children}) => {
 
@@ -19,16 +20,10 @@ const MainLayout = ({children}) => {
         <div className="logo" />
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
           <Menu.Item key="1">
-            <Icon type="user" />
-            <span>nav 1</span>
-          </Menu.Item>
-          <Menu.Item key="2">
-            <Icon type="video-camera" />
-            <span>nav 2</span>
-          </Menu.Item>
-          <Menu.Item key="3">
-            <Icon type="upload" />
-            <span>nav 3</span>
+            <Link to="/">
+              <Icon type="user" />
+              <span>{i18n.t('sideMenu.homepage')}</span>
+            </Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -55,11 +50,11 @@ const MainLayout = ({children}) => {
 };
 
 MainLayout.propTypes = {
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 MainLayout.defaultProps = {
-  children: <React.Fragment> </React.Fragment>
+  children: <React.Fragment> </React.Fragment>,
 };
 
 export default MainLayout;

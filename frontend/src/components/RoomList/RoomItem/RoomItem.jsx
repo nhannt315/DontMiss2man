@@ -28,7 +28,7 @@ const RoomItem = ({room, history}) => {
       <td>
         <div>
           <div>{room.layout}</div>
-          <div>{room.size}m2</div>
+          <div>{room.size}m<sup>2</sup></div>
         </div>
       </td>
       <td>

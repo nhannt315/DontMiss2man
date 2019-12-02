@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Title from '../../../components/Title';
 import i18n from '../../../config/i18n';
 
-const GenerailInfo = ({room, ref}) => {
+const GeneralInfo = ({room}) => {
   return (
     <div className="roomdetail-general-info">
       <Title content={i18n.t('roomDetail.general_info')}/>
@@ -41,12 +41,12 @@ const GenerailInfo = ({room, ref}) => {
   );
 };
 
-GenerailInfo.propTypes = {
+GeneralInfo.propTypes = {
   room: PropTypes.object,
 };
 
-GenerailInfo.defaultProps = {
+GeneralInfo.defaultProps = {
   room: {},
 };
 
-export default GenerailInfo;
+export default GeneralInfo;
