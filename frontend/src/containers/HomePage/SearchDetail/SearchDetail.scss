@@ -1,0 +1,87 @@
+@import "../../../styles/variables";
+
+.condition-box {
+  &-title {
+    padding: 1rem;
+    color: $color-white;
+    background-color: #515151;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  &-content-wrapper {
+    background-color: #EEEEEE;
+  }
+
+  &-content {
+    //background-color: #EEEEEE;
+    padding: 1rem 1rem 0 1rem;
+
+    dt {
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
+  }
+
+  .select-area-wrapper {
+    margin-top: .8rem;
+    .select-items {
+      min-width: 10rem;
+      flex-grow: 1;
+    }
+
+    .select-label {
+      margin: 0 .5rem 0 .5rem;
+      flex-grow: 1;
+      text-align: center;
+    }
+
+    .select-area {
+      display: flex;
+    }
+
+    .checkboxs {
+      div {
+        margin-top: .5rem;
+      }
+    }
+  }
+
+  .layout-detail-list {
+    & > div {
+      display: flex;
+      flex-wrap: wrap;
+    }
+    .checkbox-wrapper {
+      flex: 0 0 50%;
+      padding: 1rem;
+    }
+  }
+
+  .building-type-list {
+    & > div {
+      margin: .5rem;
+    }
+  }
+
+  .year-select {
+    & > div {
+      min-width: 11rem;
+      margin-top: 1rem;
+    }
+  }
+
+  .submit-area {
+    width: 100%;
+    text-align: center;
+    color: $color-white;
+    background-color: #64b5f6;
+    padding: 1rem 0 1rem 0;
+    cursor: pointer;
+    &:hover {
+      color: $color-white;
+      text-decoration: underline;
+      background-color: #2196f3;
+    }
+  }
+}

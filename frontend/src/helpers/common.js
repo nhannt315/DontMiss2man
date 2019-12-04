@@ -24,8 +24,8 @@ export default class CommonHelper {
     const years = moment().year() - moment(src).year();
     if (years > 2) {
       return i18n.t('common.number_of_year_built', {years});
-    } else {
+    } 
       return i18n.t('common.newly_built');
-    }
+    
   }
 }

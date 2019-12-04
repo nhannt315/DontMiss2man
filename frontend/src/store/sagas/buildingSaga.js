@@ -3,10 +3,10 @@ import BuildingService from '../../services/buildingService';
 import * as actions from '../actions';
 
 export function* fetchBuildingsSaga(action) {
-  const {page, perPage, sort} = action.payload;
+  const {page, perPage, sort, condition} = action.payload;
   yield put(actions.fetchBuildingsStart());
   try {
-    const response = yield BuildingService.getBuildingList(page, perPage, sort);
+    const response = yield BuildingService.getBuildingList(page, perPage, sort, condition);
     yield put(actions.fetchBuildingsSuccess(response.list, response.total, response.page));
   } catch (error) {
     yield put(actions.fetchBuildingFailure(error));

@@ -11,17 +11,21 @@ import ListHelper from '../../helpers/list_helper';
 import i18n from '../../config/i18n';
 import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
+import SearchDetail from './SearchDetail';
 
 
 const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
   const firstElement = useRef(null);
+  const [searchCondition, setCondition] = useState(null);
   const [page, setPage] = useState(1);
   const [perPage, setPerPage] = useState(NUMBER_OF_ITEMS[0].key);
   const [sortOption, setSortOption] = useState(SORT_OPTIONS.recommended.key);
   useEffect(() => {
     scrollToComponent(firstElement.current);
-    fetchBuildings(page, perPage, sortOption);
-  }, [page, perPage, fetchBuildings, sortOption]);
+    fetchBuildings(page, perPage, sortOption, searchCondition);
+  }, [page, perPage, fetchBuildings, sortOption, searchCondition]);
+
+  const searchWithCondition = condition => setCondition(condition);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
     <div className="homepage">
@@ -57,7 +61,9 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
             </div>
           </Row>
         </Col>
-        <Col span={8} />
+        <Col span={5} offset={1}>
+          <SearchDetail searchWithCondition={searchWithCondition} />
+        </Col>
       </Row>
       <Row>
         <Col className="building-list-pagination" span={16}>
@@ -94,7 +100,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchBuildings: (page, perPage, sortOption) => dispatch(actions.fetchBuildings(page, perPage, sortOption)),
+  fetchBuildings: (page, perPage, sortOption, condition = null) => dispatch(actions.fetchBuildings(page, perPage, sortOption, condition)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
