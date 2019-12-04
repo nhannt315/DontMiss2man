@@ -1,0 +1,19 @@
+{
+  "filterSearch": "絞り条件",
+  "rent_fee": "賃料",
+  "without_limit": "上限なし",
+  "no_lower_limit": "下限なし",
+  "include_management_fee": "管理費・共益費込み",
+  "no_reikin": "礼金なし",
+  "no_shikikin": "敷金・保証金なし",
+  "layout_type": "間取りタイプ",
+  "building_type": "物件の種類",
+  "mansion": "マンション",
+  "apartment": "アパート",
+  "size": "専有面積",
+  "years_built": "築年数",
+  "newly_built": "新築",
+  "not_specified": "指定しない",
+  "within_years": "{{years}}年以内",
+  "search_with_condition": "この条件で検索する"
+}

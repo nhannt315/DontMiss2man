@@ -14,5 +14,4 @@ namespace :building do
       puts building.name
     end
   end
-
 end
