@@ -14,6 +14,7 @@ namespace :suumo_crawl do
       buildings.each do |building_node|
         building = Building.new
         building.name = building_node.css("div.cassetteitem-detail > div.cassetteitem-detail-body > div > div.cassetteitem_content-title").text
+        check_and_delete_building building.name
         building.address = building_node.css("div.cassetteitem-detail > div.cassetteitem-detail-body > div > div.cassetteitem_content-body > ul > li.cassetteitem_detail-col1").text
         building.photo_url = building_node.css("div.cassetteitem-detail > div.cassetteitem-detail-object > div > div > img")[0]["rel"]
         access = []
@@ -21,9 +22,9 @@ namespace :suumo_crawl do
           access.push element.text
         end
         building.access = access
-        building.latitude, building.longitude = GoogleMapApi.get_lat_lng_from_address building.address
-        distance_from_honsha = Formula.haversine_distance([building.latitude, building.longitude], [Settings.honsha_lat, Settings.honsha_lng])
-        if distance_from_honsha > Settings.fixed_distance
+        first_room_url = building_node.css("div.cassetteitem-item > table > tbody:nth-child(2) > tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
+        building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.address
+        unless check_building_condition(building.latitude, building.longitude)
           puts "Do not match condition, skip!"
           next
         end
@@ -39,6 +40,21 @@ namespace :suumo_crawl do
     end
   end
 
+  def check_and_delete_building building_name
+    building = Building.find_by name: building_name
+    if building
+      building.destroy
+      puts "Delete building #{building_name}"
+    end
+  end
+
+  def check_building_condition lat, lng
+    distance_from_honsha = Formula.haversine_distance([lat, lng], [Settings.honsha_lat, Settings.honsha_lng])
+    return true if distance_from_honsha <= Settings.fixed_distance
+    return true if LocationService.get_walking_time(Settings.honsha_lat, Settings.honsha_lng, lat, lng) <= Settings.max_travel_time_in_mins
+    return false
+  end
+
   def extract_room_information building, url, index
     puts url
     begin
@@ -50,6 +66,7 @@ namespace :suumo_crawl do
     root_page = Nokogiri.HTML response
     room = Room.new
     room.rent_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span.property_view_note-emphasis").text
+    room.management_cost = root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span:nth-child(2)").text[/(?<=管理費・共益費: )(.*?)(?=円)r/].to_i
     room.shikikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
     room.reikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
     room.caution_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(3)").text[5..-1]
@@ -103,6 +120,7 @@ namespace :suumo_crawl do
       end
     end
   end
+
 
   def find_or_create_agent name, address, working_time, telephone_number, photo_url, slogan, access
     agent = Agent.find_by name: name
