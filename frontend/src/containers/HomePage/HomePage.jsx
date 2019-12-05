@@ -13,17 +13,27 @@ import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
 
-
-const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
+const HomePage = ({list, loading, totalCount, fetchBuildings, history, conditionRedux, sortRedux, currentPage, perPageRedux}) => {
   const firstElement = useRef(null);
-  const [searchCondition, setCondition] = useState(null);
-  const [page, setPage] = useState(1);
-  const [perPage, setPerPage] = useState(NUMBER_OF_ITEMS[0].key);
-  const [sortOption, setSortOption] = useState(SORT_OPTIONS.recommended.key);
+  const [isInitialized, setInitialize] = useState(false);
+  const [searchCondition, setCondition] = useState(conditionRedux);
+  const [page, setPage] = useState(currentPage);
+  const [perPage, setPerPage] = useState(perPageRedux || NUMBER_OF_ITEMS[0].key);
+  const [sortOption, setSortOption] = useState(sortRedux || SORT_OPTIONS.recommended.key);
   useEffect(() => {
     scrollToComponent(firstElement.current);
-    fetchBuildings(page, perPage, sortOption, searchCondition);
-  }, [page, perPage, fetchBuildings, sortOption, searchCondition]);
+    if (isInitialized) {
+      fetchBuildings(page, perPage, sortOption, searchCondition);
+    }
+    if (!isInitialized && list.length === 0) {
+      fetchBuildings(page, perPage, sortOption, searchCondition);
+      setInitialize(true);
+    }
+    if (!isInitialized && list.length > 0) {
+      setInitialize(true);
+    }
+  }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
+
 
   const searchWithCondition = condition => setCondition(condition);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
@@ -62,13 +72,13 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
           </Row>
         </Col>
         <Col span={7} offset={1}>
-          <SearchDetail searchWithCondition={searchWithCondition} />
+          <SearchDetail searchWithCondition={searchWithCondition} initialCondition={conditionRedux} />
         </Col>
       </Row>
       <Row>
         <Col className="building-list-pagination" span={16}>
           <Pagination size="small" current={page} pageSize={perPage}
-                      onChange={currentPage => setPage(currentPage)}
+                      onChange={cuPage => setPage(cuPage)}
                       total={totalCount} />
         </Col>
       </Row>
@@ -82,6 +92,10 @@ HomePage.propTypes = {
   totalCount: PropTypes.number,
   fetchBuildings: PropTypes.func,
   history: PropTypes.object,
+  conditionRedux: PropTypes.object,
+  sortRedux: PropTypes.string,
+  currentPage: PropTypes.number,
+  perPageRedux: PropTypes.number,
 };
 
 HomePage.defaultProps = {
@@ -89,14 +103,22 @@ HomePage.defaultProps = {
   loading: false,
   totalCount: 1,
   history: {},
+  conditionRedux: null,
+  sortRedux: null,
   fetchBuildings: () => {
   },
+  currentPage: 1,
+  perPageRedux: null,
 };
 
 const mapStateToProps = state => ({
   list: state.building.list,
   loading: state.building.loading,
   totalCount: state.building.totalCount,
+  conditionRedux: state.building.condition,
+  sortRedux: state.building.sort,
+  currentPage: state.building.currentPage,
+  perPageRedux: state.building.perPage,
 });
 
 const mapDispatchToProps = dispatch => ({

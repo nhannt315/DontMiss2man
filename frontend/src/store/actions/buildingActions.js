@@ -7,9 +7,10 @@ export const fetchBuildings = (page, perPage, sort, condition) => {
   };
 };
 
-export const fetchBuildingsStart = () => {
+export const fetchBuildingsStart = (sort, condition, perPage) => {
   return {
     type: actionTypes.FETCH_BUILDINGS_START,
+    payload: {sort, condition, perPage},
   };
 };
 
