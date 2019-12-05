@@ -34,7 +34,6 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history, condition
     }
   }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
 
-
   const searchWithCondition = condition => setCondition(condition);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
