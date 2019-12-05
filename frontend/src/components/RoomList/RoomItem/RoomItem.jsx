@@ -37,9 +37,7 @@ const RoomItem = ({room, history}) => {
         </div>
       </td>
       <td>
-        <div className="roomitem-detail-link" onClick={handleDetailClicked}
-             onKeyDown={handleDetailClicked}
-             role="button" tabIndex={0}>
+        <div className="roomitem-detail-link" onClick={handleDetailClicked}>
           {i18n.t('common.see_detail')}
         </div>
       </td>

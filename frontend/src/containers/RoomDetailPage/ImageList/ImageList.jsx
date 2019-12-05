@@ -8,7 +8,6 @@ import Title from '../../../components/Title';
 const ImageList = ({room}) => {
   return (
     <div>
-      <Title content={i18n.t('roomDetail.images')} />
       <ImageSlider images={room.images} />
     </div>
   )

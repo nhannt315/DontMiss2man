@@ -25,5 +25,8 @@
   "guarantor": "保証人代行",
   "other_fees": "ほか諸費用",
   "note": "備考",
-  "current_agent": "この物件を取り扱う店舗"
+  "current_agent": "この物件を取り扱う店舗",
+  "management_fee": "管理費・共益費: {{fee}}",
+  "reikin": "礼金: {{fee}}",
+  "shikikin": "敷金: {{fee}}"
 }

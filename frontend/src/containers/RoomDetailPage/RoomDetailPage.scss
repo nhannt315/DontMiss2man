@@ -1,8 +1,20 @@
 @import "../../styles/variables";
+@import "../../styles/mixins";
 .roomdetail {
   &-title {
-    color: #E13427;
-    font-size: 2rem;
+    display: flex;
+    flex-direction: row;
+    background: #ffff;
+    margin-bottom: 1rem;
+    padding: 1rem 1rem 0 1rem;
+    //border-top: 2px solid green;
+    //box-shadow: 0 4px 2px -2px grey;
+
+    h1 {
+      flex-grow: 1;
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
   }
 
   .navigation-post {

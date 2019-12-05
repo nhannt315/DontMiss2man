@@ -61,7 +61,7 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history}) => {
             </div>
           </Row>
         </Col>
-        <Col span={5} offset={1}>
+        <Col span={7} offset={1}>
           <SearchDetail searchWithCondition={searchWithCondition} />
         </Col>
       </Row>

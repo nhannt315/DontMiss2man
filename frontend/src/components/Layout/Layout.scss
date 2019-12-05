@@ -20,13 +20,24 @@
   }
 
   .logo {
-    height: 3.2rem;
+    flex-grow: 1;
     background: rgba(255, 255, 255, 0.2);
-    margin: 1.6rem;
+    cursor: pointer;
+    img {
+      height: 5rem;
+    }
+    span {
+      padding-left: .5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 3rem;
+      font-weight: bold;
+      line-height: 1.6;
+      vertical-align: middle;
+    }
   }
 
   .main-content {
-    margin: 2.4rem 1.6rem;
     padding: 2.4rem;
     background-color: $color-white;
     min-height: 28rem;
@@ -36,8 +47,10 @@
     background: $color-white;
     padding: 0;
     display: flex;
+    height: 6.4rem;
     flex-direction: row;
     padding-right: 2rem;
+    box-shadow: 0 4px 2px -2px grey;
   }
 
 }

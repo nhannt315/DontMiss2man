@@ -8,11 +8,15 @@
 *::before {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
 html {
   font-size: 62.5%;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif !important;
 }
 
 
@@ -21,6 +25,26 @@ html {
   &:after {
     content: "";
     display: block;
+    clear: both;
+  }
+}
+
+.container {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  position: relative;
+  width: 117rem;
+  margin-right: auto;
+  margin-left: auto;
+
+  &:before {
+    display: table;
+    content: "";
+  }
+
+  &:after {
+    display: table;
+    content: "";
     clear: both;
   }
 }
