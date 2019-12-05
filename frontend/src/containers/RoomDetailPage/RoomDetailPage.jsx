@@ -38,18 +38,18 @@ const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match}) => {
       <Row>
         <Col span={24}>
           <PropertyInfo room={room} />
-          {/*<Affix offsetTop={0}>*/}
-          {/*  <div className="navigation-post">*/}
-          {/*    <ul>*/}
-          {/*      <li onClick={() => scrollToComponent(imageElement.current)}>{i18n.t('roomDetail.images')}</li>*/}
-          {/*      <li*/}
-          {/*        onClick={() => scrollToComponent(generalInfoElement.current)}>{i18n.t('roomDetail.general_info')}</li>*/}
-          {/*      <li onClick={() => scrollToComponent(facilityElement.current)}>{i18n.t('roomDetail.facilities')}</li>*/}
-          {/*      <li onClick={() => scrollToComponent(detailInfoElement.current)}>{i18n.t('roomDetail.detail_info')}</li>*/}
-          {/*      <li onClick={() => scrollToComponent(mapElement.current)}>{i18n.t('roomDetail.map')}</li>*/}
-          {/*    </ul>*/}
-          {/*  </div>*/}
-          {/*</Affix>*/}
+          {/* <Affix offsetTop={0}> */}
+          {/*  <div className="navigation-post"> */}
+          {/*    <ul> */}
+          {/*      <li onClick={() => scrollToComponent(imageElement.current)}>{i18n.t('roomDetail.images')}</li> */}
+          {/*      <li */}
+          {/*        onClick={() => scrollToComponent(generalInfoElement.current)}>{i18n.t('roomDetail.general_info')}</li> */}
+          {/*      <li onClick={() => scrollToComponent(facilityElement.current)}>{i18n.t('roomDetail.facilities')}</li> */}
+          {/*      <li onClick={() => scrollToComponent(detailInfoElement.current)}>{i18n.t('roomDetail.detail_info')}</li> */}
+          {/*      <li onClick={() => scrollToComponent(mapElement.current)}>{i18n.t('roomDetail.map')}</li> */}
+          {/*    </ul> */}
+          {/*  </div> */}
+          {/* </Affix> */}
           <div ref={imageElement}>
             <ImageList room={room} />
           </div>

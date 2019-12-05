@@ -4,7 +4,7 @@ import * as actions from '../actions';
 
 export function* fetchBuildingsSaga(action) {
   const {page, perPage, sort, condition} = action.payload;
-  yield put(actions.fetchBuildingsStart());
+  yield put(actions.fetchBuildingsStart(sort, condition, perPage));
   try {
     const response = yield BuildingService.getBuildingList(page, perPage, sort, condition);
     yield put(actions.fetchBuildingsSuccess(response.list, response.total, response.page));

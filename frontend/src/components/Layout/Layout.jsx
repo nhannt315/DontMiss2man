@@ -10,8 +10,6 @@ import './Layout.scss';
 const {Header, Content} = Layout;
 
 const MainLayout = ({children}) => {
-
-
   return (
     <Layout id="app-bar">
       <Layout>
@@ -27,7 +25,6 @@ const MainLayout = ({children}) => {
               <Button>{i18n.t('common.login')}</Button>
             </div>
           </div>
-
         </Header>
         <Content className="container main-content" style={{marginTop: '1rem'}}>
           {children}
