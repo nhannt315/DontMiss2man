@@ -38,6 +38,7 @@ namespace :suumo_crawl do
       current_page = current_page + 1
       break if current_page > total_page
     end
+    calculate_average
   end
 
   def check_and_delete_building building_name
@@ -130,6 +131,21 @@ namespace :suumo_crawl do
       puts "Create agent successfully" if agent.save!
     end
     return agent.id
+  end
+
+  def calculate_average
+    Building.find_each do |building|
+      total_fee = 0
+      total_size = 0
+      building.rooms.each do |room|
+        total_fee = total_fee + room.rent_fee + room.management_cost.to_i
+        total_size = total_size + room.size.to_i
+      end
+      building.average_fee = total_fee.to_f / building.rooms.count
+      building.average_size = total_size.to_f / building.rooms.count
+      building.save!
+      puts building.name
+    end
   end
 
   task clean: :environment do

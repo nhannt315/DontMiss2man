@@ -14,4 +14,9 @@ namespace :building do
       puts building.name
     end
   end
+
+  task test_job: :environment do
+    Rails.logger.warn "So sleepy, wanna go home now.."
+    puts "So sleepy, wanna go home now.."
+  end
 end

@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
-kill -9 `cat /home/ubuntu/jdict-web/backend/tmp/pids/puma.pid`
+source ~/.bashrc
+sudo timedatectl set-timezone Asia/Tokyo
+kill -9 `cat /home/ubuntu/DontMiss2man/backend/tmp/pids/puma.pid`
 pm2 kill
 cd /home/ubuntu/DontMiss2man
 git checkout -- .
@@ -12,3 +14,4 @@ cd /home/ubuntu/DontMiss2man/backend/
 bundle install
 rails db:migrate
 bundle exec puma -e development -p 4000 --pidfile tmp/pids/puma.pid -d
+whenever --update-crontab --set environment='development'

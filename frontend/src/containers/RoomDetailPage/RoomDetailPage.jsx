@@ -13,7 +13,6 @@ import DetailInfo from './DetailInfo';
 import AgentInfo from './AgentInfo';
 import MapInfo from './MapInfo/MapInfo';
 import ImageList from './ImageList';
-import CommonHelper from '../../helpers/common';
 import PropertyInfo from './PropertyInfo';
 
 const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match}) => {

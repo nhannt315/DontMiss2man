@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, Menu, Icon, Button} from 'antd';
+import {Layout, Button} from 'antd';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
