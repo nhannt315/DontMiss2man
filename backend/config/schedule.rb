@@ -2,6 +2,11 @@
 #
 # It's helpful, but not entirely necessary to understand cron before proceeding.
 # http://en.wikipedia.org/wiki/Cron
+require 'active_support/core_ext/time'
+def jst(time)
+  Time.zone = 'Asia/Tokyo'
+  Time.zone.parse(time).localtime($system_utc_offset)
+end
 
 # Example:
 #
@@ -19,8 +24,10 @@
 #
 set :output, "log/cron_log.log"
 env :PATH, ENV['PATH']
-every 1.day, at: '4:30 am' do
+every 1.day, at: jst('11:24 am') do
   rake "suumo_crawl:mansion"
 end
+
+
 
 # Learn more: http://github.com/javan/whenever
