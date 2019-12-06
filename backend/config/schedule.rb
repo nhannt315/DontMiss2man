@@ -24,7 +24,7 @@ end
 #
 set :output, "log/cron_log.log"
 env :PATH, ENV['PATH']
-every 1.day, at: jst('11:24 am') do
+every 1.day, at: jst('3:00 am') do
   rake "suumo_crawl:mansion"
 end
 

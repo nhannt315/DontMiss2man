@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-source ~/.bashrc
-sudo timedatectl set-timezone Asia/Tokyo
+#source ~/.bashrc
+#sudo timedatectl set-timezone Asia/Tokyo
 kill -9 `cat /home/ubuntu/DontMiss2man/backend/tmp/pids/puma.pid`
 pm2 kill
 cd /home/ubuntu/DontMiss2man
