@@ -9,7 +9,8 @@ import './Layout.scss';
 
 const {Header, Content} = Layout;
 
-const MainLayout = ({children}) => {
+const MainLayout = ({children, history}) => {
+  const toLoginPage = () => history.push('/login');
   return (
     <Layout id="app-bar">
       <Layout>
@@ -22,7 +23,7 @@ const MainLayout = ({children}) => {
               </Link>
             </div>
             <div className="vertical-align">
-              <Button>{i18n.t('common.login')}</Button>
+              <Button onClick={toLoginPage}>{i18n.t('common.login')}</Button>
             </div>
           </div>
         </Header>
@@ -36,10 +37,12 @@ const MainLayout = ({children}) => {
 
 MainLayout.propTypes = {
   children: PropTypes.node,
+  history: PropTypes.object,
 };
 
 MainLayout.defaultProps = {
   children: <React.Fragment> </React.Fragment>,
+  history: {},
 };
 
 export default MainLayout;

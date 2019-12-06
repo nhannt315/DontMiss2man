@@ -8,12 +8,12 @@ import * as Containers from '../containers';
 const buildRoutes = history => {
   return (
     <Router history={history}>
-      <Layout>
-        <Switch>
-          <Route exact path="/" component={Containers.HomePage} />
-          <Route exact path="/chintai/:id" component={Containers.RoomDetailPage} />
-        </Switch>
-      </Layout>
+
+      <Switch>
+        <Route exact path="/" component={Containers.HomePage} />
+        <Route exact path="/chintai/:id" component={Containers.RoomDetailPage} />
+        <Route exact path="/login" component={Containers.LoginPage} />
+      </Switch>
     </Router>
   );
 };
