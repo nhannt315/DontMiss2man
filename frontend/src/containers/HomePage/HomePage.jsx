@@ -9,6 +9,7 @@ import * as actions from '../../store/actions';
 import {SORT_OPTIONS, NUMBER_OF_ITEMS} from '../../constants/common';
 import ListHelper from '../../helpers/list_helper';
 import i18n from '../../config/i18n';
+import Layout from '../../components/Layout';
 import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
@@ -32,56 +33,59 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history, condition
     if (!isInitialized && list.length > 0) {
       setInitialize(true);
     }
+    // eslint-disable-next-line
   }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
 
   const searchWithCondition = condition => setCondition(condition);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
   return (
-    <div className="homepage">
-      <div ref={firstElement} />
-      <Row>
-        <Col span={16}>
-          <Row>
-            <Col span={8}>
-              {i18n.t('homepage.sort')}
-              <Select className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
-                      onChange={value => setSortOption(value)}
-              >
-                {sortOptionList.map(item => {
-                  return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
-                })}
-              </Select>
-            </Col>
-            <Col span={8}>
-              {i18n.t('homepage.number_of_items')}
-              <Select value={perPage} className="sort-filter" defaultValue={NUMBER_OF_ITEMS[0].key}
-                      onChange={value => setPerPage(value)}>
-                {NUMBER_OF_ITEMS.map(item => {
-                  return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
-                })}
-              </Select>
-            </Col>
-          </Row>
-          <Row />
-          <Row>
-            <div className="list">
-              {loading ? <ListPlaceholder itemCount={perPage} /> :
-                <BuildingList history={history} buildingList={list} />}
-            </div>
-          </Row>
-        </Col>
-        <Col span={7} offset={1}>
-          <SearchDetail searchWithCondition={searchWithCondition} initialCondition={conditionRedux} />
-        </Col>
-      </Row>
-      <Row>
-        <Col className="building-list-pagination" span={16}>
-          <Pagination size="small" current={page} pageSize={perPage}
-                      onChange={cuPage => setPage(cuPage)}
-                      total={totalCount} />
-        </Col>
-      </Row>
-    </div>
+    <Layout history={history}>
+      <div className="homepage">
+        <div ref={firstElement} />
+        <Row>
+          <Col span={16}>
+            <Row>
+              <Col span={8}>
+                {i18n.t('homepage.sort')}
+                <Select className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
+                        onChange={value => setSortOption(value)}
+                >
+                  {sortOptionList.map(item => {
+                    return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
+                  })}
+                </Select>
+              </Col>
+              <Col span={8}>
+                {i18n.t('homepage.number_of_items')}
+                <Select value={perPage} className="sort-filter" defaultValue={NUMBER_OF_ITEMS[0].key}
+                        onChange={value => setPerPage(value)}>
+                  {NUMBER_OF_ITEMS.map(item => {
+                    return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
+                  })}
+                </Select>
+              </Col>
+            </Row>
+            <Row />
+            <Row>
+              <div className="list">
+                {loading ? <ListPlaceholder itemCount={perPage} /> :
+                  <BuildingList history={history} buildingList={list} />}
+              </div>
+            </Row>
+          </Col>
+          <Col span={7} offset={1}>
+            <SearchDetail searchWithCondition={searchWithCondition} initialCondition={conditionRedux} />
+          </Col>
+        </Row>
+        <Row>
+          <Col className="building-list-pagination" span={16}>
+            <Pagination size="small" current={page} pageSize={perPage}
+                        onChange={cuPage => setPage(cuPage)}
+                        total={totalCount} />
+          </Col>
+        </Row>
+      </div>
+    </Layout>
   );
 };
 

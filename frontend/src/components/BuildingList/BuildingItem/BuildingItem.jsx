@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Col, Row} from 'antd';
-
 import './BuildingItem.scss';
 import i18n from '../../../config/i18n';
 import RoomList from '../../RoomList';
+import Image from '../../Image';
 import CommonHelper from '../../../helpers/common';
 
 const BuildingItem = ({item, history}) => {
@@ -12,7 +12,7 @@ const BuildingItem = ({item, history}) => {
     <div className="buildingitem">
       <Row className="buildingitem-detail">
         <Col className="buildingitem_object" span={5}>
-          <img alt={item.name} src={item.photo_url} />
+          <Image src={item.photo_url} alt={item.name} />
         </Col>
         <Col className="buildingitem_content" span={18} offset={1}>
           <div className="buildingitem_content-label">
