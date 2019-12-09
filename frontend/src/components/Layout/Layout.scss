@@ -53,4 +53,10 @@
     box-shadow: 0 4px 2px -2px grey;
   }
 
+  .user_area {
+    cursor: pointer;
+    span {
+      margin-left: 1rem;
+    }
+  }
 }

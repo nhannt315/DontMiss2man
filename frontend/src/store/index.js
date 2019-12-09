@@ -1,7 +1,7 @@
 import {applyMiddleware, combineReducers, compose, createStore} from 'redux';
 import {routerReducer, routerMiddleware} from 'react-router-redux';
 import createSagaMiddleware from 'redux-saga';
-import {watchBuilding, watchRoom} from './sagas';
+import {watchBuilding, watchRoom, watchAuth} from './sagas';
 import reducers from './reducers';
 
 const composeEnhancers =
@@ -26,6 +26,7 @@ const configureStore = history => {
   );
   store.sagaTask = sagaMiddleware.run(watchBuilding);
   store.sagaTask = sagaMiddleware.run(watchRoom);
+  store.sagaTask = sagaMiddleware.run(watchAuth);
   return store;
 };
 

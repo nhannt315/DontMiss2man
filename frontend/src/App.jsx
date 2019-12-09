@@ -1,7 +1,6 @@
 import React from 'react';
 import {Provider} from 'react-redux';
 import {createBrowserHistory} from 'history';
-
 import './styles/base.scss';
 import AppRoutes from './config/routes';
 import configureStore from './store';

@@ -1,6 +1,9 @@
 {
   "site_name": "DontMiss2man",
   "login": "ログイン",
+  "create_account": "新規アカウント作成",
+  "logout": "ログアウト",
+  "my_page": "マイページ",
   "floor_number": "{{floor}}階",
   "floor": "階",
   "reikin": "礼金",

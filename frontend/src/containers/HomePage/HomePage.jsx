@@ -33,6 +33,7 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history, condition
     if (!isInitialized && list.length > 0) {
       setInitialize(true);
     }
+    // eslint-disable-next-line
   }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
 
   const searchWithCondition = condition => setCondition(condition);

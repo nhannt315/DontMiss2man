@@ -4,6 +4,7 @@ import {Button} from 'antd';
 import i18n from '../../../config/i18n';
 import './RoomItem.scss';
 import CommonHelper from '../../../helpers/common';
+import Image from '../../Image';
 
 const RoomItem = ({room, history}) => {
   const handleDetailClicked = () => {
@@ -11,7 +12,9 @@ const RoomItem = ({room, history}) => {
   };
   return (
     <tr className="roomitem">
-      <td><img className="room-image" src={room.layout_image_url} alt={room.layout_image_url} /></td>
+      <td>
+        <Image className="room-image" src={room.layout_image_url} alt={room.layout_image_url} />
+      </td>
       <td>{i18n.t('common.floor_number', {floor: room.floor})}</td>
       <td>
         <div>
