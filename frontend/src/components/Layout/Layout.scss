@@ -41,6 +41,7 @@
     padding: 2.4rem;
     background-color: $color-white;
     min-height: 28rem;
+    box-shadow: 0 1px 0 rgba(12,13,14,0.1), 0 1px 6px rgba(59,64,69,0.1);
   }
 
   .header {
@@ -50,7 +51,7 @@
     height: 6.4rem;
     flex-direction: row;
     padding-right: 2rem;
-    box-shadow: 0 4px 2px -2px grey;
+    box-shadow: 0 1px 0 rgba(12,13,14,0.1), 0 1px 6px rgba(59,64,69,0.1);
   }
 
   .user_area {

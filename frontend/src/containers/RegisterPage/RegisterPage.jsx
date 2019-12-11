@@ -1,9 +1,11 @@
 import React, {PureComponent} from 'react';
 import PropTypes from 'prop-types';
+import {message} from 'antd';
 import {connect} from 'react-redux';
 import AuthBackground from '../../assets/images/bg.jpg';
 import RegisterForm from '../../components/RegisterForm';
 import {register as registerRedux} from '../../store/actions';
+import i18n from '../../config/i18n';
 
 class RegisterPage extends PureComponent {
   constructor(props) {
@@ -31,9 +33,15 @@ class RegisterPage extends PureComponent {
 
   handleSubmit = values => {
     const {register} = this.props;
-    register(values.email, values.password, values.password_confirm);
+    register(values.email, values.password, values.password_confirm, this.registerSuccessCallback);
   };
 
+  registerSuccessCallback = () => {
+    const {history} = this.props;
+    message.success(i18n.t('auth.pls_check_mail'));
+    this.setState({leave: true});
+    setTimeout(() => history.push('/'), 700);
+  };
 
   render() {
     const {leave} = this.state;
@@ -74,7 +82,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  register: (email, password, passwordConfirm) => dispatch(registerRedux(email, password, passwordConfirm)),
+  register: (email, password, passwordConfirm, callback) => dispatch(registerRedux(email, password, passwordConfirm, callback)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterPage);

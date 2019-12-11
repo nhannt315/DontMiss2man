@@ -21,10 +21,10 @@ export const loginFailure = error => {
   };
 };
 
-export const register = (email, password, passwordConfirm) => {
+export const register = (email, password, passwordConfirm, callback) => {
   return {
     type: actionTypes.REGISTER,
-    payload: {email, password, passwordConfirm},
+    payload: {email, password, passwordConfirm, callback},
   };
 };
 

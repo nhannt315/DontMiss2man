@@ -4,6 +4,7 @@ import roomDetail from './ja/roomDetail';
 import sideMenu from './ja/sideMenu';
 import searchFilter from './ja/searchFilter';
 import auth from './ja/auth';
+import confirmation from './ja/confirmation';
 
 export default {
   common,
@@ -12,4 +13,5 @@ export default {
   sideMenu,
   searchFilter,
   auth,
+  confirmation,
 };

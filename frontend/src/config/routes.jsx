@@ -14,6 +14,7 @@ const buildRoutes = (history) => {
         <Route exact path="/chintai/:id" component={Containers.RoomDetailPage} />
         <Route exact path="/login" component={Containers.LoginPage} />
         <Route exact path="/registration" component={Containers.RegisterPage} />
+        <Route exact path="/confirmation" component={Containers.AccountConfirmationPage} />
       </Switch>
     </Router>
   );

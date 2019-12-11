@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from 'react-router-dom';
 import {Button, Form, Icon, Input, Spin} from 'antd';
 import i18n from '../../config/i18n';
 import './RegisterForm.scss';
+import Logo from '../../assets/images/logo.png';
 
 const RegisterForm = ({form, submit, className, loading}) => {
 
@@ -41,6 +43,12 @@ const RegisterForm = ({form, submit, className, loading}) => {
   return (
     <Form onSubmit={handleSubmit} className={['auth_form', className].join(' ')}>
       <Spin spinning={loading}>
+        <div className="logo">
+          <Link to="/">
+            <img src={Logo} alt="Logo" />
+            <span>DM2M</span>
+          </Link>
+        </div>
         <Form.Item label={i18n.t('auth.mail_address')}>
           {getFieldDecorator('email', {
             rules: [{required: true, message: i18n.t('auth.email_required')}],

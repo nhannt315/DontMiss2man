@@ -25,12 +25,6 @@ module Backend
     config.load_defaults 6.0
     config.time_zone = 'Tokyo'
     config.autoload_paths << "#{Rails.root}/lib"
-    config.middleware.insert_before 0, Rack::Cors do
-      allow do
-        origins '*'
-        resource '*', headers: :any, methods: :any
-      end
-    end
     config.hosts << "dm2m.online"
 
     # Settings in config/environments/* take precedence over those specified here.

@@ -9,13 +9,13 @@ import {
   FINISH_PROCESSING,
 } from '../actions/actionTypes';
 
+import * as keys from '../../constants/key';
+
 const initialState = {
   isAuthenticated: false,
   userData: {},
   tokenData: {},
   error: null,
-  fbUserData: null,
-  credential: null,
   isProcessing: false,
 };
 
@@ -26,6 +26,7 @@ const authReducer = (state = initialState, {type, payload}) => {
     case FINISH_PROCESSING:
       return {...state, isProcessing: false};
     case REGISTER_SUCCESS:
+      return state;
     case LOGIN_SUCCESS:
       return {...state, isAuthenticated: true, userData: payload.userData, tokenData: payload.tokenData};
     case REGISTER_FAILURE:
@@ -33,6 +34,8 @@ const authReducer = (state = initialState, {type, payload}) => {
       return {...state, isAuthenticated: false, error: payload.error};
     case LOGOUT_SUCCESS:
     case LOGOUT_FAILURE:
+      localStorage.removeItem(keys.USER_DATA_KEY);
+      localStorage.removeItem(keys.TOKEN_DATA_KEY);
       return initialState;
     default:
       return state;

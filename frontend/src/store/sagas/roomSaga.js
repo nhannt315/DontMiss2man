@@ -7,7 +7,7 @@ export function* fetchRoomDetailSaga(action) {
   yield put(actions.fetchRoomStart());
   try {
     const response = yield RoomService.fetchRoomDetail(roomId);
-    yield put(actions.fetchRoomSuccess(response));
+    yield put(actions.fetchRoomSuccess(response.data));
   } catch (e) {
     yield put(actions.fetchRoomFail(e));
   }
