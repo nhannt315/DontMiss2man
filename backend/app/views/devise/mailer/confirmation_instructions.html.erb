@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <%#= stylesheet_link_tag :email %>
+  <style>
+    .email_body-wrapper {
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      padding-top: 10px;
+    }
+
+    .email_body {
+      box-sizing: border-box;
+      max-width: 600px;
+      margin: 0;
+      border: solid 1px #c8c7cc;
+      padding: 32px 16px;
+      color: #626973;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .msg-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: #e2750f;
+    }
+
+    a {
+      vertical-align: middle;
+      margin-top: 14px;
+      display: block;
+      margin: 0 auto;
+      padding: 0;
+      width: 260px;
+      height: 48px;
+      background: #ef7f1a;
+      color: #fff !important;
+      font-size: 16px;
+      font-weight: bold;
+      line-height: 48px;
+      text-decoration: none;
+      text-align: center;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="email_body-wrapper">
+
+    <div class="email_body">
+      <!--      <h1><%#= t(:welcome).capitalize + ' ' + @email %>!</h1>-->
+      <h1 class="msg-title"><%= t '.confirm_title' %></h1>
+
+      <div><%= t '.confirm_link_msg' %> </div>
+      <div><%= t '.confirm_link_sub_ms' %></div>
+
+      <%= link_to t('.confirm_account_link'), confirmation_url(@resource, {confirmation_token: @token, config: message['client-config'].to_s, redirect_url: message['redirect-url']}).html_safe %>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -11,7 +11,7 @@ const Image = ({className, styles, src, alt, fallbackUrl}) => {
 
 Image.propTypes = {
   src: PropTypes.string,
-  alt: PropTypes.string.isRequired,
+  alt: PropTypes.string,
   fallbackUrl: PropTypes.string,
   className: PropTypes.string,
   styles: PropTypes.object,
@@ -22,6 +22,7 @@ Image.defaultProps = {
   fallbackUrl: NotFoundImg,
   className: '',
   styles: {},
+  alt: '',
 };
 
 export default Image;

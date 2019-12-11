@@ -103,4 +103,19 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  #
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  host = "dm2m.online"
+  config.action_mailer.default_url_options = { :host => host }
+
+  ActionMailer::Base.smtp_settings = {
+      user_name: ENV["send_grid_user_name"],
+      password: ENV["send_grid_api_key"],
+      domain: ENV["domain"],
+      address: "smtp.sendgrid.net",
+      port: "587",
+      :authentication => :plain,
+      :enable_starttls_auto => true
+  }
 end

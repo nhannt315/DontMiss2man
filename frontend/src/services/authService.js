@@ -19,6 +19,7 @@ AuthService.register = (email, password, passwordConfirm) => {
   const payload = {
     email, password,
     password_confirmation: passwordConfirm,
+    confirm_success_url: 'http://localhost:3000/confirmation'
   };
   return axios.post('/auth', payload);
 };

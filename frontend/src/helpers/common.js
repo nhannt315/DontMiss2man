@@ -28,4 +28,14 @@ export default class CommonHelper {
       return i18n.t('common.newly_built');
     
   }
+
+  static checkEmptyObject(obj) {
+    if (!obj)
+      return true;
+    return Object.keys(obj).length === 0 && obj.constructor === Object
+  }
+
+  static checkLocalstorageStr(src) {
+    return ['undefined', 'null'].includes(src);
+  }
 }

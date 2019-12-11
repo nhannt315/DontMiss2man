@@ -6,7 +6,7 @@ const BuildingService = {};
 BuildingService.getBuildingList = (page, perPage, sort, condition) => {
   const url = `/buildings?page=${page}&per_page=${perPage}&sort=${sort}`;
   if (!condition) {
-    return axios.get(url).then(res => res.data.data);
+    return axios.get(url);
   }
   const searchCondition = {
     upper_fee: condition.rentFee.upper,
@@ -20,8 +20,7 @@ BuildingService.getBuildingList = (page, perPage, sort, condition) => {
     lower_size: condition.size.lower,
     years_built: condition.years_built,
   };
-  return axios.get(`${url}&${qs.stringify(searchCondition, {arrayFormat: 'bracket'})}`)
-    .then(res => res.data.data);
+  return axios.get(`${url}&${qs.stringify(searchCondition, {arrayFormat: 'bracket'})}`);
 };
 
 export default BuildingService;
