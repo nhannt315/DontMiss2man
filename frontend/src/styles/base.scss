@@ -21,9 +21,20 @@ body {
   font-family: 'Noto Sans JP', sans-serif !important;
 }
 
+.outer-layout {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout {
+  min-height: calc(100vh - 4rem);
+}
 
 .clearfix {
   overflow: auto;
+
   &:after {
     content: "";
     display: block;

@@ -1,0 +1,16 @@
+@import "../../styles/variables";
+
+.footer_layout {
+  height: $footer-height;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #fffffffa;
+  border-top: 1px solid #e4e4e4;
+}
+
+.footer-content-center {
+  text-align: center;
+  line-height: $footer-height;
+}
