@@ -6,6 +6,7 @@
   .trigger {
     display: inline-block;
     flex-grow: 1;
+
     i {
       font-size: 1.6rem;
       line-height: 6.4rem;
@@ -23,9 +24,11 @@
     flex-grow: 1;
     background: rgba(255, 255, 255, 0.2);
     cursor: pointer;
+
     img {
       height: 5rem;
     }
+
     span {
       padding-left: .5rem;
       text-transform: uppercase;
@@ -40,8 +43,9 @@
   .main-content {
     padding: 2.4rem;
     background-color: $color-white;
-    min-height: 28rem;
-    box-shadow: 0 1px 0 rgba(12,13,14,0.1), 0 1px 6px rgba(59,64,69,0.1);
+    min-height: calc(100vh - 4rem);
+    margin-bottom: 6rem;
+    box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
   }
 
   .header {
@@ -51,11 +55,12 @@
     height: 6.4rem;
     flex-direction: row;
     padding-right: 2rem;
-    box-shadow: 0 1px 0 rgba(12,13,14,0.1), 0 1px 6px rgba(59,64,69,0.1);
+    box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
   }
 
   .user_area {
     cursor: pointer;
+
     span {
       margin-left: 1rem;
     }

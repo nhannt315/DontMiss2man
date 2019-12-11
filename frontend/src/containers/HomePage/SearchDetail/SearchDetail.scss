@@ -1,12 +1,27 @@
 @import "../../../styles/variables";
 
 .condition-box {
-  &-title {
-    padding: 1rem;
+  &-title-wrapper {
+
     color: $color-white;
     background-color: #515151;
     font-size: 1.5rem;
     font-weight: bold;
+    display: flex;
+    flex-direction: row;
+  }
+
+  &-title {
+    flex-grow: 1;
+    padding: 1rem;
+  }
+
+  .reset-button {
+    cursor: pointer;
+    padding: 1rem;
+    &:hover {
+      background: #aaaaaa;
+    }
   }
 
   &-content-wrapper {
