@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import PropTypes from 'prop-types';
-import {Select, Checkbox} from 'antd';
+import {Select, Checkbox, Icon} from 'antd';
 import i18n from '../../../config/i18n';
 import './SearchDetail.scss';
 import {
@@ -33,11 +33,16 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
     years_built: null,
   };
   const [searchCondition, setCondition] = useState(initialCondition || initialState);
+  const handleResetButtonClicked = () => {
+    setCondition(initialState);
+    searchWithCondition(initialState);
+  };
 
   return (
     <div className="condition-box">
-      <div className="condition-box-title">
-        {i18n.t('searchFilter.filterSearch')}
+      <div className="condition-box-title-wrapper">
+        <span className="condition-box-title">{i18n.t('searchFilter.filterSearch')}</span>
+        <span className="reset-button" onClick={handleResetButtonClicked}><Icon type="redo" /></span>
       </div>
       <div className="condition-box-content-wrapper">
         <div className="condition-box-content">
