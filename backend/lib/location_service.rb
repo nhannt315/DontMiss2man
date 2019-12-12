@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class LocationService
-  API_KEY = ENV["google_api_key"]
+  API_KEY = ENV.fetch("google_api_key")
   BASE_URL = "https://suumo.jp"
   @building_by_address = 0
   @building_by_detail = 0
@@ -32,28 +32,20 @@ class LocationService
       @building_by_address += 1
       Rails.logger.debug "Get lat,lng from address #{address}"
       Rais.logger.debug "Total by address #{@building_by_address}"
-      # puts "Get lat,lng from address #{address}"
-      # puts "Total by address #{@building_by_address}"
       return get_lat_lng_from_address address
     end
     begin
       root_page_node = Nokogiri.HTML response
       form_url = root_page_node.css("#js-timesForm")[0]["action"]
       Rails.logger.debug "Get lat, lng from detail page #{address}"
-      # puts "Get lat, lng from detail page #{address}"
       @building_by_detail += 1
-      Rails.logger.debug "Total by detail #{@building_by_detail}"
-      # puts "Total by detail #{@building_by_detail}"
+      Rails.logger.info "Total by detail #{@building_by_detail}"
       return [form_url[/(?<=ido=)(.*?)(?=&keido)/].to_f, form_url[/(?<=&keido=)[+-]?([0-9]*[.])?[0-9]+/].to_f]
     rescue NoMethodError
       @building_by_address += 1
-      Rails.logger.debug "Get lat,lng from address #{address}"
-      Rails.logger.debug "Total by address #{@building_by_address}"
-      # puts "Get lat,lng from address #{address}"
-      # puts "Total by address #{@building_by_address}"
+      Rails.logger.info "Get lat,lng from address #{address}"
+      Rails.logger.info "Total by address #{@building_by_address}"
       return get_lat_lng_from_address address
     end
   end
-
-  def self.test; end
 end

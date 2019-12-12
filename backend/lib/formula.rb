@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-##
-# Haversine Distance Calculation
-#
-# Accepts two coordinates in the form
-# of a tuple. I.e.
-#   geo_a  Array(Num, Num)
-#   geo_b  Array(Num, Num)
-#   miles  Boolean
-#
-# Returns the distance between these two
-# points in either miles or kilometers
-class Formula
+module Formula
+  ##
+  # Haversine Distance Calculation
+  #
+  # Accepts two coordinates in the form
+  # of a tuple. I.e.
+  #   geo_a  Array(Num, Num)
+  #   geo_b  Array(Num, Num)
+  #   miles  Boolean
+  #
+  # Returns the distance between these two
+  # points in either miles or kilometers
   def self.haversine_distance(geo_a, geo_b, miles = false)
     # Get latitude and longitude
     lat1, lon1 = geo_a
