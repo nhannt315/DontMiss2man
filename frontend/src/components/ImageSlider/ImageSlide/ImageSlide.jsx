@@ -4,15 +4,10 @@ import PropTypes from 'prop-types';
 import './ImageSlide.scss';
 
 const ImageSlide = ({url}) => {
-  const styles = {
-    backgroundImage: `url(${url})`,
-    // backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-  };
-
   return (
-    <div className="image-slide" style={styles} />
+    <div className="image-slide">
+      <img src={url} alt={url} />
+    </div>
   );
 };
 
