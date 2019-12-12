@@ -32,6 +32,7 @@ const MainLayout = ({children, history, userData, logout, isAuthenticated}) => {
                 <img src={Logo} alt="Logo" />
                 <span>DM2M</span>
               </Link>
+              <div className="logo-slogan">{i18n.t('common.slogan')}</div>
             </div>
             <div className="vertical-align">
               {isAuthenticated ? (
