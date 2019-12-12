@@ -36,11 +36,11 @@ const DetailInfo = ({room}) => {
           </tr>
           <tr>
             <td className="title">{i18n.t('roomDetail.other_fees')}</td>
-            <td colSpan={3}>{room.other_fees}</td>
+            <td colSpan={3}>{room.other_fees || '-'}</td>
           </tr>
           <tr>
             <td className="title">{i18n.t('roomDetail.note')}</td>
-            <td colSpan={3}>{room.note}</td>
+            <td colSpan={3}>{room.note || '-'}</td>
           </tr>
         </tbody>
       </table>

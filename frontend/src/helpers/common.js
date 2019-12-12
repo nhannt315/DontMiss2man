@@ -14,6 +14,7 @@ export default class CommonHelper {
     return result;
   }
 
+
   static round(value, precision) {
     // eslint-disable-next-line no-restricted-properties
     const multiplier = Math.pow(10, precision || 0);
