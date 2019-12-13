@@ -3,8 +3,6 @@
 class LocationService
   API_KEY = ENV.fetch("google_api_key")
   BASE_URL = "https://suumo.jp"
-  @building_by_address = 0
-  @building_by_detail = 0
 
   def self.get_lat_lng_from_address(address)
     url = "https://maps.googleapis.com/maps/api/geocode/json?address=#{CGI.escape(address)}&key=#{API_KEY}"
@@ -23,29 +21,19 @@ class LocationService
     travel_time_in_sec.to_f / 60
   end
 
-  def self.get_lat_lng_from_room_url(room_url, address)
+  def self.get_lat_lng_from_room_url(room_url, name)
     room_url = "#{BASE_URL}#{room_url}"
     detail_url = room_url.gsub(/\?bc=/, "kankyo/\\0")
     begin
       response = RestClient.get detail_url
-    rescue RestClient::NotFound
-      @building_by_address += 1
-      Rails.logger.debug "Get lat,lng from address #{address}"
-      Rais.logger.debug "Total by address #{@building_by_address}"
-      return get_lat_lng_from_address address
-    end
-    begin
       root_page_node = Nokogiri.HTML response
       form_url = root_page_node.css("#js-timesForm")[0]["action"]
-      Rails.logger.debug "Get lat, lng from detail page #{address}"
-      @building_by_detail += 1
-      Rails.logger.info "Total by detail #{@building_by_detail}"
-      return [form_url[/(?<=ido=)(.*?)(?=&keido)/].to_f, form_url[/(?<=&keido=)[+-]?([0-9]*[.])?[0-9]+/].to_f]
-    rescue NoMethodError
-      @building_by_address += 1
-      Rails.logger.info "Get lat,lng from address #{address}"
-      Rails.logger.info "Total by address #{@building_by_address}"
-      return get_lat_lng_from_address address
+      latitude = form_url[/(?<=ido=)(.*?)(?=&keido)/].to_f
+      longitude = form_url[/(?<=&keido=)[+-]?([0-9]*[.])?[0-9]+/].to_f
+      Rails.logger.info "Get lat, lng from detail page #{name}, lat: #{latitude}, lng: #{longitude}"
+      return [latitude, longitude]
+    rescue RestClient::NotFound, NoMethodError
+      return [nil, nil]
     end
   end
 end

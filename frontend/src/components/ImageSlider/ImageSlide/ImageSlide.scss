@@ -4,4 +4,9 @@
   transition: background-image .3s ease-in-out;
   display: flex;
   justify-content: center;
+
+  img{
+    max-height: 100%;
+    max-width: 100%;
+  }
 }

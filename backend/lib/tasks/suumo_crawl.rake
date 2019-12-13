@@ -23,7 +23,7 @@ namespace :suumo_crawl do
         end
         building.access = access
         first_room_url = building_node.css("div.cassetteitem-item > table > tbody:nth-child(2) > tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
-        building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.address
+        building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.name
         unless check_building_condition(building.latitude, building.longitude)
           Rails.logger.info "Do not match condition, skip! #{building.name}"
           next
@@ -47,6 +47,7 @@ namespace :suumo_crawl do
   end
 
   def check_building_condition lat, lng
+    return false unless lat || lng
     distance_from_head_office = Formula.haversine_distance([lat, lng], [Settings.head_office_lat, Settings.head_office_lng])
     return true if distance_from_head_office <= Settings.fixed_distance
     return true if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
@@ -54,7 +55,6 @@ namespace :suumo_crawl do
   end
 
   def extract_room_information building, url, index
-    puts url
     begin
       response = RestClient.get url
     rescue RestClient::NotFound
@@ -84,6 +84,7 @@ namespace :suumo_crawl do
     room.guarantor = room_info_html[/(?<=保証人代行<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
     room.other_fees = room_info_html[/(?<=ほか諸費用<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
     room.last_update = Date.parse root_page.css("#contents > div.captiontext.l-space_medium").text[/\d{4}\/\d+\/\d+/]
+    room.suumo_link = url
 
     room.agent_id = find_or_create_agent root_page
 
@@ -149,7 +150,8 @@ namespace :suumo_crawl do
 
   task clean: :environment do
     puts "Clear all data"
-    Building.destroy_all
+    #Building.destroy_all
+    calculate_average
   end
 
 end
