@@ -42,6 +42,7 @@ export default class CommonHelper {
   }
 
   static getValueFromQuery(location, key) {
-    return qs.parse(location.search, { ignoreQueryPrefix: true })[key];
+    const resultSrc = qs.parse(location.search, { ignoreQueryPrefix: true })[key];
+    return parseInt(resultSrc, 10);
   }
 }
