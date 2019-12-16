@@ -28,5 +28,6 @@
   "current_agent": "この物件を取り扱う店舗",
   "management_fee": "管理費・共益費: {{fee}}",
   "reikin": "礼金: {{fee}}",
-  "shikikin": "敷金: {{fee}}"
+  "shikikin": "敷金: {{fee}}",
+  "last_update": "情報更新日：{{date}}"
 }

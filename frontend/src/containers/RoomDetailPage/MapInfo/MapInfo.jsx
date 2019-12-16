@@ -1,37 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GoogleMapReact from 'google-map-react';
-import Title from '../../../components/Title';
-import i18n from '../../../config/i18n';
-import Marker from '../../../components/Marker';
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import './MapInfo.scss';
 
-const MapInfo = ({room}) => {
+const MapInfo = ({latitude, longitude, google, language}) => {
   return (
-    <React.Fragment>
-      <Title content={i18n.t('roomDetail.map')} />
-      <div style={{ height: '200px', width: '100%' }}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: process.env.REACT_APP_GG_MAP_API_KEY}}
-          defaultCenter={{lat: room.building.latitude, lng: room.building.longitude}}
-          defaultZoom={14}
-        >
-          <Marker
-            lat={room.building.latitude}
-            lng={room.building.longitude}
-            type="outline"
-          />
-        </GoogleMapReact>
-      </div>
-    </React.Fragment>
+    <div className="map-wrapper">
+      <Map google={google} style={{height: '30rem', width: '100%'}}
+           initialCenter={{lat: latitude, lng: longitude}} alt={language}>
+        <Marker />
+      </Map>
+    </div>
   );
 };
 
 MapInfo.propTypes = {
-  room: PropTypes.object,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
+  google: PropTypes.object,
+  language: PropTypes.string,
 };
 
 MapInfo.defaultProps = {
-  room: {},
+  latitude: 0,
+  longitude: 0,
+  google: {},
+  language: 'ja',
 };
 
-export default MapInfo;
+export default GoogleApiWrapper(props => ({
+  apiKey: (process.env.REACT_APP_GG_MAP_API_KEY),
+  language: props.language,
+}))(MapInfo);

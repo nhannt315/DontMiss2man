@@ -13,8 +13,9 @@ import Layout from '../../components/Layout';
 import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
+import CommonHelper from '../../helpers/common';
 
-const HomePage = ({list, loading, totalCount, fetchBuildings, history, conditionRedux, sortRedux, currentPage, perPageRedux}) => {
+const HomePage = ({list, loading, totalCount, fetchBuildings, history, conditionRedux, sortRedux, currentPage, perPageRedux, location}) => {
   const firstElement = useRef(null);
   const [isInitialized, setInitialize] = useState(false);
   const [searchCondition, setCondition] = useState(conditionRedux);
@@ -35,6 +36,7 @@ const HomePage = ({list, loading, totalCount, fetchBuildings, history, condition
     }
     // eslint-disable-next-line
   }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
+  console.log(CommonHelper.getValueFromQuery(location, 'page'));
 
   const searchWithCondition = condition => setCondition(condition);
   const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
@@ -99,6 +101,7 @@ HomePage.propTypes = {
   sortRedux: PropTypes.string,
   currentPage: PropTypes.number,
   perPageRedux: PropTypes.number,
+  location: PropTypes.object,
 };
 
 HomePage.defaultProps = {
@@ -112,6 +115,7 @@ HomePage.defaultProps = {
   },
   currentPage: 1,
   perPageRedux: null,
+  location: {},
 };
 
 const mapStateToProps = state => ({

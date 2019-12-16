@@ -21,7 +21,9 @@ const AgentInfo = ({room}) => {
               <Col span={6} className="info-col first-col">{room.agent.address}</Col>
               <Col span={6} className="info-col">{room.agent.working_time}</Col>
               <Col span={6} className="info-col">{room.agent.access}</Col>
-              <Col span={6} className="info-col">{room.agent.telephone_number}</Col>
+              <Col span={6} className="info-col agent_phone_number">
+                <a href={`tel:${room.agent.telephone_number}`}>{room.agent.telephone_number}</a>
+              </Col>
             </Row>
           </Col>
         </Row>

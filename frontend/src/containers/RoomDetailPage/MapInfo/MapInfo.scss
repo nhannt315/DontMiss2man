@@ -1,0 +1,8 @@
+.map-wrapper {
+  height: 30rem;
+  width: 100%;
+
+  & > div {
+    height: auto !important;
+  }
+}

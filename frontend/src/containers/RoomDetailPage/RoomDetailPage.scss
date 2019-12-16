@@ -95,8 +95,14 @@
       border-left: 1px dotted #c2c2c2;
       line-height: 1.4;
       padding: 1rem;
-      font-size: 1.2rem;
-      height: 100%;
+      font-size: 1.3rem;
+      height: 15rem;
+    }
+
+    .agent_phone_number {
+      display: flex;
+      justify-content: center;
+      font-size: 2rem;
     }
 
     .agent-info {

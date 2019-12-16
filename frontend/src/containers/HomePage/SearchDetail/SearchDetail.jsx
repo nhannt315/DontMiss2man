@@ -42,7 +42,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
     <div className="condition-box">
       <div className="condition-box-title-wrapper">
         <span className="condition-box-title">{i18n.t('searchFilter.filterSearch')}</span>
-        <span className="reset-button" onClick={handleResetButtonClicked}><Icon type="redo" /></span>
+        <span className="reset-button ripple" onClick={handleResetButtonClicked}><Icon type="redo" /></span>
       </div>
       <div className="condition-box-content-wrapper">
         <div className="condition-box-content">
@@ -157,7 +157,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
             </dd>
           </dl>
         </div>
-        <div className="submit-area" onClick={() => searchWithCondition(searchCondition)}>
+        <div className="submit-area ripple" onClick={() => searchWithCondition(searchCondition)}>
           {i18n.t('searchFilter.search_with_condition')}
         </div>
       </div>

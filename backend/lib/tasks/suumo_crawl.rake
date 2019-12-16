@@ -23,7 +23,7 @@ namespace :suumo_crawl do
         end
         building.access = access
         first_room_url = building_node.css("div.cassetteitem-item > table > tbody:nth-child(2) > tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
-        building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.address
+        building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.name
         unless check_building_condition(building.latitude, building.longitude)
           Rails.logger.info "Do not match condition, skip! #{building.name}"
           next
@@ -47,6 +47,7 @@ namespace :suumo_crawl do
   end
 
   def check_building_condition lat, lng
+    return false unless lat || lng
     distance_from_head_office = Formula.haversine_distance([lat, lng], [Settings.head_office_lat, Settings.head_office_lng])
     return true if distance_from_head_office <= Settings.fixed_distance
     return true if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
@@ -54,36 +55,41 @@ namespace :suumo_crawl do
   end
 
   def extract_room_information building, url, index
-    puts url
     begin
       response = RestClient.get url
     rescue RestClient::NotFound
       Rails.logger.error "Url not found \n #{url}"
       return
     end
-    root_page = Nokogiri.HTML response
-    room = Room.new
-    room.rent_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span.property_view_note-emphasis").text
-    room.management_cost = root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span:nth-child(2)").text[/(?<=管理費・共益費: )(.*?)(?=円)r/].to_i
-    room.shikikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
-    room.reikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
-    room.caution_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(3)").text[5..-1]
-    room.layout = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(3) > td:nth-child(2)").text
-    room.size = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(3) > td:nth-child(4)").text.chomp("m2").to_f
-    room.direction = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(5) > td:nth-child(2)").text
-    room.floor = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(4) > td:nth-child(4)").text.chomp("階").to_i
-    room.facilities = root_page.css("#bkdt-option > div > ul > li").text
-    room_info_html = root_page.css("#contents > div > table").to_s.strip.squish
-    room.layout_detail = room_info_html[/(?<=間取り詳細<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.car_park = room_info_html[/(?<=駐車場<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.condition = room_info_html[/(?<=条件<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.deal_type = room_info_html[/(?<=取引態様<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.move_in = room_info_html[/(?<=入居<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.suumo_id = room_info_html[/(?<=SUUMO<br>物件コード<\/th> <td>)(.*?)(?=<\/td>)/]
-    room.note = room_info_html[/(?<=備考<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
-    room.guarantor = room_info_html[/(?<=保証人代行<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
-    room.other_fees = room_info_html[/(?<=ほか諸費用<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
-    room.last_update = Date.parse root_page.css("#contents > div.captiontext.l-space_medium").text[/\d{4}\/\d+\/\d+/]
+    begin
+      root_page = Nokogiri.HTML response
+      room = Room.new
+      room.rent_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span.property_view_note-emphasis").text
+      room.management_cost = root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(1) > span:nth-child(2)").text[/[0-9]+(?=円)/].to_i
+      room.shikikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
+      room.reikin = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(1)").text[4..-1]
+      room.caution_fee = Formula.convert_currency root_page.css("#js-view_gallery > div.property_view_note > div > div:nth-child(2) > span:nth-child(3)").text[5..-1]
+      room.layout = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(3) > td:nth-child(2)").text
+      room.size = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(3) > td:nth-child(4)").text.chomp("m2").to_f
+      room.direction = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(5) > td:nth-child(2)").text
+      room.floor = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(4) > td:nth-child(4)").text.chomp("階").to_i
+      room.facilities = root_page.css("#bkdt-option > div > ul > li").text
+      room_info_html = root_page.css("#contents > div > table").to_s.strip.squish
+      room.layout_detail = room_info_html[/(?<=間取り詳細<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.car_park = room_info_html[/(?<=駐車場<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.condition = room_info_html[/(?<=条件<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.deal_type = room_info_html[/(?<=取引態様<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.move_in = room_info_html[/(?<=入居<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.suumo_id = room_info_html[/(?<=SUUMO<br>物件コード<\/th> <td>)(.*?)(?=<\/td>)/]
+      room.note = room_info_html[/(?<=備考<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
+      room.guarantor = room_info_html[/(?<=保証人代行<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
+      room.other_fees = room_info_html[/(?<=ほか諸費用<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
+      room.last_update = Date.parse root_page.css("#contents > div.captiontext.l-space_medium").text[/\d{4}\/\d+\/\d+/]
+      room.suumo_link = url
+
+    rescue Exception
+      byebug
+    end
 
     room.agent_id = find_or_create_agent root_page
 
@@ -149,7 +155,8 @@ namespace :suumo_crawl do
 
   task clean: :environment do
     puts "Clear all data"
-    Building.destroy_all
+    #Building.destroy_all
+    calculate_average
   end
 
 end

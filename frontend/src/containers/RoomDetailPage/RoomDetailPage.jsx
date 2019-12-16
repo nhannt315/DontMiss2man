@@ -11,7 +11,7 @@ import Title from '../../components/Title';
 import GeneralInfo from './Generalnfo';
 import DetailInfo from './DetailInfo';
 import AgentInfo from './AgentInfo';
-import MapInfo from './MapInfo/MapInfo';
+import MapInfo from './MapInfo';
 import ImageList from './ImageList';
 import PropertyInfo from './PropertyInfo';
 
@@ -54,7 +54,7 @@ const RoomDetailPage = ({room, loading, error, fetchRoomDetail, match, history})
               <DetailInfo room={room} />
             </div>
             <div ref={mapElement}>
-              <MapInfo room={room} />
+              <MapInfo latitude={room.building.latitude} longitude={room.building.longitude} language="ja" />
             </div>
             <div>
               <AgentInfo room={room} />

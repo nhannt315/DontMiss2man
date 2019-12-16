@@ -1,4 +1,5 @@
 import moment from 'moment';
+import qs from 'query-string';
 import i18n from '../config/i18n';
 
 export default class CommonHelper {
@@ -13,6 +14,7 @@ export default class CommonHelper {
     }
     return result;
   }
+
 
   static round(value, precision) {
     // eslint-disable-next-line no-restricted-properties
@@ -37,5 +39,9 @@ export default class CommonHelper {
 
   static checkLocalstorageStr(src) {
     return ['undefined', 'null'].includes(src);
+  }
+
+  static getValueFromQuery(location, key) {
+    return qs.parse(location.search, { ignoreQueryPrefix: true })[key];
   }
 }

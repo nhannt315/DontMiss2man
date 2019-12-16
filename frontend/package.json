@@ -10,7 +10,7 @@
     "craco": "^0.0.3",
     "craco-antd": "^1.14.1",
     "express": "^4.17.1",
-    "google-map-react": "^1.1.5",
+    "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "i18next": "^19.0.1",
     "loadable-components": "^2.2.3",
