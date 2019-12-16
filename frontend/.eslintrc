@@ -41,7 +41,8 @@
       "element"
     ],
     "react/no-did-update-set-state": "off",
-    "no-case-declarations": "off"
+    "no-case-declarations": "off",
+    "react/state-in-constructor": "off"
   },
   "settings": {
     "react": {
