@@ -19,7 +19,15 @@ gem "bcrypt", "~> 3.1.7"
 gem "bootsnap", ">= 1.4.2", require: false
 gem "rack-cors"
 
+group :test do
+  gem "factory_girl_rails"
+  gem "shoulda-matchers"
+  gem "faker"
+  gem "database_cleaner"
+end
+
 group :development, :test do
+  gem "rspec-rails"
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "rubocop", "~> 0.76.0", require: false
   gem "rubocop-rails", require: false
