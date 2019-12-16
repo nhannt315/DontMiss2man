@@ -17,8 +17,6 @@ export function* loginSaga(action) {
       expiry: response.headers.expiry,
     };
     const userData = response.data;
-    console.log('header', response.headers);
-    console.log(tokenData);
     if (remember) {
       yield localStorage.setItem(keys.TOKEN_DATA_KEY, JSON.stringify(tokenData));
       yield localStorage.setItem(keys.USER_DATA_KEY, JSON.stringify(userData));

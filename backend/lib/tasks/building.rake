@@ -11,12 +11,6 @@ namespace :building do
       building.average_fee = total_fee.to_f / building.rooms.count
       building.average_size = total_size.to_f / building.rooms.count
       building.save!
-      puts building.name
     end
-  end
-
-  task test_job: :environment do
-    Rails.logger.warn "So sleepy, wanna go home now.."
-    puts "So sleepy, wanna go home now.."
   end
 end

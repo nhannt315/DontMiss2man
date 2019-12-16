@@ -106,11 +106,10 @@ Rails.application.configure do
   #
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.delivery_method = :smtp
-  host = "dm2m.online"
-  config.action_mailer.default_url_options = { :host => host }
+  config.action_mailer.default_url_options = { host: ENV["domain"] }
 
   ActionMailer::Base.smtp_settings = {
-      user_name: ENV["send_grid_user_name"],
+      user_name: "apikey",
       password: ENV["send_grid_api_key"],
       domain: ENV["domain"],
       address: "smtp.sendgrid.net",

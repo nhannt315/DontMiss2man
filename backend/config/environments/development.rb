@@ -6,6 +6,11 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  # Config Logger
+  Rails.logger = Logger.new(STDOUT)
+  Rails.logger.datetime_format = "%Y-%m-%d %H:%M:%S"
+  config.logger = ActiveSupport::Logger.new("log/#{Rails.env}.log")
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -31,15 +36,15 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.default :charset => "utf-8"
 
-  config.action_mailer.default_url_options = {host: "localhost", port: 4000}
+  config.action_mailer.default_url_options = {host: ENV["host"]}
 
   # SMTP settings for gmail
   config.action_mailer.smtp_settings = {
       address: "smtp.gmail.com",
       port: "587",
       domain: "gmail.com",
-      user_name: ENV["gmail_username"],
-      password: ENV["gmail_password"],
+      user_name: ENV.fetch("gmail_username"),
+      password: ENV.fetch("gmail_password"),
       authentication: :plain,
       enable_starttls_auto: true
   }

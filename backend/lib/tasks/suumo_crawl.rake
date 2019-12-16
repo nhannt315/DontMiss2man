@@ -1,12 +1,12 @@
 namespace :suumo_crawl do
-  desc "TODO"
+  desc "Crawl building and rooms info from suumo"
   BASE_URL = "https://suumo.jp"
   task mansion: :environment do
     ROOT_URL = "https://suumo.jp/jj/chintai/ichiran/FR301FC001/?shkr1=03&cb=0.0&shkr3=03&shkr2=03&mt=9999999&sngz=&sc=13103&ar=030&bs=040&shkr4=03&ct=9999999&cn=9999999&mb=0&ta=13&et=9999999&page=".freeze
     current_page = 1
     total_page = 1
     loop do
-      puts "Starting scraping page #{current_page}"
+      Rails.logger.info "Starting scraping page #{current_page}"
       response = RestClient.get "#{ROOT_URL}#{current_page}"
       root_page = Nokogiri.HTML response
       buildings = root_page.css("#js-bukkenList > ul > li > div")
@@ -25,11 +25,11 @@ namespace :suumo_crawl do
         first_room_url = building_node.css("div.cassetteitem-item > table > tbody:nth-child(2) > tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
         building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.address
         unless check_building_condition(building.latitude, building.longitude)
-          puts "Do not match condition, skip!"
+          Rails.logger.info "Do not match condition, skip! #{building.name}"
           next
         end
-        puts building.name
-        puts "#{building.name} Successfully created" if building.save!
+        Rails.logger.info building.name
+        Rails.logger.info "#{building.name} Successfully created" if building.save!
         building_node.css("div.cassetteitem-item > table > tbody").each_with_index do |room_node, index|
           room_url = room_node.css("tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
           extract_room_information building, "#{BASE_URL}#{room_url}", index
@@ -43,17 +43,14 @@ namespace :suumo_crawl do
 
   def check_and_delete_building building_name
     building = Building.find_by name: building_name
-    if building
-      building.destroy
-      puts "Delete building #{building_name}"
-    end
+    Rails.logger.info "Deleting building #{building_name}" if building&.destroy
   end
 
   def check_building_condition lat, lng
-    distance_from_honsha = Formula.haversine_distance([lat, lng], [Settings.honsha_lat, Settings.honsha_lng])
-    return true if distance_from_honsha <= Settings.fixed_distance
-    return true if LocationService.get_walking_time(Settings.honsha_lat, Settings.honsha_lng, lat, lng) <= Settings.max_travel_time_in_mins
-    return false
+    distance_from_head_office = Formula.haversine_distance([lat, lng], [Settings.head_office_lat, Settings.head_office_lng])
+    return true if distance_from_head_office <= Settings.fixed_distance
+    return true if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
+    false
   end
 
   def extract_room_information building, url, index
@@ -61,7 +58,7 @@ namespace :suumo_crawl do
     begin
       response = RestClient.get url
     rescue RestClient::NotFound
-      puts "Url not found"
+      Rails.logger.error "Url not found \n #{url}"
       return
     end
     root_page = Nokogiri.HTML response
@@ -88,17 +85,7 @@ namespace :suumo_crawl do
     room.other_fees = room_info_html[/(?<=ほか諸費用<\/th> <td colspan="3"> <ul class="inline_list"> <li>)(.*?)(?=<\/li>)/]
     room.last_update = Date.parse root_page.css("#contents > div.captiontext.l-space_medium").text[/\d{4}\/\d+\/\d+/]
 
-    # get agent info
-    agent_info_node = root_page.css("#contents > div.itemcassette.l-space_medium")
-    agent_name = agent_info_node.css("div.itemcassette-header > span.itemcassette-header-ttl").text
-    agent_slogan = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_desc").text
-    agent_address = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell01").text
-    agent_working_time = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell02").text
-    agent_access = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell03").text
-    agent_telephone_number = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell04 > span").text
-    agent_photo_url = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-object > div > div.itemcassette_img-object > img")[0]["src"]
-
-    room.agent_id = find_or_create_agent(agent_name, agent_address, agent_working_time, agent_telephone_number, agent_photo_url, agent_slogan, agent_access)
+    room.agent_id = find_or_create_agent root_page
 
     if index.zero?
       building.structure = room_info_html[/(?<=構造<\/th> <td>)(.*?)(?=<\/td>)/]
@@ -108,10 +95,34 @@ namespace :suumo_crawl do
       building.save!
     end
     room.building_id = building.id
-    puts "Room successfully created" if room.save!
+    Rails.logger.info "Room successfully created id: #{room.id}" if room.save!
 
     # Get room photolist
-    room_photo_list_node = root_page.css("#js-view_gallery-list > li > a > img")
+    get_room_photo_list room, root_page
+  end
+
+
+  def find_or_create_agent root_page_node
+    agent_info_node = root_page_node.css("#contents > div.itemcassette.l-space_medium")
+    name = agent_info_node.css("div.itemcassette-header > span.itemcassette-header-ttl").text
+    agent = Agent.find_by name: name
+    unless agent
+      slogan = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_desc").text
+      address = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell01").text
+      working_time = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell02").text
+      access = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell03").text
+      telephone_number = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-contents > div.itemcassette_matrix > div.itemcassette_matrix-cell04 > span").text
+      photo_url = agent_info_node.css("div.itemcassette-body > div.itemcassette-body-object > div > div.itemcassette_img-object > img")[0]["src"]
+      agent = Agent.new(name: name, address: address, working_time: working_time,
+                        telephone_number: telephone_number, photo_url: photo_url,
+                        slogan: slogan, access: access)
+      Rails.logger.info "Created agent #{name} successfully" if agent.save!
+    end
+    return agent.id
+  end
+
+  def get_room_photo_list room, root_page_node
+    room_photo_list_node = root_page_node.css("#js-view_gallery-list > li > a > img")
     room_photo_list_node.each do |photo_node|
       image = Image.new(url: photo_node["data-src"], description: photo_node["alt"], room_id: room.id)
       image.save
@@ -120,17 +131,6 @@ namespace :suumo_crawl do
         room.save!
       end
     end
-  end
-
-
-  def find_or_create_agent name, address, working_time, telephone_number, photo_url, slogan, access
-    agent = Agent.find_by name: name
-    unless agent
-      agent = Agent.new(name: name, address: address, working_time: working_time,
-                        telephone_number: telephone_number, photo_url: photo_url, slogan: slogan, access: access)
-      puts "Create agent successfully" if agent.save!
-    end
-    return agent.id
   end
 
   def calculate_average
@@ -144,7 +144,6 @@ namespace :suumo_crawl do
       building.average_fee = total_fee.to_f / building.rooms.count
       building.average_size = total_size.to_f / building.rooms.count
       building.save!
-      puts building.name
     end
   end
 

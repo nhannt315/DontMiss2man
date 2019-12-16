@@ -76,6 +76,9 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-async (1.0.0)
+      activejob (>= 5.0)
+      devise (>= 4.0)
     devise_token_auth (1.1.3)
       bcrypt (~> 3.0)
       devise (> 3.5.2, < 5)
@@ -264,6 +267,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   config
+  devise-async
   devise_token_auth
   figaro
   jbuilder (~> 2.7)
