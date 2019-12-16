@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {Row, Col, Select, Pagination} from 'antd';
 import scrollToComponent from 'react-scroll-to-component';
@@ -15,80 +15,130 @@ import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
 import CommonHelper from '../../helpers/common';
 
-const HomePage = ({list, loading, totalCount, fetchBuildings, history, conditionRedux, sortRedux, currentPage, perPageRedux, location}) => {
-  const firstElement = useRef(null);
-  const [isInitialized, setInitialize] = useState(false);
-  const [searchCondition, setCondition] = useState(conditionRedux);
-  const [page, setPage] = useState(currentPage);
-  const [perPage, setPerPage] = useState(perPageRedux || NUMBER_OF_ITEMS[0].key);
-  const [sortOption, setSortOption] = useState(sortRedux || SORT_OPTIONS.recommended.key);
-  useEffect(() => {
-    scrollToComponent(firstElement.current);
-    if (isInitialized) {
-      fetchBuildings(page, perPage, sortOption, searchCondition);
-    }
-    if (!isInitialized && list.length === 0) {
-      fetchBuildings(page, perPage, sortOption, searchCondition);
-      setInitialize(true);
-    }
-    if (!isInitialized && list.length > 0) {
-      setInitialize(true);
-    }
-    // eslint-disable-next-line
-  }, [page, fetchBuildings, sortOption, searchCondition, perPage]);
-  console.log(CommonHelper.getValueFromQuery(location, 'page'));
+class HomePage extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    const {conditionRedux, sortRedux, currentPage, perPageRedux} = props;
+    this.state = {
+      searchCondition: conditionRedux,
+      page: currentPage,
+      perPage: perPageRedux || NUMBER_OF_ITEMS[0].key,
+      sortOption: sortRedux || SORT_OPTIONS.recommended.key,
+    };
+    this.firstElement = React.createRef();
+    this.sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
+  }
 
-  const searchWithCondition = condition => setCondition(condition);
-  const sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
-  return (
-    <Layout history={history}>
-      <div className="homepage">
-        <div ref={firstElement} />
-        <Row>
-          <Col span={16}>
-            <Row>
-              <Col span={8}>
-                {i18n.t('homepage.sort')}
-                <Select className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
-                        onChange={value => setSortOption(value)}
-                >
-                  {sortOptionList.map(item => {
-                    return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
-                  })}
-                </Select>
-              </Col>
-              <Col span={8}>
-                {i18n.t('homepage.number_of_items')}
-                <Select value={perPage} className="sort-filter" defaultValue={NUMBER_OF_ITEMS[0].key}
-                        onChange={value => setPerPage(value)}>
-                  {NUMBER_OF_ITEMS.map(item => {
-                    return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
-                  })}
-                </Select>
-              </Col>
-            </Row>
-            <Row />
-            <Row>
-              <div className="list">
-                {loading ? <ListPlaceholder itemCount={perPage} /> :
-                  <BuildingList history={history} buildingList={list} />}
-              </div>
-            </Row>
-          </Col>
-          <Col span={7} offset={1}>
-            <SearchDetail searchWithCondition={searchWithCondition} initialCondition={conditionRedux} />
-          </Col>
-        </Row>
-        <Row>
-          <Col className="building-list-pagination" span={16}>
-            <Pagination size="small" current={page} pageSize={perPage}
-                        onChange={cuPage => setPage(cuPage)}
-                        total={totalCount} />
-          </Col>
-        </Row>
-      </div>
-    </Layout>
-  );
+  componentDidMount() {
+    const {list, location, history} = this.props;
+    const page = CommonHelper.getValueFromQuery(location, 'page') || 1;
+    this.setState({page});
+    history.push(`/?page=${page}`);
+    if (list.length === 0)
+      this.fetchData(page);
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {location, currentPage} = this.props;
+    const page = CommonHelper.getValueFromQuery(location, 'page') || currentPage;
+    if (page !== prevState.page) {
+      this.setState({page});
+      this.fetchData(page);
+    }
+  }
+
+  handleOptionChange = value => {
+    this.setState({sortOption: value}, () => this.fetchData());
+  };
+
+  handlePerPageChange = value => {
+    this.setState({perPage: value}, () => this.fetchData());
+  };
+
+  fetchData = (currentPage = null) => {
+    scrollToComponent(this.firstElement.current);
+    const {page, perPage, sortOption, searchCondition} = this.state;
+    const {fetchBuildings} = this.props;
+    fetchBuildings(currentPage || page, perPage, sortOption, searchCondition);
+  };
+
+  searchWithCondition = condition => {
+    this.setState({searchCondition: condition}, () => this.fetchData());
+  };
+
+  handlePaginationChange = value => {
+    const {history} = this.props;
+    history.push(`/?page=${value}`);
+    this.setState({page: value}, () => this.fetchData());
+  };
+
+  render() {
+    const {history, loading, list, totalCount} = this.props;
+    const {page, perPage, sortOption, searchCondition} = this.state;
+    return (
+      <Layout history={history}>
+        <div className="homepage">
+          <div ref={this.firstElement} />
+          <Row>
+            <Col span={16}>
+              <Row>
+                <Col span={8}>
+                  {i18n.t('homepage.sort')}
+                  <Select value={sortOption} className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
+                          onChange={this.handleOptionChange}
+                  >
+                    {this.sortOptionList.map(item => {
+                      return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
+                    })}
+                  </Select>
+                </Col>
+                <Col span={8}>
+                  {i18n.t('homepage.number_of_items')}
+                  <Select value={perPage} className="sort-filter" defaultValue={NUMBER_OF_ITEMS[0].key}
+                          onChange={this.handlePerPageChange}>
+                    {NUMBER_OF_ITEMS.map(item => {
+                      return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
+                    })}
+                  </Select>
+                </Col>
+              </Row>
+              <Row />
+              <Row>
+                <div className="list">
+                  {loading ? <ListPlaceholder itemCount={perPage} /> :
+                    <BuildingList history={history} buildingList={list} />}
+                </div>
+              </Row>
+            </Col>
+            <Col span={7} offset={1}>
+              <SearchDetail searchWithCondition={this.searchWithCondition} initialCondition={searchCondition} />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="building-list-pagination" span={16}>
+              <Pagination size="small" current={page} pageSize={perPage}
+                          onChange={this.handlePaginationChange}
+                          total={totalCount} />
+            </Col>
+          </Row>
+        </div>
+      </Layout>
+    );
+  }
+}
+
+
+HomePage.propTypes = {
+  list: PropTypes.array,
+  loading: PropTypes.bool,
+  totalCount: PropTypes.number,
+  fetchBuildings: PropTypes.func,
+  history: PropTypes.object,
+  conditionRedux: PropTypes.object,
+  sortRedux: PropTypes.string,
+  currentPage: PropTypes.number,
+  perPageRedux: PropTypes.number,
+  location: PropTypes.object,
 };
 
 HomePage.propTypes = {
