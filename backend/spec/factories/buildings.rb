@@ -4,7 +4,7 @@ FactoryBot.define do
     STRUCTURES = ["木造", "鉄構造", "鉄筋コンクリート"]
     name { Faker::Lorem.word }
     address { Faker::Address.full_address }
-    access { Faker::Lorem.word }
+    access { Faker::Types.rb_array(len: rand(1..10)) }
     year_built { Faker::Time.between(from: 50.years.ago, to: Time.now) }
     type { TYPES.sample }
     structure { STRUCTURES.sample }

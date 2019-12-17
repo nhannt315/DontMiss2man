@@ -1,8 +1,16 @@
 FactoryBot.define do
   factory :room do
     suumo_id { rand(100000..999999) }
-    association(:agent)
-    association(:building)
+    trait :with_agent do
+      after :build do |room|
+        room.agent = FactoryBot.build :agent
+      end
+    end
+    trait :with_building do
+      after :build do |room|
+        room.building = FactoryBot.build :building
+      end
+    end
     rent_fee { rand(10000..500000) }
     reikin { rand(10000..500000) }
     shikikin { rand(10000..500000) }

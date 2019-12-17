@@ -7,6 +7,6 @@ FactoryBot.define do
     email { Faker::Internet.email }
     photo_url { Faker::Internet.url }
     slogan { Faker::Lorem.sentence }
-    access { Faker::Lorem.sentence }
+    access { Faker::Types.rb_array(len: rand(1..10)) }
   end
 end
