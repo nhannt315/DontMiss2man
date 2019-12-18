@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Image, type: :model do
-  let!(:image) { create :image }
+  let!(:image) { create :image, :with_room }
   describe "association" do
     it { should belong_to :room }
   end
