@@ -6,7 +6,7 @@ FactoryBot.define do
     address { Faker::Address.full_address }
     access { Faker::Types.rb_array(len: rand(1..10)) }
     year_built { Faker::Time.between(from: 50.years.ago, to: Time.now) }
-    type { TYPES.sample }
+    building_type { TYPES.sample }
     structure { STRUCTURES.sample }
     storeys { rand(2..40) }
     underground_storeys { rand(2..4) }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_13_024033) do
+ActiveRecord::Schema.define(version: 2019_12_18_032350) do
 
   create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2019_12_13_024033) do
     t.string "address"
     t.string "access"
     t.date "year_built"
-    t.string "type"
+    t.string "building_type"
     t.string "structure"
     t.integer "storeys"
     t.integer "underground_storeys"

@@ -11,6 +11,11 @@ FactoryBot.define do
         room.building = FactoryBot.build :building
       end
     end
+    trait :with_images do
+      after :build do |room|
+        room.images = FactoryBot.build_list(:image, rand(2..10), :with_room)
+      end
+    end
     rent_fee { rand(10000..500000) }
     reikin { rand(10000..500000) }
     shikikin { rand(10000..500000) }
