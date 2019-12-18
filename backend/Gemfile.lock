@@ -69,6 +69,7 @@ GEM
       deep_merge (~> 1.2, >= 1.2.1)
       dry-schema (~> 1.0)
     crass (1.0.5)
+    database_cleaner (1.7.0)
     deep_merge (1.2.1)
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -76,13 +77,12 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
-    devise-async (1.0.0)
-      activejob (>= 5.0)
-      devise (>= 4.0)
     devise_token_auth (1.1.3)
       bcrypt (~> 3.0)
       devise (> 3.5.2, < 5)
       rails (>= 4.2.0, < 6.1)
+    diff-lcs (1.3)
+    docile (1.3.2)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
     dry-configurable (0.9.0)
@@ -116,6 +116,13 @@ GEM
       dry-inflector (~> 0.1, >= 0.1.2)
       dry-logic (~> 1.0, >= 1.0.2)
     erubi (1.9.0)
+    factory_bot (5.1.1)
+      activesupport (>= 4.2.0)
+    factory_bot_rails (5.1.1)
+      factory_bot (~> 5.1.0)
+      railties (>= 4.2.0)
+    faker (2.8.1)
+      i18n (>= 1.6, < 1.8)
     ffi (1.11.3)
     figaro (1.1.1)
       thor (~> 0.14)
@@ -129,6 +136,7 @@ GEM
     jaro_winkler (1.5.4)
     jbuilder (2.9.1)
       activesupport (>= 4.2.0)
+    json (2.3.0)
     kaminari (1.1.1)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.1.1)
@@ -215,6 +223,23 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
       netrc (~> 0.8)
+    rspec-core (3.9.0)
+      rspec-support (~> 3.9.0)
+    rspec-expectations (3.9.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-mocks (3.9.0)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.9.0)
+    rspec-rails (4.0.0.beta3)
+      actionpack (>= 4.2)
+      activesupport (>= 4.2)
+      railties (>= 4.2)
+      rspec-core (~> 3.8)
+      rspec-expectations (~> 3.8)
+      rspec-mocks (~> 3.8)
+      rspec-support (~> 3.8)
+    rspec-support (3.9.0)
     rubocop (0.76.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
@@ -231,6 +256,13 @@ GEM
       rubocop (>= 0.68.1)
     ruby-progressbar (1.10.1)
     ruby_dep (1.5.0)
+    shoulda-matchers (4.1.2)
+      activesupport (>= 4.2.0)
+    simplecov (0.17.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
     spring (2.1.0)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -267,8 +299,10 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   config
-  devise-async
+  database_cleaner
   devise_token_auth
+  factory_bot_rails
+  faker
   figaro
   jbuilder (~> 2.7)
   kaminari
@@ -279,10 +313,13 @@ DEPENDENCIES
   rack-cors
   rails (~> 6.0.0)
   rest-client
+  rspec-rails (~> 4.0.0.beta3)
   rubocop (~> 0.76.0)
   rubocop-checkstyle_formatter
   rubocop-rails
   rubocop-rspec
+  shoulda-matchers
+  simplecov
   spring
   spring-watcher-listen (~> 2.0.0)
   tzinfo-data
