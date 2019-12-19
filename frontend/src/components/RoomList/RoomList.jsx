@@ -5,7 +5,7 @@ import './RoomList.scss';
 import i18n from '../../config/i18n';
 import RoomItem from './RoomItem';
 
-const RoomList = ({list, history}) => {
+const RoomList = ({list, history, userData, handleFavoriteAction, isAuthenticated}) => {
   return (
     <table className="room-list">
       <thead>
@@ -20,7 +20,13 @@ const RoomList = ({list, history}) => {
         </tr>
       </thead>
       <tbody>
-        {list.map(room => <RoomItem key={room.id} history={history} room={room} />)}
+        {list.map(room => {
+          return (
+            <RoomItem
+              key={room.id} history={history} room={room} userData={userData} handleFavoriteAction={handleFavoriteAction}
+              isAuthenticated={isAuthenticated} />
+          );
+        })}
       </tbody>
     </table>
   );
@@ -29,10 +35,16 @@ const RoomList = ({list, history}) => {
 RoomList.propTypes = {
   list: PropTypes.array,
   history: PropTypes.object.isRequired,
+  userData: PropTypes.object,
+  handleFavoriteAction: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 RoomList.defaultProps = {
   list: [],
+  userData: {},
+  tokenData: {},
+  isAuthenticated: false,
 };
 
 export default RoomList;

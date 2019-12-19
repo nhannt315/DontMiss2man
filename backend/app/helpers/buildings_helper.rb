@@ -8,7 +8,7 @@ module BuildingsHelper
       rooms: {rent_fee: params[:lower_fee].to_i..upper_fee, size: params[:lower_size].to_i..upper_size}
     }
     condition[:rooms][:layout] = params[:layout_types] if params[:layout_types].present?
-    condition[:type] = params[:building_type] if params[:building_type].present?
+    condition[:building_type] = params[:building_type] if params[:building_type].present?
     if params[:no_management_fee] && ActiveModel::Type::Boolean.new.cast(params[:no_management_fee])
       condition[:rooms][:management_cost] = 0
     end

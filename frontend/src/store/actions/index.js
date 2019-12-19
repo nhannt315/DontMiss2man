@@ -26,3 +26,8 @@ export {
   finishProcess,
   authCheckState,
 } from './authAction';
+
+export {
+  addUserFavorite,
+  removeUserFavorite,
+} from './userActions';
