@@ -16,4 +16,14 @@
     margin-top: 2rem;
     text-align: center;
   }
+
+  .list_option {
+    display: flex;
+    align-items: center;
+
+    &__sort {
+      margin-right: auto;
+    }
+  }
 }
+

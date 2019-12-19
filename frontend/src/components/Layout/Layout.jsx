@@ -1,17 +1,21 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {Layout, Button, Dropdown, Menu, Avatar} from 'antd';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import scrollToComponent from 'react-scroll-to-component';
 import i18n from '../../config/i18n';
 import Logo from '../../assets/images/logo.png';
 import './Layout.scss';
 import {logout as logoutRedux} from '../../store/actions';
+import ToTopButton from '../ToTopButton';
 
 const {Header, Content} = Layout;
 
 const MainLayout = ({children, history, userData, logout, isAuthenticated}) => {
+  const firstElement = useRef(null);
   const toLoginPage = () => history.push('/login');
+  const toTop = () => scrollToComponent(firstElement.current);
   const userMenu = (
     <Menu>
       <Menu.Item>
@@ -22,6 +26,7 @@ const MainLayout = ({children, history, userData, logout, isAuthenticated}) => {
       </Menu.Item>
     </Menu>
   );
+
   return (
     <Layout id="app-bar">
       <Layout>
@@ -49,8 +54,12 @@ const MainLayout = ({children, history, userData, logout, isAuthenticated}) => {
           </div>
         </Header>
         <Content className="container main-content" style={{marginTop: '1rem'}}>
+          <div ref={firstElement}/>
           {children}
         </Content>
+        <div className="to_top_area">
+          <ToTopButton onClick={toTop}/>
+        </div>
       </Layout>
     </Layout>
   );
