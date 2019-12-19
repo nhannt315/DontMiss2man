@@ -1,4 +1,5 @@
 import React, {useRef, useEffect, useState} from 'react';
+import scrollToComponent from 'react-scroll-to-component';
 import PropTypes from 'prop-types';
 import {Button, Col, Row, message, Icon} from 'antd';
 import {connect} from 'react-redux';
@@ -22,17 +23,18 @@ const RoomDetailPage = props => {
     addUserFavorite, removeUserFavorite, userData, tokenData, isAuthenticated,
   } = props;
   const [favoriteLoading, setFavoriteLoading] = useState(false);
-  const imageElement = useRef(null);
-  const generalInfoElement = useRef(null);
-  const facilityElement = useRef(null);
-  const detailInfoElement = useRef(null);
-  const mapElement = useRef(null);
+  const [isInitialized, setInitialize] = useState(false);
+  const firstElement = useRef(null);
   useEffect(() => {
     fetchRoomDetail(match.params.id);
-  }, [fetchRoomDetail, match]);
+    if (!isInitialized) {
+      scrollToComponent(firstElement.current);
+      setInitialize(true);
+    }
+  }, [fetchRoomDetail, match, isInitialized]);
   const isFavorited = isAuthenticated && (userData.favorites.includes(room.id));
   const handleFavoriteButton = () => {
-    if (!isAuthenticated){
+    if (!isAuthenticated) {
       message.warning(i18n.t('common.need_login'));
       return;
     }
@@ -45,7 +47,7 @@ const RoomDetailPage = props => {
           addUserFavorite(room.id);
         else if (action === 'delete')
           removeUserFavorite(room.id);
-      })
+      });
   };
 
   if (loading)
@@ -53,6 +55,7 @@ const RoomDetailPage = props => {
   return (
     <Layout history={history}>
       <div className="roomdetail">
+        <div ref={firstElement} />
         <div className="roomdetail-title">
           <h1>{room.building.name}</h1>
           <div>
@@ -65,22 +68,22 @@ const RoomDetailPage = props => {
         <Row>
           <Col span={24}>
             <PropertyInfo room={room} />
-            <div ref={imageElement}>
+            <div>
               <ImageList room={room} />
             </div>
-            <div ref={generalInfoElement}>
+            <div>
               <GeneralInfo room={room} />
             </div>
-            <div ref={facilityElement}>
+            <div>
               <Title content={i18n.t('roomDetail.facilities')} />
               <div className="roomdetail-facilities">
                 {room.facilities}
               </div>
             </div>
-            <div ref={detailInfoElement}>
+            <div>
               <DetailInfo room={room} />
             </div>
-            <div ref={mapElement}>
+            <div>
               <MapInfo latitude={room.building.latitude} longitude={room.building.longitude} language="ja" />
             </div>
             <div>
