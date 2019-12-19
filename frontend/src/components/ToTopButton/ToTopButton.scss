@@ -1,0 +1,22 @@
+.to_top_btn {
+  border: none;
+  padding: .7rem 1.5rem 1rem 1.5rem;
+  font-size: 2rem;
+  border-radius: 20%;
+  cursor: pointer;
+  z-index: 99;
+  background-color: #1890ff;
+  color: #fff;
+  .anticon {
+    transition: all .2s;
+  }
+
+  &:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,.3);
+
+  }
+
+  &:hover .anticon {
+    transform: translateY(-30%);
+  }
+}
