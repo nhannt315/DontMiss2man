@@ -7,7 +7,7 @@ import RoomList from '../../RoomList';
 import Image from '../../Image';
 import CommonHelper from '../../../helpers/common';
 
-const BuildingItem = ({item, history}) => {
+const BuildingItem = ({item, history, userData, handleFavoriteAction, isAuthenticated}) => {
   return (
     <div className="buildingitem">
       <Row className="buildingitem-detail">
@@ -38,7 +38,8 @@ const BuildingItem = ({item, history}) => {
         </Col>
       </Row>
       <Row className="buildingitem-rooms">
-        <RoomList list={item.rooms} history={history} />
+        <RoomList list={item.rooms} history={history} userData={userData} handleFavoriteAction={handleFavoriteAction}
+                  isAuthenticated={isAuthenticated} />
       </Row>
     </div>
   );
@@ -47,10 +48,15 @@ const BuildingItem = ({item, history}) => {
 BuildingItem.propTypes = {
   item: PropTypes.object,
   history: PropTypes.object.isRequired,
+  userData: PropTypes.object,
+  handleFavoriteAction: PropTypes.func.isRequired,
+  isAuthenticated: PropTypes.bool,
 };
 
 BuildingItem.defaultProps = {
   item: {},
+  userData: {},
+  isAuthenticated: false,
 };
 
 export default BuildingItem;

@@ -7,4 +7,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
   include DeviseTokenAuth::Concerns::User
+  has_many :user_rooms, dependent: :delete_all
+  has_many :rooms, through: :user_rooms
+
+
+
+  def as_json(*)
+    super.tap do |hash|
+      hash["favorites"] = rooms.map(&:id).compact
+    end
+  end
 end

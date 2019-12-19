@@ -1,7 +1,7 @@
 require "rails_helper"
 
 RSpec.describe Room, type: :model do
-  let!(:room) { create :room }
+  let!(:room) { create :room, :with_agent, :with_building }
   describe "associations" do
     it { should belong_to :building }
     it { should belong_to :agent }

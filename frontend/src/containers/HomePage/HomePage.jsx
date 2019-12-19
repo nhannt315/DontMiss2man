@@ -14,6 +14,7 @@ import BuildingList from '../../components/BuildingList';
 import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
 import CommonHelper from '../../helpers/common';
+import FavoriteService from '../../services/favoriteService';
 
 class HomePage extends React.PureComponent {
   constructor(props) {
@@ -72,8 +73,19 @@ class HomePage extends React.PureComponent {
     this.setState({page: value}, () => this.fetchData());
   };
 
+  handleFavoriteAction = (roomId, action) => {
+    const {tokenData, addUserFavorite, removeUserFavorite} = this.props;
+    return FavoriteService.handleFavorite(roomId, tokenData, action)
+      .then(() => {
+        if (action === 'create')
+          addUserFavorite(roomId);
+        else if (action === 'delete')
+          removeUserFavorite(roomId);
+      });
+  };
+
   render() {
-    const {history, loading, list, totalCount} = this.props;
+    const {history, loading, list, totalCount, userData, isAuthenticated} = this.props;
     const {page, perPage, sortOption, searchCondition} = this.state;
     return (
       <Layout history={history}>
@@ -106,7 +118,11 @@ class HomePage extends React.PureComponent {
               <Row>
                 <div className="list">
                   {loading ? <ListPlaceholder itemCount={perPage} /> :
-                    <BuildingList history={history} buildingList={list} />}
+                    <BuildingList
+                      handleFavoriteAction={this.handleFavoriteAction}
+                      history={history} buildingList={list} userData={userData}
+                      isAuthenticated={isAuthenticated} />
+                  }
                 </div>
               </Row>
             </Col>
@@ -139,19 +155,11 @@ HomePage.propTypes = {
   currentPage: PropTypes.number,
   perPageRedux: PropTypes.number,
   location: PropTypes.object,
-};
-
-HomePage.propTypes = {
-  list: PropTypes.array,
-  loading: PropTypes.bool,
-  totalCount: PropTypes.number,
-  fetchBuildings: PropTypes.func,
-  history: PropTypes.object,
-  conditionRedux: PropTypes.object,
-  sortRedux: PropTypes.string,
-  currentPage: PropTypes.number,
-  perPageRedux: PropTypes.number,
-  location: PropTypes.object,
+  userData: PropTypes.object,
+  tokenData: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
+  addUserFavorite: PropTypes.func,
+  removeUserFavorite: PropTypes.func,
 };
 
 HomePage.defaultProps = {
@@ -166,6 +174,13 @@ HomePage.defaultProps = {
   currentPage: 1,
   perPageRedux: null,
   location: {},
+  userData: {},
+  tokenData: {},
+  isAuthenticated: false,
+  addUserFavorite: () => {
+  },
+  removeUserFavorite: () => {
+  },
 };
 
 const mapStateToProps = state => ({
@@ -176,10 +191,15 @@ const mapStateToProps = state => ({
   sortRedux: state.building.sort,
   currentPage: state.building.currentPage,
   perPageRedux: state.building.perPage,
+  userData: state.auth.userData,
+  tokenData: state.auth.tokenData,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchBuildings: (page, perPage, sortOption, condition = null) => dispatch(actions.fetchBuildings(page, perPage, sortOption, condition)),
+  addUserFavorite: roomId => dispatch(actions.addUserFavorite(roomId)),
+  removeUserFavorite: roomId => dispatch(actions.removeUserFavorite(roomId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
