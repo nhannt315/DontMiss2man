@@ -11,7 +11,7 @@ const getHeader = tokenData => ({
 
 AuthService.login = (email, password) => {
   const payload = {email, password};
-  return axios.post('/auth/sign_in', payload)
+  return axios.post('/auth/sign_in', payload);
 };
 
 
@@ -19,7 +19,7 @@ AuthService.register = (email, password, passwordConfirm) => {
   const payload = {
     email, password,
     password_confirmation: passwordConfirm,
-    confirm_success_url: 'http://localhost:3000/confirmation'
+    confirm_success_url: process.env.REACT_APP_CONFIRM_SUCCESS_URL,
   };
   return axios.post('/auth', payload);
 };
