@@ -12,58 +12,94 @@ import ToTopButton from '../ToTopButton';
 
 const {Header, Content} = Layout;
 
-const MainLayout = ({children, history, userData, logout, isAuthenticated}) => {
-  const firstElement = useRef(null);
-  const toLoginPage = () => history.push('/login');
-  const toTop = () => scrollToComponent(firstElement.current);
-  const userMenu = (
-    <Menu>
-      <Menu.Item>
-        <div>{i18n.t('common.my_page')}</div>
-      </Menu.Item>
-      <Menu.Item>
-        <div onClick={logout}>{i18n.t('common.logout')}</div>
-      </Menu.Item>
-    </Menu>
-  );
+class MainLayout extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.firstElement = React.createRef();
+    this.state = {
+      showHeader: false,
+      scrollPos: 0,
+    };
+  }
 
-  return (
-    <Layout id="app-bar">
-      <Layout>
-        <Header className="header">
-          <div className="container" style={{display: 'flex', flexDirection: 'row'}}>
-            <div className="logo">
-              <Link to="/">
-                <img src={Logo} alt="Logo" />
-                <span>DM2M</span>
-              </Link>
-              <div className="logo-slogan">{i18n.t('common.slogan')}</div>
+  componentDidMount() {
+    window.addEventListener('scroll', this.handleScroll);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.handleScroll);
+  }
+
+  handleScroll = () => {
+    const { scrollPos } = this.state;
+    this.setState({
+      scrollPos: document.body.getBoundingClientRect().top,
+      showHeader: document.body.getBoundingClientRect().top > scrollPos
+    });
+  };
+
+  toLoginPage = () => {
+    const {history} = this.props;
+    history.push('/login');
+  };
+
+  toTop = () => {
+    scrollToComponent(this.firstElement.current);
+  };
+
+  render() {
+    const {children, userData, logout, isAuthenticated} = this.props;
+    const {showHeader} = this.state;
+    const userMenu = (
+      <Menu>
+        <Menu.Item>
+          <div>{i18n.t('common.my_page')}</div>
+        </Menu.Item>
+        <Menu.Item>
+          <div onClick={logout}>{i18n.t('common.logout')}</div>
+        </Menu.Item>
+      </Menu>
+    );
+
+    return (
+      <Layout id="app-bar">
+        <Layout>
+          <Header className={`header ${showHeader ? 'header--active' : 'header--hidden'}`}>
+            <div className="container" style={{display: 'flex', flexDirection: 'row'}}>
+              <div className="logo">
+                <Link to="/">
+                  <img src={Logo} alt="Logo" />
+                  <span>DM2M</span>
+                </Link>
+                <div className="logo-slogan">{i18n.t('common.slogan')}</div>
+              </div>
+              <div className="vertical-align">
+                {isAuthenticated ? (
+                  <Dropdown overlay={userMenu}>
+                    <div className="user_area">
+                      <Avatar icon="user" />
+                      <span>{userData.email}</span>
+                    </div>
+                  </Dropdown>
+                ) : (
+                  <Button onClick={this.toLoginPage}>{i18n.t('common.login')}</Button>
+                )}
+              </div>
             </div>
-            <div className="vertical-align">
-              {isAuthenticated ? (
-                <Dropdown overlay={userMenu}>
-                  <div className="user_area">
-                    <Avatar icon="user" />
-                    <span>{userData.email}</span>
-                  </div>
-                </Dropdown>
-              ) : (
-                <Button onClick={toLoginPage}>{i18n.t('common.login')}</Button>
-              )}
-            </div>
+          </Header>
+          <Content className="container main-content" style={{marginTop: '1rem'}}>
+            <div ref={this.firstElement} />
+            {children}
+          </Content>
+          <div className="to_top_area">
+            <ToTopButton onClick={this.toTop} />
           </div>
-        </Header>
-        <Content className="container main-content" style={{marginTop: '1rem'}}>
-          <div ref={firstElement}/>
-          {children}
-        </Content>
-        <div className="to_top_area">
-          <ToTopButton onClick={toTop}/>
-        </div>
+        </Layout>
       </Layout>
-    </Layout>
-  );
-};
+    );
+  }
+}
+
 
 MainLayout.propTypes = {
   children: PropTypes.node,

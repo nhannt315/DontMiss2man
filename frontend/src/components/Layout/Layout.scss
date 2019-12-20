@@ -64,6 +64,15 @@
     z-index: 100;
     box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
   }
+  .header--active {
+    visibility: visible;
+    transition: all 200ms ease-in;
+  }
+  .header--hidden {
+    visibility: hidden;
+    transition: all 200ms ease-out;
+    transform: translate(0, -100%);
+  }
 
   .user_area {
     cursor: pointer;
