@@ -48,7 +48,7 @@ const RoomItem = ({room, history, userData, handleFavoriteAction, isAuthenticate
       </td>
       <td>
         <div>
-          <Button loading={loading} onClick={handleFavoriteButtonClicked}>
+          <Button loading={loading} onClick={handleFavoriteButtonClicked} style={{width: '8rem'}}>
             {!loading && <Icon type="heart" theme={isFavorited ? 'filled' : 'outlined'} />}
             {isFavorited ? i18n.t('common.delete') : i18n.t('common.add')}
           </Button>

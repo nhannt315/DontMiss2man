@@ -25,14 +25,14 @@ const addUserFavorite = (state, payload) => {
   const newList = state.userData.favorites;
   newList.push(payload.roomId);
   const newUserData = {...state.userData, favorites: newList};
-  localStorage.setItem(keys.USER_DATA_KEY, newUserData);
+  localStorage.setItem(keys.USER_DATA_KEY, JSON.stringify(newUserData));
   return {...state, userData: newUserData};
 };
 
 const removeUserFavorite = (state, payload) => {
   const newList = state.userData.favorites.filter(e => e !== payload.roomId);
   const newUserData = {...state.userData, favorites: newList};
-  localStorage.setItem(keys.USER_DATA_KEY, newUserData);
+  localStorage.setItem(keys.USER_DATA_KEY, JSON.stringify(newUserData));
   return {...state, userData: newUserData};
 };
 

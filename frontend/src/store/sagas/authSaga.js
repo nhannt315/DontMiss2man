@@ -64,17 +64,23 @@ export function* logoutSaga() {
 }
 
 export function* authCheckStateSaga() {
-  const userDataStr = localStorage.getItem(keys.USER_DATA_KEY);
-  const tokenDataStr = localStorage.getItem(keys.TOKEN_DATA_KEY);
-  if (CommonHelper.checkLocalstorageStr(userDataStr) || CommonHelper.checkLocalstorageStr(tokenDataStr)) {
+  try {
+    const userDataStr = localStorage.getItem(keys.USER_DATA_KEY);
+    const tokenDataStr = localStorage.getItem(keys.TOKEN_DATA_KEY);
+    if (CommonHelper.checkLocalstorageStr(userDataStr) || CommonHelper.checkLocalstorageStr(tokenDataStr)) {
+      yield put(actions.logoutSuccess());
+      return;
+    }
+    const userData = JSON.parse(userDataStr);
+    const tokenData = JSON.parse(tokenDataStr);
+    if (CommonHelper.checkEmptyObject(userData) || CommonHelper.checkEmptyObject(tokenData)) {
+      yield put(actions.logoutSuccess());
+      return;
+    }
+    yield put(actions.loginSuccess(userData, tokenData));
+  } catch (e) {
+    localStorage.removeItem(keys.USER_DATA_KEY);
+    localStorage.removeItem(keys.TOKEN_DATA_KEY);
     yield put(actions.logoutSuccess());
-    return;
   }
-  const userData = JSON.parse(userDataStr);
-  const tokenData = JSON.parse(tokenDataStr);
-  if (CommonHelper.checkEmptyObject(userData) || CommonHelper.checkEmptyObject(tokenData)) {
-    yield put(actions.logoutSuccess());
-    return;
-  }
-  yield put(actions.loginSuccess(userData, tokenData));
 }

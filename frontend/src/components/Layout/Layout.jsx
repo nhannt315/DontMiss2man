@@ -1,8 +1,9 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {Layout, Button, Dropdown, Menu, Avatar} from 'antd';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import throttleLodash from 'lodash/throttle';
 import scrollToComponent from 'react-scroll-to-component';
 import i18n from '../../config/i18n';
 import Logo from '../../assets/images/logo.png';
@@ -23,19 +24,22 @@ class MainLayout extends React.PureComponent {
   }
 
   componentDidMount() {
-    window.addEventListener('scroll', this.handleScroll);
+    window.addEventListener('scroll', throttleLodash(this.handleScroll, 100));
   }
 
   componentWillUnmount() {
-    window.removeEventListener('scroll', this.handleScroll);
+    window.removeEventListener('scroll', throttleLodash(this.handleScroll, 100));
   }
 
   handleScroll = () => {
-    const { scrollPos } = this.state;
-    this.setState({
-      scrollPos: document.body.getBoundingClientRect().top,
-      showHeader: document.body.getBoundingClientRect().top > scrollPos
-    });
+    const {scrollPos} = this.state;
+    const topPos = document.body.getBoundingClientRect().top;
+    if (topPos < -64 || topPos > scrollPos) {
+      this.setState({
+        scrollPos: topPos,
+        showHeader: topPos > scrollPos,
+      });
+    }
   };
 
   toLoginPage = () => {

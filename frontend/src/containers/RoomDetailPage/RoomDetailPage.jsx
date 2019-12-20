@@ -64,7 +64,7 @@ const RoomDetailPage = props => {
             <span>{i18n.t('common.view_on_suumo')}</span>
           </a>
           <div>
-            <Button loading={favoriteLoading} onClick={handleFavoriteButton}>
+            <Button loading={favoriteLoading} onClick={handleFavoriteButton} style={{width: '8rem'}}>
               {!favoriteLoading && <Icon type="heart" theme={isFavorited ? 'filled' : 'outlined'} />}
               {isFavorited ? i18n.t('common.delete') : i18n.t('common.add')}
             </Button>
