@@ -13,7 +13,7 @@ const RoomItem = ({room, history, userData, handleFavoriteAction, isAuthenticate
   };
   const isFavorited = isAuthenticated && (userData.favorites.includes(room.id));
   const handleFavoriteButtonClicked = () => {
-    if (!isAuthenticated){
+    if (!isAuthenticated) {
       message.warning(i18n.t('common.need_login'));
       return;
     }
@@ -50,7 +50,7 @@ const RoomItem = ({room, history, userData, handleFavoriteAction, isAuthenticate
         <div>
           <Button loading={loading} onClick={handleFavoriteButtonClicked}>
             {!loading && <Icon type="heart" theme={isFavorited ? 'filled' : 'outlined'} />}
-            {i18n.t('common.add')}
+            {isFavorited ? i18n.t('common.delete') : i18n.t('common.add')}
           </Button>
         </div>
       </td>

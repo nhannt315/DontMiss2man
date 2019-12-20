@@ -17,7 +17,7 @@ class MainLayout extends React.PureComponent {
     super(props);
     this.firstElement = React.createRef();
     this.state = {
-      showHeader: false,
+      showHeader: true,
       scrollPos: 0,
     };
   }

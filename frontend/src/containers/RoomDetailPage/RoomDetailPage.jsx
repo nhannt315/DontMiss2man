@@ -60,13 +60,13 @@ const RoomDetailPage = props => {
         <div className="roomdetail-title">
           <h1>{room.building.name}</h1>
           <a href={room.suumo_link} target="_blank" rel="noreferrer noopener" className="suumo_link">
-            <img src={SuumoIcon} alt="suumo_icon"/>
+            <img src={SuumoIcon} alt="suumo_icon" />
             <span>{i18n.t('common.view_on_suumo')}</span>
           </a>
           <div>
             <Button loading={favoriteLoading} onClick={handleFavoriteButton}>
               {!favoriteLoading && <Icon type="heart" theme={isFavorited ? 'filled' : 'outlined'} />}
-              {i18n.t('common.add')}
+              {isFavorited ? i18n.t('common.delete') : i18n.t('common.add')}
             </Button>
           </div>
         </div>
