@@ -13,5 +13,5 @@ pm2 start server.js
 cd /home/ubuntu/DontMiss2man/backend/
 bundle install
 rails db:migrate
-bundle exec puma -e development -p 4000 --pidfile tmp/pids/puma.pid -d
-bundle exec whenever --update-crontab --set environment='development'
+bundle exec puma -e production -p 4000 --pidfile tmp/pids/puma.pid -d
+bundle exec whenever --update-crontab --set environment='production'
