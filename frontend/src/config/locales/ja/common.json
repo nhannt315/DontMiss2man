@@ -13,6 +13,8 @@
   "like": "お気に入り",
   "rent_fee": "賃料/管理費",
   "add": "追加",
+  "delete": "削除",
+  "view_on_suumo": "Suumoで閲覧",
   "see_detail": "詳細を見る",
   "number_of_year_built": "築{{years}}年",
   "newly_built": "新築",

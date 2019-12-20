@@ -4,6 +4,7 @@
   &-title {
     display: flex;
     flex-direction: row;
+    align-items: center;
     background: #ffff;
     margin-bottom: 1rem;
     padding: 1rem 1rem 0 1rem;
@@ -122,6 +123,20 @@
 
     img {
       max-width: 90%;
+    }
+  }
+
+  .suumo_link {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+    img {
+      height: 3rem;
+      margin-right: .5rem;
+    }
+
+    span {
+      align-self: flex-end;
     }
   }
 }

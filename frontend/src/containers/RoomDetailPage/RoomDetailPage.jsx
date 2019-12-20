@@ -16,6 +16,7 @@ import AgentInfo from './AgentInfo';
 import MapInfo from './MapInfo';
 import ImageList from './ImageList';
 import PropertyInfo from './PropertyInfo';
+import SuumoIcon from '../../assets/images/suumo_icon.png';
 
 const RoomDetailPage = props => {
   const {
@@ -58,6 +59,10 @@ const RoomDetailPage = props => {
         <div ref={firstElement} />
         <div className="roomdetail-title">
           <h1>{room.building.name}</h1>
+          <a href={room.suumo_link} target="_blank" rel="noreferrer noopener" className="suumo_link">
+            <img src={SuumoIcon} alt="suumo_icon"/>
+            <span>{i18n.t('common.view_on_suumo')}</span>
+          </a>
           <div>
             <Button loading={favoriteLoading} onClick={handleFavoriteButton}>
               {!favoriteLoading && <Icon type="heart" theme={isFavorited ? 'filled' : 'outlined'} />}
