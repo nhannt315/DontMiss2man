@@ -1,0 +1,13 @@
+.favorite_list {
+  max-height: 50vh;
+  overflow: scroll;
+
+  &__no_item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+}

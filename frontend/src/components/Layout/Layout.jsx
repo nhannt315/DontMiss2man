@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout, Button, Dropdown, Menu, Avatar} from 'antd';
+import {Layout, Button, Dropdown, Menu, Avatar, Modal} from 'antd';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -8,8 +8,12 @@ import scrollToComponent from 'react-scroll-to-component';
 import i18n from '../../config/i18n';
 import Logo from '../../assets/images/logo.png';
 import './Layout.scss';
-import {logout as logoutRedux} from '../../store/actions';
+import {
+  logout as logoutRedux,
+  removeUserFavorite as removeUserFavoriteRedux,
+} from '../../store/actions';
 import ToTopButton from '../ToTopButton';
+import FavoriteList from '../FavoriteList';
 
 const {Header, Content} = Layout;
 
@@ -20,6 +24,7 @@ class MainLayout extends React.PureComponent {
     this.state = {
       showHeader: true,
       scrollPos: 0,
+      showFavoriteModal: false,
     };
   }
 
@@ -52,12 +57,12 @@ class MainLayout extends React.PureComponent {
   };
 
   render() {
-    const {children, userData, logout, isAuthenticated} = this.props;
-    const {showHeader} = this.state;
+    const {children, userData, logout, isAuthenticated, tokenData, removeUserFavorite} = this.props;
+    const {showHeader, showFavoriteModal} = this.state;
     const userMenu = (
       <Menu>
-        <Menu.Item>
-          <div>{i18n.t('common.my_page')}</div>
+        <Menu.Item onClick={() => this.setState({showFavoriteModal: true})}>
+          <div>{i18n.t('common.like')}</div>
         </Menu.Item>
         <Menu.Item>
           <div onClick={logout}>{i18n.t('common.logout')}</div>
@@ -67,6 +72,18 @@ class MainLayout extends React.PureComponent {
 
     return (
       <Layout id="app-bar">
+        <Modal
+          title={i18n.t('common.favorite_list')}
+          visible={showFavoriteModal}
+          onCancel={() => this.setState({showFavoriteModal: false})}
+          footer={null}
+          width="35vw"
+        >
+          <FavoriteList
+            tokenData={tokenData} userFavoriteIds={userData.favorites}
+            removeUserFavorite={removeUserFavorite} show={showFavoriteModal}
+          />
+        </Modal>
         <Layout>
           <Header className={`header ${showHeader ? 'header--active' : 'header--hidden'}`}>
             <div className="container" style={{display: 'flex', flexDirection: 'row'}}>
@@ -111,6 +128,8 @@ MainLayout.propTypes = {
   userData: PropTypes.object,
   logout: PropTypes.func,
   isAuthenticated: PropTypes.bool,
+  tokenData: PropTypes.object,
+  removeUserFavorite: PropTypes.func,
 };
 
 MainLayout.defaultProps = {
@@ -120,15 +139,21 @@ MainLayout.defaultProps = {
   logout: () => {
   },
   isAuthenticated: false,
+  tokenData: {},
+  removeUserFavorite: () => {
+
+  },
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   userData: state.auth.userData,
+  tokenData: state.auth.tokenData,
 });
 
 const mapDispatchToProps = dispatch => ({
   logout: () => dispatch(logoutRedux()),
+  removeUserFavorite: roomId => dispatch(removeUserFavoriteRedux(roomId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainLayout);

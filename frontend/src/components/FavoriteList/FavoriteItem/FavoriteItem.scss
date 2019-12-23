@@ -1,0 +1,90 @@
+@import "../../../styles/variables";
+
+.favorite_item {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: .5rem;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  &__image {
+    margin-right: 1rem;
+    display: flex;
+    flex-direction: column;
+
+    img {
+      width: 10rem;
+    }
+
+  }
+
+  &__delete_btn {
+    margin-top: .5rem;
+    font-size: 1.2rem;
+    color: #706E60;
+    cursor: pointer;
+    font-weight: bold;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__info {
+    margin-right: auto;
+
+    & > div:not(:last-child) {
+      margin-bottom: .5rem;
+    }
+  }
+
+  &__name {
+    color: #006CCB;
+    font-size: 1.8rem;
+    font-weight: bold;
+  }
+
+  &__main_fee {
+    color: #F82055;
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+
+  &__sub_fee {
+
+    & > span:not(:last-child) {
+      margin-right: .6rem;
+    }
+
+    & > span::before {
+      font-weight: bold;
+      margin-right: .3rem;
+    }
+
+    &__management::before {
+      content: "[管]";
+    }
+
+    &__reikin::before {
+      content: "[礼]";
+    }
+
+    &__shikikin::before {
+      content: "[敷]";
+    }
+  }
+
+  &__extra {
+    span + span::before {
+      content: "/";
+      margin-right: .5rem;
+      margin-left: .5rem;
+    }
+  }
+
+  &__access {
+
+  }
+}
