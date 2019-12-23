@@ -24,7 +24,7 @@ namespace :suumo_crawl do
         building.access = access
         first_room_url = building_node.css("div.cassetteitem-item > table > tbody:nth-child(2) > tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
         building.latitude, building.longitude = LocationService.get_lat_lng_from_room_url first_room_url, building.name
-        unless check_building_condition(building.latitude, building.longitude)
+        unless check_building_condition(building.latitude, building.longitude, building)
           Rails.logger.info "Do not match condition, skip! #{building.name}"
           next
         end
@@ -46,11 +46,20 @@ namespace :suumo_crawl do
     Rails.logger.info "Deleting building #{building_name}" if building&.destroy
   end
 
-  def check_building_condition lat, lng
+  def check_building_condition lat, lng, building
     return false unless lat || lng
     distance_from_head_office = Formula.haversine_distance([lat, lng], [Settings.head_office_lat, Settings.head_office_lng])
+    building.distance = distance_from_head_office
     return true if distance_from_head_office <= Settings.fixed_distance
-    return true if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
+    if distance_from_head_office <= Settings.fixed_distance
+      building.condition_type = 0
+      return true
+    end
+    return false if distance_from_head_office > Settings.fixed_distance + 0.2
+    if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
+      building.condition_type = 1
+      return true
+    end
     false
   end
 

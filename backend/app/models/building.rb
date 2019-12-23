@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Building < ApplicationRecord
+  enum condition_type: { distance: 0, travel_time: 1 }
   has_many :rooms, dependent: :destroy
   scope :newly_built, -> { order(year_built: :desc) }
   scope :cheapest, -> { order(average_fee: :asc) }
