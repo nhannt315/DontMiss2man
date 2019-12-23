@@ -323,3 +323,9 @@
   -webkit-animation-name: bounceOutDown;
   animation-name: bounceOutDown
 }
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}

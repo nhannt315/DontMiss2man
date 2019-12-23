@@ -14,5 +14,9 @@ FavoriteService.handleFavorite = (roomId, token, action) => {
   return axios.post(url, {room_id: roomId}, {headers: getHeader(token)});
 };
 
+FavoriteService.getFavoriteList = token => {
+  return axios.get('/favorites', {headers: getHeader(token)});
+};
+
 
 export default FavoriteService;

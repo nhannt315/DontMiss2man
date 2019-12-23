@@ -20,5 +20,11 @@
   "newly_built": "新築",
   "number_of_storeys": "{{storeys}}階建",
   "slogan": "マネーフォワード社員向けの不動産物件の部屋探し。２万円を逃さないように",
-  "need_login": "ログインが必要です。"
+  "need_login": "ログインが必要です。",
+  "favorite_list": "お気に入り物件リスト",
+  "delete_from_favorites": "お気に入りから削除",
+  "favorite_delete_confirm": "お気に入りから削除しますか？",
+  "to_delete": "削除する",
+  "cancel": "キャンセル",
+  "no_item": "登録がありません。"
 }

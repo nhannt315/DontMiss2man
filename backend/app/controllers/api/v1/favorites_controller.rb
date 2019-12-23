@@ -1,6 +1,11 @@
 class Api::V1::FavoritesController < ApplicationController
-  before_action :authenticate_user!, only: [:create, :delete]
+  before_action :authenticate_user!, only: [:create, :delete, :index]
   before_action :get_param, only: [:create, :delete]
+
+  def index
+    favorite_list = current_user.rooms.eager_load :building
+    render json: {data: favorite_list}, include: [:building]
+  end
 
   def create
     return render json: {}, status: :conflict if current_user.room_ids.include? @room_id
