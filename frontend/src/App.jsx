@@ -9,7 +9,7 @@ import configureAxios from './config/axios';
 const App = () => {
   const history = createBrowserHistory();
   const store = configureStore(history);
-  configureAxios();
+  configureAxios(store);
   return (
     <Provider store={store}>
       <AppRoutes history={history} />

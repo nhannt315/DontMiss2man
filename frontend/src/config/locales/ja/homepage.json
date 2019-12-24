@@ -10,7 +10,8 @@
     "cheapest_fee": "家賃+管理費が安い順",
     "most_expensive_fee": "家賃+管理費が高い順",
     "newest_building": "築年数が新しい順",
-    "most_largest": "専有面積が広い順"
+    "most_largest": "専有面積が広い順",
+    "nearest": "近い順"
   },
   "number_items": "{{count}}件"
 }

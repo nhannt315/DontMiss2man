@@ -3,13 +3,14 @@ import {message} from 'antd';
 import get from 'lodash/get';
 import {BASE_API_URL} from '../constants/endpoint';
 import {LOCALE_KEY} from '../constants/key';
+import {logout} from '../store/actions';
 
 const checkContainQuery = url => {
   const pattern = new RegExp(/\?.+=.*/g);
   return pattern.test(url);
 };
 
-const configureAxios = () => {
+const configureAxios = store => {
   axios.defaults.baseURL = BASE_API_URL;
   axios.interceptors.request.use(config => {
       const newConfig = config;
@@ -25,7 +26,6 @@ const configureAxios = () => {
     },
   );
 
-
   axios.interceptors.response.use(response => {
     const newRes = response;
     const resData = response.data;
@@ -37,6 +37,7 @@ const configureAxios = () => {
       switch (response.status) {
         case 401:
           message.error(get(response, 'data.errors[0]'));
+          store.dispatch(logout());
           break;
         case 422:
           const errors = get(response, 'data.errors');

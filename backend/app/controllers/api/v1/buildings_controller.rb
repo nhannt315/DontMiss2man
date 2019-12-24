@@ -13,12 +13,14 @@ class Api::V1::BuildingsController < ApplicationController
                        Building.eager_load(:rooms).most_expensive
                      when "largest"
                        Building.eager_load(:rooms).largest
+                     when "nearest"
+                       Building.eager_load(:rooms).nearest
                      else
                        Building.eager_load(:rooms).all
                      end
     if @is_advanced_search
       @building_list = @building_list.where(generate_condition_query(params))
-      @building_list.filter_by_year_built(Date.strptime(params[:years_built].to_s, "%Y")) if params[:years_built]
+      @building_list = @building_list.filter_by_year_built(Date.strptime(params[:years_built].to_s, "%Y")) if params[:years_built]
     end
     @building_list = @building_list.page(@page).per @per_page
   end
