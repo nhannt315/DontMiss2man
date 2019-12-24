@@ -38,7 +38,7 @@ class RegisterPage extends PureComponent {
 
   registerSuccessCallback = () => {
     const {history} = this.props;
-    message.success(i18n.t('auth.pls_check_mail'));
+    message.success(i18n.t('auth.pls_check_mail'), 6);
     this.setState({leave: true});
     setTimeout(() => history.push('/'), 700);
   };

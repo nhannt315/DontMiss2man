@@ -7,7 +7,7 @@ class Building < ApplicationRecord
   scope :cheapest, -> { order(average_fee: :asc) }
   scope :most_expensive, -> { order(average_fee: :desc) }
   scope :largest, -> { order(average_size: :desc) }
-  scope :nearest, -> { order(distance: :asc) }
+  scope :nearest, -> { where.not(distance: nil).order(distance: :asc) }
   scope :filter_by_year_built, ->(year) { where("year_built > ?", year) }
 
   serialize :access, Array

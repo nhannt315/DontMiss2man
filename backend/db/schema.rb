@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_12_21_012842) do
+ActiveRecord::Schema.define(version: 2019_12_24_080111) do
 
   create_table "agents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name"
@@ -35,13 +35,13 @@ ActiveRecord::Schema.define(version: 2019_12_21_012842) do
     t.integer "storeys"
     t.integer "underground_storeys"
     t.string "photo_url"
-    t.float "longitude"
-    t.float "latitude"
+    t.decimal "longitude", precision: 20, scale: 13
+    t.decimal "latitude", precision: 20, scale: 13
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "average_size"
     t.float "average_fee"
-    t.float "distance"
+    t.decimal "distance", precision: 20, scale: 13
     t.integer "condition_type", default: 0
   end
 

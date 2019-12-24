@@ -13,4 +13,18 @@ namespace :building do
       building.save!
     end
   end
+
+  task calculate_distance: :environment do
+    Building.find_each do |building|
+      building.distance = Formula.haversine_distance([building.latitude, building.longitude], [Settings.head_office_lat, Settings.head_office_lng])
+      building.save!
+    end
+  end
+
+  task clean: :environment do
+    Image.delete_all
+    Agent.delete_all
+    Room.delete_all
+    Building.delete_all
+  end
 end
