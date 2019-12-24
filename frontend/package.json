@@ -46,6 +46,7 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "server": "node server.js",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js,.jsx  ./src --fix"
