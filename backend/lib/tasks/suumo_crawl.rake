@@ -107,6 +107,7 @@ namespace :suumo_crawl do
       building.storeys = room_info_html[/(?<=階建<\/th> <td>)(.*?)(?=<\/td>)/][/[\s\d]+(?=階建)/].to_i
       building.underground_storeys = room_info_html[/(?<=階建<\/th> <td>)(.*?)(?=<\/td>)/][/(?<=地下)[\s\d]+/].to_i
       building.year_built = Date.strptime(room_info_html[/(?<=築年月<\/th> <td>)(.*?)(?=<\/td>)/], "%Y年")
+      building.building_type = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(5) > td:nth-child(4)").text
       building.save!
     end
     room.building_id = building.id
