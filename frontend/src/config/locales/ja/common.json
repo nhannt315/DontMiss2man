@@ -26,5 +26,7 @@
   "favorite_delete_confirm": "お気に入りから削除しますか？",
   "to_delete": "削除する",
   "cancel": "キャンセル",
-  "no_item": "登録がありません。"
+  "no_item": "登録がありません。",
+  "money_ten_thousand_yen": "{{value}}万円",
+  "money_yen": "{{value}}円"
 }

@@ -37,7 +37,7 @@ const FavoriteItem = ({room, deleteFavorite}) => {
       <div className="favorite_item__info">
         <div className="favorite_item__name">
           <Link to={`/chintai/${room.id}`} target="_blank">
-            {`${room.building.name} ${i18n.t('common.floor_number', {floor: room.floor})}`}
+            {`${room.building.name} ${i18n.t('common.floor_number', {postProcess: 'interval', floor: room.floor})}`}
           </Link>
         </div>
         <div className="favorite_item__main_fee">

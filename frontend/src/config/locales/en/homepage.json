@@ -1,0 +1,17 @@
+{
+  "sort": "Sort",
+  "number_of_building": "表示建物数",
+  "number_of_items": "Number of items",
+  "change_search_condition": "検索条件変更",
+  "view_by_building": "建物ごとに表示",
+  "view_by_room": "部屋ごとに表示",
+  "sort_options": {
+    "recommended": "Default",
+    "cheapest_fee": "Cheapest",
+    "most_expensive_fee": "Most expensive",
+    "newest_building": "Newly built",
+    "most_largest": "Largest",
+    "nearest": "Nearest"
+  },
+  "number_items": "{{count}} items"
+}

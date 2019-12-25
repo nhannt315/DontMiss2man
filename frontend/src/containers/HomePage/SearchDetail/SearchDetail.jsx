@@ -4,15 +4,21 @@ import {Select, Checkbox, Icon} from 'antd';
 import i18n from '../../../config/i18n';
 import './SearchDetail.scss';
 import {
-  LOWER_RENT_FEE_OPTIONS,
-  UPPER_RENT_FEE_OPTIONS,
   LAYOUT_TYPE_OPTIONS,
-  UPPER_SIZE_OPTIONS,
-  LOWER_SIZE_OPTIONS,
-  YEAR_OPTIONS,
+  createLowerFeeOptions,
+  createUpperFeeOptions,
+  createLowerSizeOptions,
+  createUpperSizeOptions,
+  createYearOptions,
 } from '../../../constants/searchFilter';
 
 const {Option} = Select;
+
+let LOWER_RENT_FEE_OPTIONS = createLowerFeeOptions();
+let UPPER_RENT_FEE_OPTIONS = createUpperFeeOptions();
+let UPPER_SIZE_OPTIONS = createUpperSizeOptions();
+let LOWER_SIZE_OPTIONS = createLowerSizeOptions();
+let YEAR_OPTIONS = createYearOptions();
 
 const SearchDetail = ({searchWithCondition, initialCondition}) => {
   const initialState = {
@@ -37,6 +43,14 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
     setCondition(initialState);
     searchWithCondition(initialState);
   };
+
+  i18n.on('languageChanged', () => {
+    LOWER_RENT_FEE_OPTIONS = createLowerFeeOptions();
+    UPPER_RENT_FEE_OPTIONS = createUpperFeeOptions();
+    UPPER_SIZE_OPTIONS = createUpperSizeOptions();
+    LOWER_SIZE_OPTIONS = createLowerSizeOptions();
+    YEAR_OPTIONS = createYearOptions();
+  });
 
   return (
     <div className="condition-box">
@@ -105,17 +119,17 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
               </Checkbox.Group>
             </dd>
           </dl>
-          <dl>
-            <dt>{i18n.t('searchFilter.building_type')}</dt>
-            <dd className="building-type-list">
-              <Checkbox.Group
-                value={searchCondition.buildingType}
-                onChange={values => setCondition({...searchCondition, buildingType: values})}>
-                <div><Checkbox value="マンション">{i18n.t('searchFilter.mansion')}</Checkbox></div>
-                <div><Checkbox value="アパート">{i18n.t('searchFilter.apartment')}</Checkbox></div>
-              </Checkbox.Group>
-            </dd>
-          </dl>
+          {/* <dl> */}
+          {/*  <dt>{i18n.t('searchFilter.building_type')}</dt> */}
+          {/*  <dd className="building-type-list"> */}
+          {/*    <Checkbox.Group */}
+          {/*      value={searchCondition.buildingType} */}
+          {/*      onChange={values => setCondition({...searchCondition, buildingType: values})}> */}
+          {/*      <div><Checkbox value="マンション">{i18n.t('searchFilter.mansion')}</Checkbox></div> */}
+          {/*      <div><Checkbox value="アパート">{i18n.t('searchFilter.apartment')}</Checkbox></div> */}
+          {/*    </Checkbox.Group> */}
+          {/*  </dd> */}
+          {/* </dl> */}
           <dl>
             <dt>{i18n.t('searchFilter.size')}</dt>
             <dd className="select-area-wrapper">

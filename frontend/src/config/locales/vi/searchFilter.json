@@ -1,0 +1,19 @@
+{
+  "filterSearch": "Bộ lọc tìm kiếm",
+  "rent_fee": "Tiền nhà",
+  "without_limit": "Không giới hạn",
+  "no_lower_limit": "Không giới hạn",
+  "include_management_fee": "Không tiền quản lý",
+  "no_reikin": "Không tiền lễ",
+  "no_shikikin": "Không tiền cọc",
+  "layout_type": "Sơ đồ nhà",
+  "building_type": "物件の種類",
+  "mansion": "マンション",
+  "apartment": "アパート",
+  "size": "Diện tích sử dụng",
+  "years_built": "Năm xây dựng",
+  "newly_built": "Mới xây",
+  "not_specified": "Không chỉ định",
+  "within_years": "Xây trong vòng {{years}} năm",
+  "search_with_condition": "Tìm kiếm với điều kiện này"
+}

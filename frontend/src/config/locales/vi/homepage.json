@@ -1,0 +1,17 @@
+{
+  "sort": "Sắp xếp",
+  "number_of_building": "Số lượng hiển thị",
+  "number_of_items": "Số lượng hiển thị",
+  "change_search_condition": "Thay đổi điều kiện tìm kiếm",
+  "view_by_building": "建物ごとに表示",
+  "view_by_room": "部屋ごとに表示",
+  "sort_options": {
+    "recommended": "Mặc định",
+    "cheapest_fee": "Tiền nhà/quản lý rẻ",
+    "most_expensive_fee": "Tiền nhà/quản lý đắt",
+    "newest_building": "Mới xây",
+    "most_largest": "Diện tích rộng",
+    "nearest": "Gần công ty"
+  },
+  "number_items": "{{count}} phòng"
+}

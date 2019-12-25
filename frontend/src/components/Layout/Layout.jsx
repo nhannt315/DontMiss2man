@@ -14,6 +14,7 @@ import {
 } from '../../store/actions';
 import ToTopButton from '../ToTopButton';
 import FavoriteList from '../FavoriteList';
+import LanguageChanger from '../LanguageChanger';
 
 const {Header, Content} = Layout;
 
@@ -57,7 +58,7 @@ class MainLayout extends React.PureComponent {
   };
 
   render() {
-    const {children, userData, logout, isAuthenticated, tokenData, removeUserFavorite} = this.props;
+    const {children, userData, logout, isAuthenticated, tokenData, removeUserFavorite, language} = this.props;
     const {showHeader, showFavoriteModal} = this.state;
     const userMenu = (
       <Menu>
@@ -94,6 +95,7 @@ class MainLayout extends React.PureComponent {
                 </Link>
                 <div className="logo-slogan">{i18n.t('common.slogan')}</div>
               </div>
+              <LanguageChanger currentLng={language} />
               <div className="vertical-align">
                 {isAuthenticated ? (
                   <Dropdown overlay={userMenu}>
@@ -130,6 +132,7 @@ MainLayout.propTypes = {
   isAuthenticated: PropTypes.bool,
   tokenData: PropTypes.object,
   removeUserFavorite: PropTypes.func,
+  language: PropTypes.string,
 };
 
 MainLayout.defaultProps = {
@@ -141,14 +144,15 @@ MainLayout.defaultProps = {
   isAuthenticated: false,
   tokenData: {},
   removeUserFavorite: () => {
-
   },
+  language: '',
 };
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated,
   userData: state.auth.userData,
   tokenData: state.auth.tokenData,
+  language: state.ui.language,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -5,6 +5,7 @@ import sideMenu from './ja/sideMenu';
 import searchFilter from './ja/searchFilter';
 import auth from './ja/auth';
 import confirmation from './ja/confirmation';
+import language from './ja/language';
 
 export default {
   common,
@@ -14,4 +15,5 @@ export default {
   searchFilter,
   auth,
   confirmation,
+  language,
 };

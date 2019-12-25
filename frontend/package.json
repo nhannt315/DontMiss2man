@@ -13,6 +13,7 @@
     "google-maps-react": "^2.0.2",
     "history": "^4.10.1",
     "i18next": "^19.0.1",
+    "i18next-intervalplural-postprocessor": "^1.0.3",
     "loadable-components": "^2.2.3",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",

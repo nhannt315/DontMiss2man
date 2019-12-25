@@ -27,7 +27,7 @@ const RoomItem = ({room, history, userData, handleFavoriteAction, isAuthenticate
       <td>
         <Image className="room-image" src={room.layout_image_url} alt={room.layout_image_url} />
       </td>
-      <td>{i18n.t('common.floor_number', {floor: room.floor})}</td>
+      <td>{i18n.t('common.floor_number', {postProcess: 'interval', floor: room.floor})}</td>
       <td>
         <div>
           <div className="room-rent-fee">{CommonHelper.convertYen(room.rent_fee)}</div>

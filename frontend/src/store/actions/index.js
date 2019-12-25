@@ -31,3 +31,7 @@ export {
   addUserFavorite,
   removeUserFavorite,
 } from './userActions';
+
+export {
+  changeLanguage,
+} from './uiActions';
