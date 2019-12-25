@@ -93,8 +93,8 @@ class HomePage extends React.PureComponent {
           <div ref={this.firstElement} />
           <Row>
             <Col span={16}>
-              <Row className="list_option">
-                <Col span={8} className="list_option__sort">
+              <div className="list_option">
+                <div className="list_option__sort">
                   {i18n.t('homepage.sort')}
                   <Select value={sortOption} className="sort-filter" defaultValue={SORT_OPTIONS.recommended.key}
                           onChange={this.handleOptionChange}
@@ -103,8 +103,8 @@ class HomePage extends React.PureComponent {
                       return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
                     })}
                   </Select>
-                </Col>
-                <Col span={8} className="list_option__limit">
+                </div>
+                <div className="list_option__limit">
                   {i18n.t('homepage.number_of_items')}
                   <Select value={perPage} className="sort-filter" defaultValue={NUMBER_OF_ITEMS[0].key}
                           onChange={this.handlePerPageChange}>
@@ -112,8 +112,8 @@ class HomePage extends React.PureComponent {
                       return <Select.Option key={item.key} value={item.key}>{item.value}</Select.Option>;
                     })}
                   </Select>
-                </Col>
-              </Row>
+                </div>
+              </div>
               <Row />
               <Row>
                 <div className="list">

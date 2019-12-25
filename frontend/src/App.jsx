@@ -10,6 +10,7 @@ const App = () => {
   const history = createBrowserHistory();
   const store = configureStore(history);
   configureAxios(store);
+
   return (
     <Provider store={store}>
       <AppRoutes history={history} />

@@ -1,0 +1,21 @@
+{
+  "filterSearch": "Advanced search",
+  "rent_fee": "Rent fee",
+  "without_limit": "Without limit",
+  "no_lower_limit": "No lower limit",
+  "include_management_fee": "Includes common service free",
+  "no_reikin": "No key money",
+  "no_shikikin": "No security deposit",
+  "layout_type": "Layout type",
+  "building_type": "Property type",
+  "mansion": "Apartment",
+  "apartment": "Apartment",
+  "size": "Size",
+  "years_built": "Year built",
+  "newly_built": "Newly built",
+  "not_specified": "Not specified",
+  "within_years": "Within {{years}} years",
+  "within_years_plural": "Within {{years}} years",
+  "within_years_interval": "(1){Within 1 year}",
+  "search_with_condition": "Search by this condition"
+}

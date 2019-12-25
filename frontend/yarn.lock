@@ -5477,6 +5477,11 @@ https-browserify@^1.0.0:
   resolved "https://registry.yarnpkg.com/https-browserify/-/https-browserify-1.0.0.tgz#ec06c10e0a34c0f2faf199f7fd7fc78fffd03c73"
   integrity sha1-7AbBDgo0wPL68Zn3/X/Hj//QPHM=
 
+i18next-intervalplural-postprocessor@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/i18next-intervalplural-postprocessor/-/i18next-intervalplural-postprocessor-1.0.3.tgz#0abb98c383c6a48ab23afcaa52575529176859f0"
+  integrity sha512-1ItqzJACc8Nr9akARWItJFS6kPbz7Imu0d31ufAYzi/i4/xj5rJ+CI6KkdyU5X3cSr0EwcYozh/HyaBace8kyA==
+
 i18next@^19.0.1:
   version "19.0.1"
   resolved "https://registry.yarnpkg.com/i18next/-/i18next-19.0.1.tgz#11347b9d5f2ceb4a03750a06010cc249fe065d31"
