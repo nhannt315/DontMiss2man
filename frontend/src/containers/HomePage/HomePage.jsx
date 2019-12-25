@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 import './HomePage.scss';
 import * as actions from '../../store/actions';
-import {SORT_OPTIONS, NUMBER_OF_ITEMS} from '../../constants/common';
+import {createSortOptions, createNumberOfItemOptions} from '../../constants/common';
 import ListHelper from '../../helpers/list_helper';
 import i18n from '../../config/i18n';
 import Layout from '../../components/Layout';
@@ -15,6 +15,9 @@ import ListPlaceholder from '../../components/ListPlaceholder';
 import SearchDetail from './SearchDetail';
 import CommonHelper from '../../helpers/common';
 import FavoriteService from '../../services/favoriteService';
+
+let SORT_OPTIONS = createSortOptions();
+let NUMBER_OF_ITEMS = createNumberOfItemOptions();
 
 class HomePage extends React.PureComponent {
   constructor(props) {
@@ -37,7 +40,13 @@ class HomePage extends React.PureComponent {
     history.push(`/?page=${page}`);
     if (list.length === 0)
       this.fetchData(page);
+    i18n.on('languageChanged', () => {
+      SORT_OPTIONS = createSortOptions();
+      NUMBER_OF_ITEMS = createNumberOfItemOptions();
+      this.sortOptionList = ListHelper.generateListFromObject(SORT_OPTIONS);
+    });
   }
+
 
   componentDidUpdate(prevProps, prevState, snapshot) {
     const {location, currentPage} = this.props;
