@@ -17,5 +17,6 @@
   "within_years": "Within {{years}} years",
   "within_years_plural": "Within {{years}} years",
   "within_years_interval": "(1){Within 1 year}",
-  "search_with_condition": "Search by this condition"
+  "search_with_condition": "Search by this condition",
+  "one_room": "One room"
 }

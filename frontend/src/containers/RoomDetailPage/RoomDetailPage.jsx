@@ -54,7 +54,7 @@ const RoomDetailPage = props => {
   if (loading)
     return <ListPlaceholder itemCount={5} />;
   return (
-    <Layout history={history}>
+    <Layout history={history} err={error}>
       <div className="roomdetail">
         <div ref={firstElement} />
         <div className="roomdetail-title">

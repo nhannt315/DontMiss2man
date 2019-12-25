@@ -4,7 +4,7 @@ import {Select, Checkbox, Icon} from 'antd';
 import i18n from '../../../config/i18n';
 import './SearchDetail.scss';
 import {
-  LAYOUT_TYPE_OPTIONS,
+  createLayoutOptions,
   createLowerFeeOptions,
   createUpperFeeOptions,
   createLowerSizeOptions,
@@ -19,6 +19,7 @@ let UPPER_RENT_FEE_OPTIONS = createUpperFeeOptions();
 let UPPER_SIZE_OPTIONS = createUpperSizeOptions();
 let LOWER_SIZE_OPTIONS = createLowerSizeOptions();
 let YEAR_OPTIONS = createYearOptions();
+let LAYOUT_TYPE_OPTIONS = createLayoutOptions();
 
 const SearchDetail = ({searchWithCondition, initialCondition}) => {
   const initialState = {
@@ -50,6 +51,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
     UPPER_SIZE_OPTIONS = createUpperSizeOptions();
     LOWER_SIZE_OPTIONS = createLowerSizeOptions();
     YEAR_OPTIONS = createYearOptions();
+    LAYOUT_TYPE_OPTIONS = createLayoutOptions();
   });
 
   return (
