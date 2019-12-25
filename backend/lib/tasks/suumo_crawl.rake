@@ -38,7 +38,8 @@ namespace :suumo_crawl do
       current_page = current_page + 1
       break if current_page > total_page
     end
-    calculate_average
+    Rake::Task["building:calculate_average"].execute
+    Rake::Task["building:calculate_distance"].execute
   end
 
   def check_and_delete_building building_name
@@ -50,7 +51,6 @@ namespace :suumo_crawl do
     return false unless lat || lng
     distance_from_head_office = Formula.haversine_distance([lat, lng], [Settings.head_office_lat, Settings.head_office_lng])
     building.distance = distance_from_head_office
-    return true if distance_from_head_office <= Settings.fixed_distance
     if distance_from_head_office <= Settings.fixed_distance
       building.condition_type = 0
       return true
@@ -107,6 +107,7 @@ namespace :suumo_crawl do
       building.storeys = room_info_html[/(?<=階建<\/th> <td>)(.*?)(?=<\/td>)/][/[\s\d]+(?=階建)/].to_i
       building.underground_storeys = room_info_html[/(?<=階建<\/th> <td>)(.*?)(?=<\/td>)/][/(?<=地下)[\s\d]+/].to_i
       building.year_built = Date.strptime(room_info_html[/(?<=築年月<\/th> <td>)(.*?)(?=<\/td>)/], "%Y年")
+      building.building_type = root_page.css("#js-view_gallery > div.l-property_view_table > table > tr:nth-child(5) > td:nth-child(4)").text
       building.save!
     end
     room.building_id = building.id
@@ -146,25 +147,6 @@ namespace :suumo_crawl do
         room.save!
       end
     end
-  end
-
-  def calculate_average
-    Building.find_each do |building|
-      total_size = 0
-      min_fee_room = Room.where(building_id: building.id).order('rent_fee + management_cost ASC')[0]
-      min_fee = min_fee_room.rent_fee + min_fee_room.management_cost
-      building.rooms.each do |room|
-        total_size = total_size + room.size.to_i
-      end
-      building.average_fee = min_fee
-      building.average_size = total_size.to_f / building.rooms.count
-      building.save!
-    end
-  end
-
-  task clean: :environment do
-    Rails.logger.info "Clear all data"
-    Building.destroy_all
   end
 
 end
