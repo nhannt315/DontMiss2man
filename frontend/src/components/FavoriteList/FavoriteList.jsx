@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
+import FlipMove from 'react-flip-move';
 import i18n from '../../config/i18n';
 import './FavoriteList.scss';
 import FavoriteService from '../../services/favoriteService';
@@ -32,9 +33,11 @@ const FavoriteList = ({tokenData, userFavoriteIds, removeUserFavorite, show}) =>
   return (
     <div className="favorite_list">
       {loading && <OverlayLoader />}
-      {list.map(item => (
-        <FavoriteItem key={item.id} room={item} deleteFavorite={deleteFavorite} />
-      ))}
+      <FlipMove>
+        {list.map(item => (
+          <FavoriteItem key={item.id} room={item} deleteFavorite={deleteFavorite} />
+        ))}
+      </FlipMove>
       {list.length === 0 && (
         <div className="favorite_list__no_item">
           <span>{i18n.t('common.no_item')}</span>
