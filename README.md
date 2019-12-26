@@ -17,6 +17,25 @@ This service will provide apartments that qualify for housing allowance
 * Data is updated automatically daily from [Suumo](https://suumo.jp/)
 * Sortable list with search filter at homepage
 * Sign in to save your favorite apartment for later viewing
+* Support Japanese, English and Vietnamese
+
+## How to find apartments that suits conditions
+
+As stated in Money Forward's support policy Any official employee living in an apartment that meets either of the following two conditions will receive a pension
+- The apartment is located within a radius of 1.5km from the office
+- Travel to work by foot or by train takes less than 15 minutes
+
+## Technologies used to solve above conditions
+
+- The apartment is located within a radius of 1.5km from the office
+    - With latitude and longitude values retrieved from suumo, we can calculate the direct distance from office using Haversine formula ([reference](https://en.wikipedia.org/wiki/Haversine_formula))
+
+![image](https://user-images.githubusercontent.com/21120045/71454892-1d859600-27d6-11ea-94dd-c415671bc789.png)
+
+- Travel to work by foot or by train takes less than 15 minutes
+    - This problem can be easily solved using [Google Maps Distance Matrix API](https://developers.google.com/maps/documentation/distance-matrix/start).
+    
+![image](https://user-images.githubusercontent.com/21120045/71454949-4c9c0780-27d6-11ea-92fb-4f03de1b7759.jpg)
 
 ## Development Environment
 - MacOS X Mojave 10.14
