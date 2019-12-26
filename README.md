@@ -2,8 +2,19 @@
 ====
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 
+## Table of contents
+
+* [Introduction](#Introduction)
+* [Features](#Features)
+* [How to find apartments that suits conditions](#condition)
+* [Technology Stack](#techstack)
+* [Cloud Architecture](#architecture)
+* [Reference](#Reference)
+
 Overview
-## Description
+
+## Introduction
+
 Housing service for Money Forward employees
 
 This service will provide apartments that qualify for housing allowance
@@ -19,6 +30,7 @@ This service will provide apartments that qualify for housing allowance
 * Sign in to save your favorite apartment for later viewing
 * Support Japanese, English and Vietnamese
 
+<a name="condition"></a>
 ## How to find apartments that suits conditions
 
 As stated in Money Forward's support policy Any official employee living in an apartment that meets either of the following two conditions will receive a pension
@@ -40,6 +52,7 @@ As stated in Money Forward's support policy Any official employee living in an a
 ## Development Environment
 - MacOS X Mojave 10.14
 
+<a name="techstack"></a>
 ## Technology stack
 ***WebServer:***
 - Nginx
@@ -60,8 +73,20 @@ As stated in Money Forward's support policy Any official employee living in an a
 
 ***Deploy:*** 
 - Amazon Web Service EC2
+
+<a name="architecture"></a>
 ## Cloud architecture
 
 ![image](https://user-images.githubusercontent.com/21120045/71454152-b31f2680-27d2-11ea-8a77-3752c0b9b98b.png)
 
 
+## Reference
+https://reactjs.org/
+
+https://rubyonrails.org/
+
+https://aws.amazon.com/ec2/
+
+https://en.wikipedia.org/wiki/Haversine_formula
+
+https://developers.google.com/maps/documentation/distance-matrix/
