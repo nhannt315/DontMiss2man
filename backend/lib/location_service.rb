@@ -32,7 +32,7 @@ class LocationService
       longitude = form_url[/(?<=&keido=)[+-]?([0-9]*[.])?[0-9]+/].to_f
       Rails.logger.info "Get lat, lng from detail page #{name}, lat: #{latitude}, lng: #{longitude}"
       return [latitude, longitude]
-    rescue RestClient::NotFound, NoMethodError
+    rescue RestClient::NotFound, NoMethodError, RestClient::InternalServerError
       return [nil, nil]
     end
   end
