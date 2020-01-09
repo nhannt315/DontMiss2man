@@ -34,6 +34,7 @@ namespace :suumo_crawl do
           room_url = room_node.css("tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
           extract_room_information building, "#{BASE_URL}#{room_url}", index
         end
+        calculate_average building
       end
       current_page = current_page + 1
       break if current_page > total_page
@@ -55,11 +56,11 @@ namespace :suumo_crawl do
       building.condition_type = 0
       return true
     end
-    return false if distance_from_head_office > Settings.fixed_distance + 0.2
-    if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
-      building.condition_type = 1
-      return true
-    end
+    # return false if distance_from_head_office > Settings.fixed_distance + 0.2
+    # if LocationService.get_walking_time(Settings.head_office_lat, Settings.head_office_lng, lat, lng) <= Settings.max_travel_time_in_mins
+    #   building.condition_type = 1
+    #   return true
+    # end
     false
   end
 
@@ -135,6 +136,19 @@ namespace :suumo_crawl do
       Rails.logger.info "Created agent #{name} successfully" if agent.save!
     end
     return agent.id
+  end
+
+  def calculate_average building
+    total_size = 0
+    min_fee_room = Room.where(building_id: building.id).order('rent_fee + management_cost ASC')[0]
+    min_fee = min_fee_room.rent_fee + min_fee_room.management_cost
+    building.rooms.each do |room|
+      total_size = total_size + room.size.to_i
+    end
+    building.average_fee = min_fee
+    building.average_size = total_size.to_f / building.rooms.count
+    building.distance = Formula.haversine_distance([building.latitude, building.longitude], [Settings.head_office_lat, Settings.head_office_lng])
+    building.save!
   end
 
   def get_room_photo_list room, root_page_node
