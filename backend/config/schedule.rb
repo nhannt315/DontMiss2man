@@ -28,6 +28,10 @@ every 1.day, at: jst('3:00 am') do
   rake "suumo_crawl:mansion"
 end
 
+every 1.day, at: jst('5:00 am') do
+  rake "building:calculate_average"
+  rake "building:calculate_distance"
+end
 
 
 # Learn more: http://github.com/javan/whenever

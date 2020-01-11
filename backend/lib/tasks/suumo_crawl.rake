@@ -34,7 +34,7 @@ namespace :suumo_crawl do
           room_url = room_node.css("tr > td.ui-text--midium.ui-text--bold > a")[0]["href"]
           extract_room_information building, "#{BASE_URL}#{room_url}", index
         end
-        calculate_average building
+        # calculate_average building
       end
       current_page = current_page + 1
       break if current_page > total_page
