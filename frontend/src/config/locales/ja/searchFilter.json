@@ -16,5 +16,7 @@
   "not_specified": "指定しない",
   "within_years": "{{years}}年以内",
   "search_with_condition": "この条件で検索する",
-  "one_room": "ワンルーム"
+  "one_room": "ワンルーム",
+  "room_facilities": "室内設備",
+  "with_furniture": "家具家電付き"
 }

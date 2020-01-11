@@ -19,6 +19,7 @@ BuildingService.getBuildingList = (page, perPage, sort, condition) => {
     upper_size: condition.size.upper,
     lower_size: condition.size.lower,
     years_built: condition.years_built,
+    with_furniture: condition.withFurniture,
   };
   return axios.get(`${url}&${qs.stringify(searchCondition, {arrayFormat: 'bracket'})}`);
 };

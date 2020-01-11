@@ -1,6 +1,6 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {Select, Checkbox, Icon} from 'antd';
+import { Select, Checkbox, Icon } from 'antd';
 import i18n from '../../../config/i18n';
 import './SearchDetail.scss';
 import {
@@ -12,7 +12,7 @@ import {
   createYearOptions,
 } from '../../../constants/searchFilter';
 
-const {Option} = Select;
+const { Option } = Select;
 
 let LOWER_RENT_FEE_OPTIONS = createLowerFeeOptions();
 let UPPER_RENT_FEE_OPTIONS = createUpperFeeOptions();
@@ -21,7 +21,7 @@ let LOWER_SIZE_OPTIONS = createLowerSizeOptions();
 let YEAR_OPTIONS = createYearOptions();
 let LAYOUT_TYPE_OPTIONS = createLayoutOptions();
 
-const SearchDetail = ({searchWithCondition, initialCondition}) => {
+const SearchDetail = ({ searchWithCondition, initialCondition }) => {
   const initialState = {
     rentFee: {
       upper: null,
@@ -31,6 +31,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
       noShikikin: false,
       options: [],
     },
+    withFurniture: false,
     layoutType: [],
     buildingType: [],
     size: {
@@ -67,11 +68,11 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
             <dd className="select-area-wrapper">
               <div className="select-area">
                 <Select defaultValue={LOWER_RENT_FEE_OPTIONS[0].key} className="select-items"
-                        value={searchCondition.rentFee.lower}
-                        onChange={value => setCondition({
-                          ...searchCondition,
-                          rentFee: {...searchCondition.rentFee, lower: value},
-                        })}
+                  value={searchCondition.rentFee.lower}
+                  onChange={value => setCondition({
+                    ...searchCondition,
+                    rentFee: { ...searchCondition.rentFee, lower: value },
+                  })}
                 >
                   {LOWER_RENT_FEE_OPTIONS.map(ele => (
                     <Option value={ele.key} key={ele.key}>{ele.value}</Option>
@@ -79,11 +80,11 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
                 </Select>
                 <span className="select-label">〜</span>
                 <Select defaultValue={UPPER_RENT_FEE_OPTIONS[0].key} className="select-items"
-                        value={searchCondition.rentFee.upper}
-                        onChange={value => setCondition({
-                          ...searchCondition,
-                          rentFee: {...searchCondition.rentFee, upper: value},
-                        })}
+                  value={searchCondition.rentFee.upper}
+                  onChange={value => setCondition({
+                    ...searchCondition,
+                    rentFee: { ...searchCondition.rentFee, upper: value },
+                  })}
                 >
                   {UPPER_RENT_FEE_OPTIONS.map(ele => (
                     <Option value={ele.key} key={ele.key}>{ele.value}</Option>
@@ -99,7 +100,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
                     condition.noReikin = values.includes('reikin');
                     condition.noShikikin = values.includes('shikikin');
                     condition.options = values;
-                    setCondition({...searchCondition, rentFee: {...searchCondition.rentFee, ...condition}});
+                    setCondition({ ...searchCondition, rentFee: { ...searchCondition.rentFee, ...condition } });
                   }}>
                   <div><Checkbox value="fee">{i18n.t('searchFilter.include_management_fee')}</Checkbox></div>
                   <div><Checkbox value="reikin">{i18n.t('searchFilter.no_reikin')}</Checkbox></div>
@@ -113,7 +114,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
             <dd className="layout-detail-list">
               <Checkbox.Group
                 value={searchCondition.layoutType}
-                onChange={values => setCondition({...searchCondition, layoutType: values})}
+                onChange={values => setCondition({ ...searchCondition, layoutType: values })}
               >
                 {LAYOUT_TYPE_OPTIONS.map(ele => (
                   <div key={ele} className="checkbox-wrapper"><Checkbox value={ele}>{ele}</Checkbox></div>
@@ -121,26 +122,25 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
               </Checkbox.Group>
             </dd>
           </dl>
-          {/* <dl> */}
-          {/*  <dt>{i18n.t('searchFilter.building_type')}</dt> */}
-          {/*  <dd className="building-type-list"> */}
-          {/*    <Checkbox.Group */}
-          {/*      value={searchCondition.buildingType} */}
-          {/*      onChange={values => setCondition({...searchCondition, buildingType: values})}> */}
-          {/*      <div><Checkbox value="マンション">{i18n.t('searchFilter.mansion')}</Checkbox></div> */}
-          {/*      <div><Checkbox value="アパート">{i18n.t('searchFilter.apartment')}</Checkbox></div> */}
-          {/*    </Checkbox.Group> */}
-          {/*  </dd> */}
-          {/* </dl> */}
+          <dl>
+            <dt>{i18n.t('searchFilter.room_facilities')}</dt>
+            <dd className="building-type-list">
+              <Checkbox
+                onChange={e => setCondition({ ...searchCondition, withFurniture: e.target.checked })}
+                checked={searchCondition.withFurniture}>
+                {i18n.t('searchFilter.with_furniture')}
+              </Checkbox>
+            </dd>
+          </dl>
           <dl>
             <dt>{i18n.t('searchFilter.size')}</dt>
             <dd className="select-area-wrapper">
               <div className="select-area">
                 <Select defaultValue={LOWER_SIZE_OPTIONS[0].key} className="select-items"
-                        value={searchCondition.size.lower}
-                        onChange={value => {
-                          setCondition({...searchCondition, size: {...searchCondition.size, lower: value}});
-                        }}
+                  value={searchCondition.size.lower}
+                  onChange={value => {
+                    setCondition({ ...searchCondition, size: { ...searchCondition.size, lower: value } });
+                  }}
                 >
                   {LOWER_SIZE_OPTIONS.map(ele => (
                     <Option value={ele.key} key={ele.key}>{ele.value}</Option>
@@ -148,10 +148,10 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
                 </Select>
                 <span className="select-label">〜</span>
                 <Select defaultValue={UPPER_SIZE_OPTIONS[0].key} className="select-items"
-                        value={searchCondition.size.upper}
-                        onChange={value => {
-                          setCondition({...searchCondition, size: {...searchCondition.size, upper: value}});
-                        }}
+                  value={searchCondition.size.upper}
+                  onChange={value => {
+                    setCondition({ ...searchCondition, size: { ...searchCondition.size, upper: value } });
+                  }}
                 >
                   {UPPER_SIZE_OPTIONS.map(ele => (
                     <Option value={ele.key} key={ele.key}>{ele.value}</Option>
@@ -164,7 +164,7 @@ const SearchDetail = ({searchWithCondition, initialCondition}) => {
             <dt>{i18n.t('searchFilter.years_built')}</dt>
             <dd className="year-select">
               <Select defaultValue={YEAR_OPTIONS[YEAR_OPTIONS.length - 1].key} value={searchCondition.years_built}
-                      onChange={value => setCondition({...searchCondition, years_built: value})}
+                onChange={value => setCondition({ ...searchCondition, years_built: value })}
               >
                 {YEAR_OPTIONS.map(ele => (
                   <Option key={ele.key} value={ele.key}>{ele.value}</Option>

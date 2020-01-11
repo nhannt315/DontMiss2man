@@ -16,5 +16,7 @@
   "not_specified": "Không chỉ định",
   "within_years": "Xây trong vòng {{years}} năm",
   "search_with_condition": "Tìm kiếm với điều kiện này",
-  "one_room": "Một phòng"
+  "one_room": "Một phòng",
+  "room_facilities": "Trang thiết bị trong phòng",
+  "with_furniture": "Đủ đồ"
 }

@@ -16,6 +16,7 @@ module BuildingsHelper
     if params[:no_shikikin] && ActiveModel::Type::Boolean.new.cast(params[:no_shikikin])
       condition[:rooms][:shikikin] = 0
     end
+    
     condition
   end
 end

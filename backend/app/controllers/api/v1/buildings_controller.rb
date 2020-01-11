@@ -21,6 +21,9 @@ class Api::V1::BuildingsController < ApplicationController
     if @is_advanced_search
       @building_list = @building_list.where(generate_condition_query(params))
       @building_list = @building_list.filter_by_year_built(Date.strptime(params[:years_built].to_s, "%Y")) if params[:years_built]
+      if params[:with_furniture] && ActiveModel::Type::Boolean.new.cast(params[:with_furniture])
+        @building_list = @building_list.where "rooms.facilities LIKE ? OR rooms.facilities LIKE ?", "%家具付%", "%家電付%"
+      end
     end
     @building_list = @building_list.page(@page).per @per_page
   end
