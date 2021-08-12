@@ -11,4 +11,8 @@ class Building < ApplicationRecord
   scope :filter_by_year_built, ->(year) { where("year_built > ?", year) }
 
   serialize :access, Array
+
+  def office
+    Office.find(office_id)
+  end
 end

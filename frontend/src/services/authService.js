@@ -14,7 +14,6 @@ AuthService.login = (email, password) => {
   return axios.post('/auth/sign_in', payload);
 };
 
-
 AuthService.register = (email, password, passwordConfirm) => {
   const payload = {
     email, password,

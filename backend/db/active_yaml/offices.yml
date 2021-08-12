@@ -1,0 +1,7 @@
+- id: 1
+  name: 本社
+  latitude: 35.6447199
+  longitude: 139.7493365
+  address: 東京都港区芝浦3-1-21 msb Tamachi 田町ステーションタワーS 21F
+  postal_code: 108-0023
+  scraping_url: https://suumo.jp/jj/chintai/ichiran/FR301FC001/?shkr1=03&cb=0.0&shkr3=03&shkr2=03&mt=9999999&sngz=&sc=13103&ar=030&bs=040&shkr4=03&ct=9999999&cn=9999999&mb=0&ta=13&et=9999999
