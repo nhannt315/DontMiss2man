@@ -22,6 +22,8 @@ module Backend
     config.time_zone = "Tokyo"
     config.autoload_paths << "#{Rails.root}/lib"
     config.hosts << "dm2m.online"
+    config.hosts << "localhost"
+    config.hosts << "127.0.0.1"
     config.i18n.default_locale = :"en"
     config.api_only = true
   end

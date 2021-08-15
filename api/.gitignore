@@ -35,3 +35,5 @@ config/environments/*.local.yml
 
 .env
 .generators
+
+/config/credentials/production.key
