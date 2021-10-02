@@ -1,2 +1,5 @@
 .idea
 frontend/.env
+db/*
+.vagrant
+.DS_Store

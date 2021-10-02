@@ -1,6 +1,16 @@
 version: "3"
 
 services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./db/conf.d:/etc/mysql/conf.d
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "53306:3306"
   web:
     build:
       context: ./web
@@ -13,6 +23,10 @@ services:
     build:
       context: ./api
       dockerfile: ./Dockerfile
+    env_file:
+      - api/.env.docker.local
     command: /bin/bash -c "bundle exec rails server -b 0.0.0.0 -p 4000 -e production"
     ports:
       - "4000:4000"
+    depends_on:
+      - db
