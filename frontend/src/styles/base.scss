@@ -1,0 +1,69 @@
+@import '~antd/dist/antd.css';
+@import "variables";
+@import "animations";
+@import "common";
+@import "table";
+@import "auth";
+@import "button";
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: 'Noto Sans JP', sans-serif !important;
+}
+
+.outer-layout {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.main-layout {
+  min-height: calc(100vh - 4rem);
+}
+
+.clearfix {
+  overflow: auto;
+
+  &:after {
+    content: "";
+    display: block;
+    clear: both;
+  }
+}
+
+.container {
+  padding-left: 0.8rem;
+  padding-right: 0.8rem;
+  position: relative;
+  width: 117rem;
+  margin-right: auto;
+  margin-left: auto;
+
+  &:before {
+    display: table;
+    content: "";
+  }
+
+  &:after {
+    display: table;
+    content: "";
+    clear: both;
+  }
+}
+
+
+.text-center {
+  text-align: center;
+}

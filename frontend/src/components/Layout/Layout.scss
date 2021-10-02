@@ -1,0 +1,91 @@
+@import "../../styles/variables";
+
+#app-bar {
+  min-height: 100vh;
+
+  .trigger {
+    display: inline-block;
+    flex-grow: 1;
+
+    i {
+      font-size: 1.6rem;
+      line-height: 6.4rem;
+      padding: 0 2.4rem;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+  }
+
+  .trigger:hover {
+    color: #1890ff;
+  }
+
+  .logo {
+    flex-grow: 1;
+    background: rgba(255, 255, 255, 0.2);
+
+    &-slogan {
+      display: inline-block;
+      font-size: 1.2rem;
+    }
+
+    img {
+      height: 5rem;
+    }
+
+    span {
+      padding-left: .5rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 3rem;
+      font-weight: bold;
+      line-height: 1.6;
+      vertical-align: middle;
+    }
+  }
+
+  .main-content {
+    margin-top: calc(1rem + #{$header-height}) !important;
+    padding: 2.4rem;
+    background-color: $color-white;
+    min-height: calc(100vh - 4rem);
+    margin-bottom: 6rem;
+    box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+  }
+
+  .header {
+    position: fixed;
+    background: $color-white;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: $header-height;
+    flex-direction: row;
+    z-index: 100;
+    box-shadow: 0 1px 0 rgba(12, 13, 14, 0.1), 0 1px 6px rgba(59, 64, 69, 0.1);
+  }
+  .header--active {
+    visibility: visible;
+    transition: all 200ms ease-in;
+  }
+  .header--hidden {
+    visibility: hidden;
+    transition: all 200ms ease-out;
+    transform: translate(0, -100%);
+  }
+
+  .user_area {
+    cursor: pointer;
+
+    span {
+      margin-left: 1rem;
+    }
+  }
+
+  .to_top_area {
+    position: fixed;
+    bottom: 5rem;
+    right: 8rem;
+  }
+}

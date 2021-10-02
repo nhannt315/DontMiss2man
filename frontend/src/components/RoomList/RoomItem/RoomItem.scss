@@ -1,0 +1,68 @@
+.roomitem {
+  .room-image {
+    height: 7.8rem;
+    width: 7.8rem;
+  }
+
+  td {
+    vertical-align: middle;
+    border-bottom: 1px solid #d9d9d9;
+    padding: 10px 3px;
+    text-align: center;
+  }
+
+  &-reikin {
+    &::before {
+      content: "礼";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: #999;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+      line-height: 16px;
+      margin-right: .4rem;
+    }
+
+    margin-bottom: 7px;
+  }
+
+  &-shikikin {
+    &::before {
+      content: "敷";
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background: #999;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+      line-height: 16px;
+      margin-right: .4rem
+    }
+  }
+
+  .room-rent-fee {
+    color: #f82055;
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  &-detail-link {
+    color: #004CCA;
+    text-decoration: underline;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      text-decoration: none;
+      color: #048ADE;
+    }
+  }
+
+  .hide-icon {
+    //visibility: hidden;
+    display: none;
+  }
+}

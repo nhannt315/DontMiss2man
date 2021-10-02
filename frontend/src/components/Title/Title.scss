@@ -1,0 +1,10 @@
+@import "../../styles/variables";
+
+.title {
+  font-weight: bold;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 100%;
+  background-color: $border-color;
+  border-left: 2px solid green;
+}

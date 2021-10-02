@@ -1,0 +1,29 @@
+.homepage {
+  .sort-filter {
+    margin-left: 1rem;
+    width: 18rem;
+  }
+
+  .number_of_item_filter {
+    width: 10rem;
+  }
+
+  .list {
+    margin-top: 2rem;
+  }
+
+  .building-list-pagination {
+    margin-top: 2rem;
+    text-align: center;
+  }
+
+  .list_option {
+    display: flex;
+    align-items: center;
+
+    &__sort {
+      margin-right: auto;
+    }
+  }
+}
+

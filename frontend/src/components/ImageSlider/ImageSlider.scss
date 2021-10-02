@@ -1,0 +1,35 @@
+.image-slider {
+  display: flex;
+  flex-direction: column;
+
+  .image-list {
+    position: relative;
+    height: 380px;
+    border: 1px solid #ccc;
+    padding: .5rem 0 .5rem 0;
+  }
+
+  .image_description {
+    padding: 10px;
+    background-color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &-caption {
+      color: #fff;
+      font-size: 12px;
+      width: 580px;
+      line-height: 1.4;
+      padding-left: .5rem;
+    }
+
+    &-caption_number {
+      color: #fff;
+      font-size: 12px;
+      display: flex;
+      justify-content: flex-end;
+      flex: 1;
+    }
+  }
+}

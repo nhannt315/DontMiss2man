@@ -1,0 +1,112 @@
+# These are all the cops that are disabled in the default configuration.
+# encrypt email function uses dynamic finder method, so disabling this check
+Rails/InverseOf:
+  Enabled: false
+
+Rails/DynamicFindBy:
+  Enabled: false
+
+# TODO faced rubocop bug https://github.com/bbatsov/rubocop/issues/4751
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/CreateTableWithTimestamps:
+  Enabled: false
+
+Style/InlineComment:
+  Description: "Avoid inline comments."
+  Enabled: false
+
+Style/MethodCalledOnDoEndBlock:
+  Description: "Avoid chaining a method call on a do...end block."
+  Enabled: false
+
+Style/SymbolArray:
+  Description: "Use %i or %I for arrays of symbols."
+  Enabled: false
+
+Style/Documentation:
+  Description: "Document classes and non-namespace modules."
+  Enabled: false
+
+Layout/EmptyLinesAroundAccessModifier:
+  Description: "Keep blank lines around access modifiers."
+  Enabled: false
+
+Style/EmptyLiteral:
+  Description: "Prefer literals to Array.new/Hash.new/String.new."
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Description: "Checks style of children classes and modules."
+  Enabled: false
+
+Metrics/ClassLength:
+  Description: "Avoid classes longer than 100 lines of code."
+  Enabled: false
+
+Metrics/MethodLength:
+  Description: "Avoid methods longer than 10 lines of code."
+  Enabled: false
+
+Metrics/ParameterLists:
+  Description: "Avoid parameter lists longer than three or four parameters."
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Description: "Avoid complex methods."
+  Enabled: false
+
+Layout/AlignArray:
+  Description: >-
+    Align the elements of an array literal if they span more than
+    one line.
+  Enabled: false
+
+Layout/EmptyLineAfterGuardClause:
+  Description: "Add empty line after guard clause."
+  Enabled: false
+
+Layout/SpaceBeforeBlockBraces:
+  Description: >-
+    Checks that the left block brace has or doesn't have space
+    before it.
+  Enabled: false
+
+Style/RedundantCondition:
+  Enabled: false
+
+Rails/HelperInstanceVariable:
+  Enabled: false
+
+Layout/AlignArguments:
+  Enabled: false
+
+Rails/LinkToBlank:
+  Enabled: false
+
+Style/RedundantPercentQ:
+  Description: "Checks for %q/%Q when single quotes or double quotes would do."
+  Enabled: false
+
+Naming:
+  Description: Check the naming of accessor methods for get_/set_.
+  Enabled: false
+
+#################### Lint ################################
+### Warnings
+Lint/AssignmentInCondition:
+  Description: "Don't use assignment in conditions."
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/LetSetup:
+  Enabled: false
