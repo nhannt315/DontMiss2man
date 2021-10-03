@@ -12,6 +12,12 @@ interface ILoginResponseData {
   email: string;
 }
 
+interface IRegistrationRequest {
+  email: string;
+  password: string;
+  password_confirmation: string;
+}
+
 class AuthService {
   login(email: string, password: string) {
     const payload = { email, password };
@@ -29,7 +35,10 @@ class AuthService {
       confirm_success_url: process.env.REACT_APP_CONFIRM_SUCCESS_URL,
     };
 
-    return axios.post('/auth', payload);
+    return axios.post<IRegistrationRequest, IResponse<ILoginResponseData>>(
+      '/auth/register',
+      payload
+    );
   }
 
   logout(token: AccessToken) {
