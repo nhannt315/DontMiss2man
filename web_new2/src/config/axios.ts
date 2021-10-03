@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { LOCALE_KEY } from 'src/constants/key';
 
 const checkContainQuery = (url: string): boolean => {
@@ -26,16 +26,11 @@ export const configureAxios = (baseUrl: string): void => {
   );
 
   axios.interceptors.response.use(
-    (response) => {
-      const newRes = response;
-      const resData: AxiosResponse = response.data;
-      newRes.data = resData.data;
-      return newRes;
-    },
+    (response) => response,
     (error) => {
       const { response } = error;
       if (response) {
-        alert(response);
+        console.log(response);
       }
     }
   );

@@ -1,15 +1,16 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import useTranslation from 'next-translate/useTranslation';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import Warning from 'src/assets/svg/Warning.svg';
-import axios from 'axios';
-import { configureAxios } from 'src/config/axios';
-
+import { useAuth } from 'src/hooks/auth';
 import AuthService from 'src/services/api/auth';
+import { setAccessToken } from 'src/utils/cookie';
 
 const LoginForm: React.FC = () => {
+  const router = useRouter();
   const { t } = useTranslation('auth');
   const { register, handleSubmit, formState, setError } = useForm<{
     email: string;
@@ -26,19 +27,19 @@ const LoginForm: React.FC = () => {
       })
     ),
   });
+  const { setToken, setEmail } = useAuth();
 
   const onSubmit = handleSubmit(async (data) => {
-    configureAxios('localhost:4000/api/v1');
-    console.log(axios.defaults.baseURL);
-
     AuthService.login(data.email, data.password)
       .then((response) => {
-        console.log(response.data);
+        setAccessToken(response.data.token);
+        setToken(response.data.token);
+        setEmail(response.data.email);
+        router.push('/');
       })
       .catch((e) => {
         console.log(e);
       });
-    setError('password', { message: '認証に失敗しました' });
   });
 
   return (
