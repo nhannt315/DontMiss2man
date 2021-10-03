@@ -21,6 +21,7 @@ gem "rack-cors"
 gem "active_hash"
 gem "parallel"
 gem "graphql"
+gem "jwt"
 
 group :test do
   gem "factory_bot_rails"

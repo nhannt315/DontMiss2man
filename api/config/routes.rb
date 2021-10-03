@@ -11,6 +11,9 @@ Rails.application.routes.draw do
           post "delete"
         end
       end
+
+      post "/auth/login", to: "authentications#login"
+      post "/auth/register", to: "authentications#register"
     end
   end
 end
