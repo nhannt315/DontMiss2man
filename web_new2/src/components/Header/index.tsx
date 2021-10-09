@@ -13,7 +13,6 @@ const Header: React.FC<Props> = ({ show }) => {
   const { t } = useTranslation('auth');
   const router = useRouter();
   const { email, token } = useAuth();
-
   return (
     <div
       className="flex flex-row w-full bg-white border-1 shadow-sm py-2"

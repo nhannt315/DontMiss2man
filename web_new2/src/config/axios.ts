@@ -1,17 +1,21 @@
 import axios from 'axios';
-import { LOCALE_KEY } from 'src/constants/key';
+import { NextPageContext } from 'next';
+import { getLocale } from 'src/utils/cookie';
 
 const checkContainQuery = (url: string): boolean => {
   const pattern = new RegExp(/\?.+=.*/g);
   return pattern.test(url);
 };
 
-export const configureAxios = (baseUrl: string): void => {
+export const configureAxios = (
+  baseUrl: string,
+  ctx?: NextPageContext
+): void => {
   axios.defaults.baseURL = baseUrl;
   axios.interceptors.request.use(
     (config) => {
       const newConfig = config;
-      const locale = localStorage.getItem(LOCALE_KEY) || 'ja';
+      const locale = getLocale(ctx);
       const localeQuery = checkContainQuery(newConfig.url)
         ? `&locale=${locale}`
         : `?locale=${locale}`;

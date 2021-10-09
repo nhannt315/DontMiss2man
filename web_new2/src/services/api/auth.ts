@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AccessToken, generateRequestHeader } from '../token';
+import { generateRequestHeader } from '../utils';
 import { IResponse } from 'src/services/response';
 
 interface ILoginRequest {
@@ -41,7 +41,7 @@ class AuthService {
     );
   }
 
-  logout(token: AccessToken) {
+  logout(token: string) {
     return axios.delete('/auth/sign_out', {
       headers: generateRequestHeader(token),
     });

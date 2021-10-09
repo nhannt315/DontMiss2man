@@ -14,6 +14,12 @@ Rails.application.routes.draw do
 
       post "/auth/login", to: "authentications#login"
       post "/auth/register", to: "authentications#register"
+
+      resources :users do
+        collection do
+          get "info"
+        end
+      end
     end
   end
 end

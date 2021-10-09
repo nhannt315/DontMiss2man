@@ -1,9 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Header from 'src/components/Header';
+import { IUserInfo } from 'src/types/user';
+import { useAuth } from 'src/hooks/auth';
 
-const MainLayout: React.FC = ({ children }) => {
+interface IProps {
+  userInfo?: IUserInfo;
+}
+
+const MainLayout: React.FC<IProps> = ({ userInfo, children }) => {
   const [showHeader, setShowHeader] = useState<boolean>(true);
+  const { setEmail, setToken } = useAuth();
+
+  useEffect(() => {
+    if (userInfo) {
+      setEmail(userInfo.email);
+      setToken(userInfo.token);
+    }
+  }, [setEmail, setToken, userInfo]);
 
   return (
     <div id="app-bar" style={{ height: '100vh' }}>
