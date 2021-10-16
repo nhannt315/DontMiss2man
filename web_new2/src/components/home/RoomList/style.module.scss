@@ -1,0 +1,31 @@
+.reikin {
+  &::before {
+    content: '礼';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #999;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 16px;
+    margin-right: 0.4rem;
+  }
+
+  margin-bottom: 7px;
+}
+
+.shikikin {
+  &::before {
+    content: '敷';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    background: #999;
+    color: #fff;
+    font-size: 12px;
+    text-align: center;
+    line-height: 16px;
+    margin-right: 0.4rem;
+  }
+}

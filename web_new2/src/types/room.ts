@@ -1,0 +1,32 @@
+export interface IRoom {
+  id: number;
+  suumo_id: string;
+  building_id: number;
+  agent_id: number;
+  rent_fee: number;
+  reikin: number;
+  shikikin: number;
+  management_cost: number;
+  caution_fee: number;
+  layout_image_url: string;
+  size: number;
+  direction: string;
+  facilities: string;
+  floor: number;
+  car_park: string;
+  condition: string;
+  note: string;
+  layout: string;
+  layout_detail: string;
+  deal_type: string;
+  move_in_time: Date;
+  move_in: string;
+  damage_insurance: string;
+  guarantor: string;
+  other_fees: string;
+  other_initial_fees: string;
+  last_update: Date;
+  suumo_link: string;
+  created_at: Date;
+  updated_at: Date;
+}

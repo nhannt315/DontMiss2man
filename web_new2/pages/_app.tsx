@@ -7,7 +7,7 @@ import { BASE_API_URL, SSR_API_URL } from 'src/constants/endpoint';
 import { AuthProvider } from 'src/hooks/auth';
 import Layout from 'src/components/Layout';
 import UserService from 'src/services/api/user';
-import { getAccessToken } from 'src/utils/cookie';
+import { getAccessToken, removeAccessToken } from 'src/utils/cookie';
 import { IUserInfo } from 'src/types/user';
 import 'src/style.css';
 
@@ -32,6 +32,7 @@ const MyApp = ({
       })
       .catch((err) => {
         console.log(err);
+        removeAccessToken();
       });
   }, [accessToken]);
 
