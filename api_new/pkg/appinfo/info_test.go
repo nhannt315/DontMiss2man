@@ -13,7 +13,7 @@ func TestGetValue(t *testing.T) {
 	}{
 		{"PackageRootPath", func() interface{} {
 			return PackageRootPath()
-		}, "github.com/moneyforward/consumption_tax_api"},
+		}, "github.com/nhannt315/real_estate_api"},
 	}
 	for _, test := range tests {
 		t.Run(test.name, func(t *testing.T) {
