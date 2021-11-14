@@ -82,3 +82,6 @@ reset-db: clear-db-data
 	$(DOCKER_BUILD_BASE) rm -s -v -f db
 	make start-db
 	make migration-up
+
+go-generate:
+	@$(GOMOD) go generate ./...
