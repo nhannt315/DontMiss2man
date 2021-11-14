@@ -1,0 +1,5 @@
+{
+  // styled-jsxを効かせるために必要
+  // ref: https://github.com/vercel/styled-jsx/issues/498#issuecomment-426867837
+  "presets": ["next/babel"]
+}
