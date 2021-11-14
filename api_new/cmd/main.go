@@ -7,6 +7,7 @@ import (
 
 	"github.com/nhannt315/real_estate_api/pkg/appinfo"
 	pkgconf "github.com/nhannt315/real_estate_api/pkg/config"
+	"github.com/nhannt315/real_estate_api/pkg/datetime"
 	"github.com/nhannt315/real_estate_api/pkg/errors"
 	"github.com/nhannt315/real_estate_api/pkg/goroutine"
 	goroutine_interceptor "github.com/nhannt315/real_estate_api/pkg/goroutine/interceptors"
@@ -63,10 +64,48 @@ func doInit(ctx context.Context) error {
 	// handle server stopping
 	initialize.WaitForServerStop(ctx, logger)
 
+	// register app & db location to clarify the app and db layer timezone
+	if err = registerAppLocation(appConf.AppLocation); err != nil {
+		return err
+	}
+	if err = registerDBLocation(appConf.DBConfig.Location); err != nil {
+		return err
+	}
+
 	// 通常の停止のためshutdownログ出力前に終了処理する
 	shutdownTasks.ExecuteAll(ctx)
 
 	logger.Info(ctx, "server shutdown gracefully")
+
+	return nil
+}
+
+// registerAppLocation registers location by given name
+// to all packages that need registering location
+// to themselves as app location.
+func registerAppLocation(appLocStr string) error {
+	appLoc, err := datetime.LoadLocation(appLocStr)
+	if err != nil {
+		return errors.Wrapf(err, "cannot load app location %s", appLocStr)
+	}
+	if err = datetime.SetAppLocation(appLoc); err != nil {
+		return errors.Wrap(err, "cannot set app location to times package")
+	}
+
+	return nil
+}
+
+// registerDBLocation registers location by given name
+// to all packages that need registering location
+// to themselves as db location.
+func registerDBLocation(dbLocStr string) error {
+	dbLoc, err := datetime.LoadLocation(dbLocStr)
+	if err != nil {
+		return errors.Wrapf(err, "cannot load database location %s", dbLocStr)
+	}
+	if err = datetime.SetDBLocation(dbLoc); err != nil {
+		return errors.Wrap(err, "cannot set database location to times package")
+	}
 
 	return nil
 }
