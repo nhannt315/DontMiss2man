@@ -23,7 +23,7 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-row container mx-auto pt-4 bg-white mt-2 h-full px-6">
       <BuildingList className="w-8/12" list={buildingList} />
-      <SearchDetail className="w-4/12" />
+      <SearchDetail className="w-4/12 h-auto" />
     </div>
   );
 };
