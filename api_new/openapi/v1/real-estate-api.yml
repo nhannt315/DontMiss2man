@@ -1,0 +1,23 @@
+openapi: 3.0.3
+info:
+  title: real estate REST API
+  description: |
+    # Features
+  contact:
+    name: DontMiss2Man
+    url: https://github.com/nhannt315/DontMiss2Man
+  version: 1.0.0
+servers:
+  # We treat OAS2 host + basePath the same as OAS3 server.url, so we do not
+  # require them to go in the URL. If you have a base path of api/v1 and your path is defined as hello,
+  # then a request to http://localhost:4010/hello would work, but http://localhost:4010/api/v1/hello will fail.
+  # This confuses some, but the other way was confusing to others.
+  # Check the default output of Prism CLI to see what URLs you have available.
+  # https://hub.docker.com/r/stoplight/prism/#-roadmap
+  - url: http://localhost:{port}
+    description: Local Development
+    variables:
+      port:
+        default: "4000"
+        enum:
+          - "4000"

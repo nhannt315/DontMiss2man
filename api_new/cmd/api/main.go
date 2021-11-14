@@ -18,6 +18,7 @@ import (
 	"github.com/nhannt315/real_estate_api/internal/initialize"
 
 	main_db "github.com/nhannt315/real_estate_api/internal/initialize/db"
+	main_oapi "github.com/nhannt315/real_estate_api/internal/initialize/openapi"
 )
 
 func main() {
@@ -41,8 +42,6 @@ func doInit(ctx context.Context) error {
 	rb := rollbar.NewClient(appConf.Rollbar, appinfo.SimpleVersion())
 	logger := zap.NewLogger(appConf.Logger, rb)
 
-	logger.Infof(ctx, "Real estate api server started at port %d", 4000)
-
 	shutdownTasks := initialize.NewShutdownTasks(logger)
 
 	defer func() {
@@ -61,9 +60,6 @@ func doInit(ctx context.Context) error {
 	}
 	shutdownTasks.Add(dbTask)
 
-	// handle server stopping
-	initialize.WaitForServerStop(ctx, logger)
-
 	// register app & db location to clarify the app and db layer timezone
 	if err = registerAppLocation(appConf.AppLocation); err != nil {
 		return err
@@ -71,6 +67,19 @@ func doInit(ctx context.Context) error {
 	if err = registerDBLocation(appConf.DBConfig.Location); err != nil {
 		return err
 	}
+
+	oapiServerTask, err := main_oapi.Initialize(ctx, logger, appConf.OpenAPIConfig)
+	if err != nil {
+		return err
+	}
+	err = oapiServerTask.Start(ctx)
+	if err != nil {
+		return err
+	}
+	shutdownTasks.Add(oapiServerTask)
+
+	// handle server stopping
+	initialize.WaitForServerStop(ctx, logger)
 
 	// 通常の停止のためshutdownログ出力前に終了処理する
 	shutdownTasks.ExecuteAll(ctx)

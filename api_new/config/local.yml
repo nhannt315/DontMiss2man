@@ -27,3 +27,5 @@ db:
   max_idle_conn: 2
   # Avoid packet error: https://github.com/go-sql-driver/mysql/issues/674
   conn_max_lifetime: 60s
+openapi:
+  address: ":4000"
