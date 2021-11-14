@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/cenkalti/backoff/v4 v4.1.2
 	github.com/go-sql-driver/mysql v1.6.0
+	github.com/golang/mock v1.6.0
 	github.com/jinzhu/configor v1.2.1
 	github.com/pkg/errors v0.9.1
 	github.com/rollbar/rollbar-go v1.4.2
