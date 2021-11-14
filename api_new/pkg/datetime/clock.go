@@ -1,3 +1,5 @@
+//go:generate $GOBIN/mockgen -source=$GOFILE -destination=mock/mock_$GOFILE -package=mock_$GOPACKAGE
+
 package datetime
 
 import (
