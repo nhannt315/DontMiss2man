@@ -5,6 +5,8 @@ import (
 	"net/http"
 
 	"github.com/nhannt315/real_estate_api/internal/openapi"
+	oapilog "github.com/nhannt315/real_estate_api/internal/openapi/log"
+	oapi_middlewares "github.com/nhannt315/real_estate_api/internal/openapi/middlewares"
 	"github.com/nhannt315/real_estate_api/pkg/errors"
 	"github.com/nhannt315/real_estate_api/pkg/goroutine"
 	"github.com/nhannt315/real_estate_api/pkg/logs"
@@ -21,7 +23,15 @@ func Initialize(
 	logger logs.Logger,
 	apiServerConfig *openapi.Config,
 ) (*Task, error) {
-	apiServer := openapi.NewServer()
+
+	oapiLogger := oapilog.NewLogger(logger)
+
+	apiServer := openapi.NewServer(oapiLogger)
+	apiServer.RegisterMiddleware(
+		oapi_middlewares.NewRecover(logger),
+		oapi_middlewares.NewContext(),
+		oapi_middlewares.NewLogger(oapiLogger),
+	)
 
 	return &Task{server: apiServer, logger: logger, apiServerConfig: apiServerConfig}, nil
 }
