@@ -1,0 +1,8 @@
+.idea
+/bin
+.env
+
+deployments/db/data/*
+
+# colonyのファイル
+*.injected.yml

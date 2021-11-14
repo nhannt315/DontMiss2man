@@ -1,0 +1,22 @@
+version: "3"
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./deployments/db/data:/var/lib/mysql
+      - ./deployments/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+      - ./deployments/db/conf.d:/etc/mysql/conf.d
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+    ports:
+      - "63306:3306"
+  migration:
+    restart: "no"
+    build:
+      context: .
+      dockerfile: ./deployments/migration/Dockerfile
+    env_file:
+      - deployments/api/local.docker.env
+    volumes:
+      # このコンテナで作ったmigrateファイルをローカルディレクトリに置きたいので
+      - ./deployments/migration/migrations:/db/migrations
