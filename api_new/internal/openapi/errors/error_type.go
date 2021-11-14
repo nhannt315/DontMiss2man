@@ -21,15 +21,12 @@ func (t *ErrorType) Title() string {
 }
 
 var (
-	ErrorTypeValidationFailed  = &ErrorType{http.StatusBadRequest, "validation_failed", "Validation Failed"}
+	// ErrorTypeValidationFailed is the error type for validation errors.
+	ErrorTypeValidationFailed = &ErrorType{http.StatusBadRequest, "validation_failed", "Validation Failed"}
+	// ErrorTypeInvalidCredential is the error type for invalid credentials.
 	ErrorTypeInvalidCredential = &ErrorType{http.StatusUnauthorized, "invalid_credential", "Invalid Credential"}
-	ErrorTypeDataNotFound      = &ErrorType{http.StatusNotFound, "data_not_found", "Data Not Found"}
-	ErrorTypeInternal          = &ErrorType{http.StatusInternalServerError, "internal", "Internal"}
+	// ErrorTypeDataNotFound is the error type for data not found.
+	ErrorTypeDataNotFound = &ErrorType{http.StatusNotFound, "data_not_found", "Data Not Found"}
+	// ErrorTypeInternal is the error type for internal errors.
+	ErrorTypeInternal = &ErrorType{http.StatusInternalServerError, "internal", "Internal"}
 )
-
-var allErrorTypes = []*ErrorType{
-	ErrorTypeValidationFailed,
-	ErrorTypeInvalidCredential,
-	ErrorTypeDataNotFound,
-	ErrorTypeInternal,
-}

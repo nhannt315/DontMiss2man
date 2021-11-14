@@ -39,7 +39,7 @@ func Initialize(
 func (t *Task) Start(ctx context.Context) (err error) {
 	goroutine.GoWithContext(ctx, func(innerCtx context.Context) {
 		t.logger.Infof(innerCtx, "Start api server at addr %s", t.apiServerConfig.Address)
-		if err := t.server.Start(t.apiServerConfig.Address); err != nil && err != http.ErrServerClosed {
+		if err := t.server.Start(t.apiServerConfig.Address); err != nil && errors.Is(err, http.ErrServerClosed) {
 			t.logger.Error(innerCtx, errors.Wrapf(err, "Start api server at addr %s", t.apiServerConfig.Address))
 			return
 		}

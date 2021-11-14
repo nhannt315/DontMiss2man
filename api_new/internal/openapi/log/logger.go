@@ -27,7 +27,7 @@ func MaskHeaderKeys(keys ...string) Option {
 	}
 }
 
-// MaskResponseKeys 値をマスクしたいResponseのFieldを指定する
+// MaskRequestBodyKeys 値をマスクしたいResponseのFieldを指定する
 func MaskRequestBodyKeys(keys ...string) Option {
 	return func(l *Logger) {
 		l.maskResponseKeys = pkgstrings.GenerateRegexs(keys...)

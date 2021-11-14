@@ -11,6 +11,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/rollbar/rollbar-go v1.4.2
 	go.uber.org/zap v1.19.1
+	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa
 	gopkg.in/yaml.v2 v2.4.0
 	gorm.io/driver/mysql v1.1.3
 	gorm.io/gorm v1.22.3
