@@ -3,6 +3,8 @@ package datetime
 import (
 	"database/sql"
 	"database/sql/driver"
+	"encoding/json"
+	"fmt"
 	"time"
 )
 
@@ -43,4 +45,47 @@ func (t *Time) Value() (driver.Value, error) {
 	timeToSave := t.value.In(getDBLocation())
 
 	return timeToSave.Format(iso8601Layout), nil
+}
+
+// ToTime converts Date to time.Time in UTC location.
+func (t *Time) ToTime() time.Time {
+	if !t.IsValid() {
+		return time.Time{}
+	}
+	return *t.value
+}
+
+// ToTimePtr time.Timeのポインタを返す
+func (t *Time) ToTimePtr() *time.Time {
+	return t.value
+}
+
+// Format returns format of Date
+func (t *Time) Format(layout string) string {
+	return t.ToTime().Format(layout)
+}
+
+func (t *Time) FormatISO8601() string {
+	if !t.IsValid() {
+		return ""
+	}
+	return t.Format(iso8601Layout)
+}
+
+func (t *Time) String() string {
+	return t.FormatISO8601()
+}
+
+func (t Time) MarshalJSON() ([]byte, error) {
+	return []byte(fmt.Sprintf("%q", t.String())), nil
+}
+
+func (t *Time) UnmarshalJSON(data []byte) error {
+	var value time.Time
+	err := json.Unmarshal(data, &value)
+	if err != nil {
+		return err
+	}
+	t.value = &value
+	return nil
 }

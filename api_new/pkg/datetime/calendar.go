@@ -6,6 +6,7 @@ type Calendar interface {
 	CurrentDate() *Date
 	NewDate(year int, month time.Month, day int) *Date
 	ParseDate(s string, layout string) (*Date, error)
+	NewNullDate(d *Date) *NullDate
 }
 
 type calendar struct{}
@@ -29,7 +30,6 @@ func (c *calendar) NewDate(year int, month time.Month, day int) *Date {
 	}
 }
 
-// ParseDate return new Date from given date-string and layout-string.
 func (c *calendar) ParseDate(s string, layout string) (*Date, error) {
 	if layout == "" {
 		layout = defaultLayout
@@ -41,4 +41,12 @@ func (c *calendar) ParseDate(s string, layout string) (*Date, error) {
 	}
 
 	return &Date{value: &t}, nil
+}
+
+func (c *calendar) NewNullDate(d *Date) *NullDate {
+	if d == nil {
+		return &NullDate{Valid: false}
+	}
+
+	return &NullDate{Date: *d, Valid: true}
 }

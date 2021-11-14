@@ -10,6 +10,7 @@ type Clock interface {
 	Now() *Time
 	NewTime(year int, month time.Month, day int, hour, min, sec, nsec int) *Time
 	ParseTime(layout, value string) (*Time, error)
+	NewNullTime(t *Time) *NullTime
 }
 
 type clock struct{}
@@ -35,4 +36,11 @@ func (c *clock) ParseTime(layout, value string) (*Time, error) {
 	}
 
 	return &Time{value: &timeValue}, nil
+}
+
+func (c *clock) NewNullTime(t *Time) *NullTime {
+	if t == nil {
+		return &NullTime{Valid: false}
+	}
+	return &NullTime{Time: *t, Valid: true}
 }
