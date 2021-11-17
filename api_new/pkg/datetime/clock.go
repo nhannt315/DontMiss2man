@@ -10,6 +10,7 @@ import (
 
 type Clock interface {
 	Now() *Time
+	FromNow(seconds int) *Time
 	NewTime(year int, month time.Month, day int, hour, min, sec, nsec int) *Time
 	ParseTime(layout, value string) (*Time, error)
 }
@@ -22,6 +23,11 @@ func NewClock() Clock {
 
 func (c *clock) Now() *Time {
 	timeValue := time.Now().In(getAppLocation())
+	return &Time{value: timeValue}
+}
+
+func (c *clock) FromNow(seconds int) *Time {
+	timeValue := time.Now().Add(time.Duration(seconds) * time.Second).In(getAppLocation())
 	return &Time{value: timeValue}
 }
 

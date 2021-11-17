@@ -29,3 +29,10 @@ db:
   conn_max_lifetime: 60s
 openapi:
   address: ":4000"
+key_id: "real-estate"
+jwt:
+  key_id: "real-estate"
+  private_key: ""
+  expiration: 3600
+  issuer: "real-estate"
+  singing_alg: RS256
