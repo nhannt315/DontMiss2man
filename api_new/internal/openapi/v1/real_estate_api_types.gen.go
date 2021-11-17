@@ -25,10 +25,10 @@ const (
 // Authentication response data
 type AuthenticationResponse struct {
 	// User email
-	Email *string `json:"email,omitempty"`
+	Email string `json:"email"`
 
 	// JWT token
-	Token *string `json:"token,omitempty"`
+	Token string `json:"token"`
 }
 
 // エラー

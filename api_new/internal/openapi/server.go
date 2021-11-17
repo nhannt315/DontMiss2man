@@ -41,6 +41,10 @@ func (s *Server) RegisterMiddleware(mw ...echo.MiddlewareFunc) {
 	s.e.Use(mw...)
 }
 
+func (s *Server) Group(path string, middleware ...echo.MiddlewareFunc) *echo.Group {
+	return s.e.Group(path, middleware...)
+}
+
 // RegisterErrorHandler エラーハンドラを登録する
 func RegisterErrorHandler(h ErrorHandler) {
 	errorHandlers = append(errorHandlers, h)

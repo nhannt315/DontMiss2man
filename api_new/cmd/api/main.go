@@ -16,6 +16,7 @@ import (
 
 	"github.com/nhannt315/real_estate_api/internal/config"
 	"github.com/nhannt315/real_estate_api/internal/initialize"
+	"github.com/nhannt315/real_estate_api/internal/repository"
 
 	main_db "github.com/nhannt315/real_estate_api/internal/initialize/db"
 	main_oapi "github.com/nhannt315/real_estate_api/internal/initialize/openapi"
@@ -68,7 +69,9 @@ func doInit(ctx context.Context) error {
 		return err
 	}
 
-	oapiServerTask, err := main_oapi.Initialize(ctx, logger, appConf.OpenAPIConfig)
+	reg := repository.NewRegistry(dbTask.GormDB())
+
+	oapiServerTask, err := main_oapi.Initialize(ctx, logger, &appConf, reg)
 	if err != nil {
 		return err
 	}

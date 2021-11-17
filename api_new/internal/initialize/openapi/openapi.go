@@ -4,11 +4,17 @@ import (
 	"context"
 	"net/http"
 
+	"github.com/nhannt315/real_estate_api/internal/config"
 	"github.com/nhannt315/real_estate_api/internal/openapi"
 	oapilog "github.com/nhannt315/real_estate_api/internal/openapi/log"
 	oapi_middlewares "github.com/nhannt315/real_estate_api/internal/openapi/middlewares"
+	openapiv1_server "github.com/nhannt315/real_estate_api/internal/openapi/v1/controllers"
+	"github.com/nhannt315/real_estate_api/internal/repository"
+	"github.com/nhannt315/real_estate_api/internal/services/jwt"
+	"github.com/nhannt315/real_estate_api/pkg/datetime"
 	"github.com/nhannt315/real_estate_api/pkg/errors"
 	"github.com/nhannt315/real_estate_api/pkg/goroutine"
+	"github.com/nhannt315/real_estate_api/pkg/jwk"
 	"github.com/nhannt315/real_estate_api/pkg/logs"
 )
 
@@ -21,7 +27,8 @@ type Task struct {
 func Initialize(
 	ctx context.Context,
 	logger logs.Logger,
-	apiServerConfig *openapi.Config,
+	appConfig *config.Config,
+	reg repository.Registry,
 ) (*Task, error) {
 
 	oapiLogger := oapilog.NewLogger(logger)
@@ -33,7 +40,28 @@ func Initialize(
 		oapi_middlewares.NewLogger(oapiLogger),
 	)
 
-	return &Task{server: apiServer, logger: logger, apiServerConfig: apiServerConfig}, nil
+	dateTimeManager := datetime.NewManager()
+	jwkHelper, err := jwk.NewHelper(appConfig.JWTConfig.KeyID, appConfig.JWTConfig.PrivateKey)
+	if err != nil {
+		return nil, err
+	}
+
+	jwtGenerator, err := jwt.NewGenerator(appConfig.JWTConfig, jwkHelper, dateTimeManager)
+	if err != nil {
+		return nil, err
+	}
+
+	ictx := &openapiv1_server.InitializeContext{
+		Logger:          logger,
+		Reg:             reg,
+		AppConf:         appConfig,
+		JWTGenerator:    jwtGenerator,
+		DateTimeManager: dateTimeManager,
+	}
+
+	openapiv1_server.RegisterHandler(ictx, apiServer)
+
+	return &Task{server: apiServer, logger: logger, apiServerConfig: appConfig.OpenAPIConfig}, nil
 }
 
 func (t *Task) Start(ctx context.Context) (err error) {
