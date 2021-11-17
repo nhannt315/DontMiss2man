@@ -105,6 +105,9 @@ components:
         email:
           description: "User email"
           type: string
+      required:
+        - token
+        - email
     Error:
       description: エラー
       type: object

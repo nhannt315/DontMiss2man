@@ -1,0 +1,24 @@
+version: '3.0'
+
+# defines the containers to be started
+services:
+  apidoc:
+    image: swaggerapi/swagger-ui
+    container_name: swagger-ui
+    # HOST:CONTAINER
+    ports:
+      - "8001:8080"
+    volumes:
+      # Acocording to my research, docker swagger-ui image seems to use nginx.
+      - ./v1:/usr/share/nginx/html/swagger
+    environment:
+      API_URL: swagger/real-estate-api.yml
+  prism:
+    build:
+      context: ./prism
+      dockerfile: Dockerfile
+    container_name: prism
+    volumes:
+      - ./v1/real-estate-api.yml:/real-estate-api.yml
+    ports:
+      - 4010:4010
