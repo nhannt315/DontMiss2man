@@ -21,3 +21,203 @@ servers:
         default: "4000"
         enum:
           - "4000"
+paths:
+  /auth/login:
+    post:
+      operationId: login
+      summary: sign user in
+      description: sign user in and get token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticationResponse"
+        "401":
+          $ref: "#/components/responses/InvalidCredential"
+  /auth/register:
+    post:
+      operationId: register
+      summary: register user
+      description: register user and get token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegistrationRequest"
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthenticationResponse"
+        "400":
+          $ref: "#/components/responses/BadRequest"
+
+components:
+  schemas:
+    LoginRequest:
+      description: Login request data
+      type: object
+      properties:
+        email:
+          description: "User email"
+          type: string
+        password:
+          description: "User password"
+          type: string
+      required:
+        - email
+        - password
+    RegistrationRequest:
+      description: User registration request data
+      type: object
+      properties:
+        email:
+          description: "User email"
+          type: string
+        password:
+          description: "User password"
+          type: string
+        password_confirmation:
+          description: "User password confirmation"
+          type: string
+      required:
+        - email
+        - password
+        - password_confirmation
+    AuthenticationResponse:
+      description: Authentication response data
+      type: object
+      properties:
+        token:
+          description: "JWT token"
+          type: string
+        email:
+          description: "User email"
+          type: string
+    Error:
+      description: エラー
+      type: object
+      properties:
+        type:
+          type: string
+          enum:
+            - validation_failed
+            - operation_not_completed
+            - invalid_credential
+            - permission_denied
+            - request_not_found
+            - data_creation_failed
+            - unsupported_media_type
+            - internal_error
+          default: internal_error
+          description: >
+            エラー種別:
+              * `validation_failed`: リクエストボディやパラメータのバリデーションエラー
+              * `operation_not_completed`: 処理待ちや処理中のリクエストに対し、ファイルダウンロードや削除を要求した
+              * `invalid_credential`: 認証・認可情報が不正
+              * `permission_denied`: APIを実行する権限がない
+              * `request_not_found`: 指定された作成要求IDが存在しない
+              * `data_creation_failed`: 作成要求を受けたが、その後の処理でデータやファイル生成に失敗した
+              * `unsupported_media_type`: APIでサポートされていないリクエスト形式。Content-Type が不正な場合など。
+              * `internal_error`: 内部エラー
+        title:
+          description: エラー概要
+          type: string
+        detail:
+          description: エラーの詳細な説明
+          type: string
+        errors:
+          description: エラー詳細のリスト
+          type: array
+          items:
+            $ref: "#/components/schemas/ErrorDetail"
+          minItems: 0
+      required:
+        - type
+        - title
+        - detail
+    ErrorDetail:
+      description: エラー詳細
+      type: object
+      properties:
+        resource:
+          description: エラーとなったリソース
+          type: string
+        name:
+          description: エラーとなった項目
+          type: string
+        reason:
+          description: エラー理由
+          type: string
+      required:
+        - resource
+        - name
+        - reason
+  responses:
+    BadRequest:
+      description: パラメータ不正などAPI呼び出し側理由のエラー
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            type: validation_failed
+            title: validation failed
+            errors:
+              - resouce: request
+                name: requestId
+                reason: an invalid interger
+    InvalidCredential:
+      description: 認証情報が不正
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            type: invalid_credential
+            title: invalid credential
+            errors:
+              - resouce: request
+                name: requestId
+                reason: an invalid interger
+    Forbidden:
+      description: アクセス権限がない場合のエラー
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            type: permission_denied
+            title: permission denied
+            detail: POST /journal/files not permitted
+    NotFound:
+      description: 指定されたリソースが存在しない場合のエラー
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            type: request_not_found
+            title: request not found
+            detail: request (id=100) is not found
+    UnexpectedError:
+      description: 予期していないエラー
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+          example:
+            type: internal_error
+            title: internal error
+            detail: the server encountered an internal server error

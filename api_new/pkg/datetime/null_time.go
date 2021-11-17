@@ -3,13 +3,21 @@ package datetime
 import "database/sql/driver"
 
 type NullTime struct {
-	Time  Time
+	Time  *Time
 	Valid bool
+}
+
+func NewNullTime(t *Time) NullTime {
+	return NullTime{Time: t, Valid: true}
+}
+
+func NewNullTimePtr(t *Time) *NullTime {
+	return &NullTime{Time: t, Valid: true}
 }
 
 func (t *NullTime) Scan(value interface{}) error {
 	if value == nil {
-		t.Time, t.Valid = Time{}, false
+		t.Valid = false
 		return nil
 	}
 

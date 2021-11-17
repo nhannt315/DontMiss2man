@@ -63,20 +63,6 @@ func (mr *MockCalendarMockRecorder) NewDate(year, month, day interface{}) *gomoc
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewDate", reflect.TypeOf((*MockCalendar)(nil).NewDate), year, month, day)
 }
 
-// NewNullDate mocks base method.
-func (m *MockCalendar) NewNullDate(d *datetime.Date) *datetime.NullDate {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NewNullDate", d)
-	ret0, _ := ret[0].(*datetime.NullDate)
-	return ret0
-}
-
-// NewNullDate indicates an expected call of NewNullDate.
-func (mr *MockCalendarMockRecorder) NewNullDate(d interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewNullDate", reflect.TypeOf((*MockCalendar)(nil).NewNullDate), d)
-}
-
 // ParseDate mocks base method.
 func (m *MockCalendar) ParseDate(s, layout string) (*datetime.Date, error) {
 	m.ctrl.T.Helper()

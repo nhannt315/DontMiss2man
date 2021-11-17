@@ -12,11 +12,11 @@ const iso8601Layout = "2006-01-02T15:04:05Z0700"
 
 // Time 時間
 type Time struct {
-	value *time.Time
+	value time.Time
 }
 
 func (t *Time) IsValid() bool {
-	return t.value != nil
+	return !t.value.IsZero()
 }
 
 func (t *Time) Scan(value interface{}) error {
@@ -30,9 +30,7 @@ func (t *Time) Scan(value interface{}) error {
 		return err
 	}
 
-	newTimeValue := timeValue.In(getAppLocation())
-
-	t.value = &newTimeValue
+	t.value = timeValue.In(getAppLocation())
 
 	return nil
 }
@@ -52,12 +50,12 @@ func (t *Time) ToTime() time.Time {
 	if !t.IsValid() {
 		return time.Time{}
 	}
-	return *t.value
+	return t.value
 }
 
 // ToTimePtr time.Timeのポインタを返す
 func (t *Time) ToTimePtr() *time.Time {
-	return t.value
+	return &t.value
 }
 
 // Format returns format of Date
@@ -86,6 +84,6 @@ func (t *Time) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	t.value = &value
+	t.value = value
 	return nil
 }

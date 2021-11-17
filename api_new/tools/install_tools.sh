@@ -8,6 +8,7 @@ declare -a tools=(
   "golang.org/x/tools/cmd/godoc@v0.1.2"
   "golang.org/x/tools/cmd/goimports@v0.1.2"
   "github.com/golang/mock/mockgen@v1.6.0"
+  "github.com/deepmap/oapi-codegen/cmd/oapi-codegen@v1.9.0"
 )
 
 for package in "${tools[@]}"; do

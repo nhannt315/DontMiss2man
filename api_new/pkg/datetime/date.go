@@ -19,12 +19,12 @@ const defaultLayout = "2006-01-02"
 //	業務ロジックとして便利な func をサポートする。
 //	DBカラムとして利用できる。( database/sql/Scanner, database/sql/driver/Valuer の 実装 )
 type Date struct {
-	value *time.Time
+	value time.Time
 }
 
 // IsValid Check if date is valid
 func (m *Date) IsValid() bool {
-	return m.value != nil
+	return !m.value.IsZero()
 }
 
 // Year returns year of Date
@@ -85,8 +85,7 @@ func (m *Date) Scan(value interface{}) error {
 		day = i
 	}
 
-	newValue := time.Date(year, time.Month(month), day, 0, 0, 0, 0, getDBLocation()).In(getAppLocation())
-	m.value = &newValue
+	m.value = time.Date(year, time.Month(month), day, 0, 0, 0, 0, getDBLocation()).In(getAppLocation())
 
 	return nil
 }
@@ -123,12 +122,12 @@ func (m *Date) ToTime() time.Time {
 	if !m.IsValid() {
 		return time.Time{}
 	}
-	return *m.value
+	return m.value
 }
 
 // ToTimePtr time.Timeのポインタを返す
 func (m *Date) ToTimePtr() *time.Time {
-	return m.value
+	return &m.value
 }
 
 // Compare 2つのDateを比較する
@@ -185,6 +184,6 @@ func (m *Date) UnmarshalJSON(data []byte) error {
 	if err != nil {
 		return err
 	}
-	m.value = &d
+	m.value = d
 	return nil
 }

@@ -35,20 +35,6 @@ func (m *MockClock) EXPECT() *MockClockMockRecorder {
 	return m.recorder
 }
 
-// NewNullTime mocks base method.
-func (m *MockClock) NewNullTime(t *datetime.Time) *datetime.NullTime {
-	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "NewNullTime", t)
-	ret0, _ := ret[0].(*datetime.NullTime)
-	return ret0
-}
-
-// NewNullTime indicates an expected call of NewNullTime.
-func (mr *MockClockMockRecorder) NewNullTime(t interface{}) *gomock.Call {
-	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "NewNullTime", reflect.TypeOf((*MockClock)(nil).NewNullTime), t)
-}
-
 // NewTime mocks base method.
 func (m *MockClock) NewTime(year int, month time.Month, day, hour, min, sec, nsec int) *datetime.Time {
 	m.ctrl.T.Helper()
