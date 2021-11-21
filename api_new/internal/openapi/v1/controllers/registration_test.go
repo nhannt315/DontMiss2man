@@ -3,81 +3,88 @@ package controllers_test
 import (
 	"context"
 	"encoding/json"
-	"github.com/nhannt315/real_estate_api/internal/model"
-	"github.com/nhannt315/real_estate_api/pkg/password"
-	"github.com/stretchr/testify/assert"
-	"testing"
-
 	"github.com/golang/mock/gomock"
+	"github.com/nhannt315/real_estate_api/internal/model"
 	openapiv1 "github.com/nhannt315/real_estate_api/internal/openapi/v1"
 	openapiv1_controllers "github.com/nhannt315/real_estate_api/internal/openapi/v1/controllers"
 	jwt_generator_mock "github.com/nhannt315/real_estate_api/internal/services/jwt/mock"
 	"github.com/nhannt315/real_estate_api/internal/test"
 	openapitest "github.com/nhannt315/real_estate_api/internal/test/openapi"
+	"github.com/stretchr/testify/assert"
+	"testing"
 )
 
-func Test_AuthenticationController_Login(t *testing.T) {
+func TestRegistrationController_Register(t *testing.T) {
 	ctx := context.Background()
-		testHelper := test.NewHelper(t)
+	testHelper := test.NewHelper(t)
 
 	tests := []struct {
 		name                    string
-		prepareMockJWTGenerator func(mockedGenerator *jwt_generator_mock.MockGenerator, userID uint64)
 		prepareTestData         func(userID uint64) error
+		prepareMockJWTGenerator func(mockedGenerator *jwt_generator_mock.MockGenerator, userID uint64)
 		userID                  uint64
-		requestBody             *openapiv1.LoginRequest
+		requestBody             *openapiv1.RegistrationRequest
 		want                    *openapiv1.AuthenticationResponse
 		wantErr                 *openapiv1.Error
 	}{
 		{
-			name: "Email and password are valid",
+			name: "Normal case, all parameters are valid",
 			prepareTestData: func(userID uint64) error {
-				hashedPassword, err := password.HashPassword("123456")
-				if err != nil {
-					return err
-				}
-				return testHelper.Registry().UserRepository().Create(&model.User{
-					ID:             userID,
-					Email:          "test@gmail.com",
-					PasswordDigest: hashedPassword,
-				})
+				return nil
 			},
 			prepareMockJWTGenerator: func(mockedGenerator *jwt_generator_mock.MockGenerator, userID uint64) {
-				mockedGenerator.EXPECT().GenerateJWTString(userID).Return("token", nil)
+				mockedGenerator.EXPECT().GenerateJWTString(gomock.Any()).Return("token", nil)
 			},
-			userID: 23,
-			requestBody: &openapiv1.LoginRequest{
-				Email:    "test@gmail.com",
-				Password: "123456",
+			userID: 321,
+			requestBody: &openapiv1.RegistrationRequest{
+				Email:                "test@mail.com",
+				Password:             "new_password",
+				PasswordConfirmation: "new_password",
 			},
 			want: &openapiv1.AuthenticationResponse{
-				Email: "test@gmail.com",
+				Email: "test@mail.com",
 				Token: "token",
 			},
 		},
 		{
-			name: "Email or Password are not valid",
+			name: "password confirmation is not match",
 			prepareTestData: func(userID uint64) error {
-				hashedPassword, err := password.HashPassword("123456")
+				return nil
+			},
+			prepareMockJWTGenerator: func(mockedGenerator *jwt_generator_mock.MockGenerator, userID uint64) {},
+			userID: 321,
+			requestBody: &openapiv1.RegistrationRequest{
+				Email:                "test@mail.com",
+				Password:             "new_password",
+				PasswordConfirmation: "new_password_not_match",
+			},
+			wantErr: &openapiv1.Error{
+				Detail: "Password not match",
+				Title:  "Bad Request",
+				Type:   "bad_request",
+			},
+		},
+		{
+			name: "email is already used",
+			prepareTestData: func(userID uint64) error {
+				newUser := &model.User{ID: userID, Email: "test@mail.com"}
+				err := testHelper.Registry().UserRepository().WithContext(ctx).Create(newUser)
 				if err != nil {
 					return err
 				}
-				return testHelper.Registry().UserRepository().Create(&model.User{
-					ID:             userID,
-					Email:          "test@gmail.com",
-					PasswordDigest: hashedPassword,
-				})
+				return nil
 			},
 			prepareMockJWTGenerator: func(mockedGenerator *jwt_generator_mock.MockGenerator, userID uint64) {},
-			userID:                  23,
-			requestBody: &openapiv1.LoginRequest{
-				Email:    "test@gmail.com",
-				Password: "wrongpass",
+			userID: 321,
+			requestBody: &openapiv1.RegistrationRequest{
+				Email:                "test@mail.com",
+				Password:             "new_password",
+				PasswordConfirmation: "new_password",
 			},
 			wantErr: &openapiv1.Error{
-				Detail: "Login failed",
-				Title:  "Invalid Credential",
-				Type:   "invalid_credential",
+				Detail: "Email can't be used for registration",
+				Title:  "Bad Request",
+				Type:   "bad_request",
 			},
 		},
 	}
@@ -94,12 +101,12 @@ func Test_AuthenticationController_Login(t *testing.T) {
 
 			jwtGenerator := jwt_generator_mock.NewMockGenerator(ctrl)
 			tt.prepareMockJWTGenerator(jwtGenerator, tt.userID)
+
 			testServer, err := openapitest.NewTestServer(ctx, &openapiv1_controllers.InitializeContext{
 				Logger:       testHelper.Logger(),
 				Reg:          testHelper.Registry(),
 				JWTGenerator: jwtGenerator,
 			})
-
 			if err != nil {
 				t.Error(err)
 				return
@@ -111,10 +118,11 @@ func Test_AuthenticationController_Login(t *testing.T) {
 				return
 			}
 
-			rawResponse := testServer.PostJSON("/auth/login", string(reqBody))
+			rawResponse := testServer.PostJSON("/auth/register", string(reqBody))
 
 			resBody := &openapiv1.AuthenticationResponse{}
 			resError := &openapiv1.Error{}
+
 			err = openapitest.ParseResponse(rawResponse, resBody, resError)
 			if err != nil {
 				t.Error(err)
