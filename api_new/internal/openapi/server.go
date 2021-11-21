@@ -45,6 +45,10 @@ func (s *Server) Group(path string, middleware ...echo.MiddlewareFunc) *echo.Gro
 	return s.e.Group(path, middleware...)
 }
 
+func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	s.e.ServeHTTP(w, r)
+}
+
 // RegisterErrorHandler エラーハンドラを登録する
 func RegisterErrorHandler(h ErrorHandler) {
 	errorHandlers = append(errorHandlers, h)
