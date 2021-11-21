@@ -14,7 +14,7 @@ import (
 	"github.com/pressly/goose"
 )
 
-var testSqlDB *sql.DB
+var testSQLDB *sql.DB
 var testSchemaName string
 var testDBMutex sync.Mutex
 
@@ -22,7 +22,7 @@ func InitializeTestDB(config *config.Config) (func(), error) {
 	testDBMutex.Lock()
 	defer testDBMutex.Unlock()
 
-	if testSqlDB != nil {
+	if testSQLDB != nil {
 		return nil, errors.New("Test database already initialized")
 	}
 
@@ -60,19 +60,19 @@ func initTestDB(config *config.Config) (func(), error) {
 	}
 
 	testSchemaName = schema
-	testSqlDB = mainDBConn
+	testSQLDB = mainDBConn
 
 	logger.Infof(ctx, "create %s", testSchemaName)
 
 	return func() {
 		logger.Infof(ctx, "drop %s", testSchemaName)
 		// nolint: errcheck
-		testSqlDB.Exec("DROP DATABASE " + testSchemaName)
-		err := testSqlDB.Close()
+		testSQLDB.Exec("DROP DATABASE " + testSchemaName)
+		err := testSQLDB.Close()
 		if err != nil {
 			return
 		}
-		testSqlDB = nil
+		testSQLDB = nil
 		testSchemaName = ""
 	}, nil
 }

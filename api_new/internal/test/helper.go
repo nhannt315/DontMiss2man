@@ -53,10 +53,10 @@ func RootDir() string {
 
 func (h *Helper) DB() *gorm.DB {
 	h.testDBOnce.Do(func() {
-		if testSqlDB == nil || testSchemaName == "" {
+		if testSQLDB == nil || testSchemaName == "" {
 			panic("Test database not initialized")
 		}
-		testGormDB, err := db.NewTestDB(h.logger, testSqlDB, h.testConf.Logger.Level)
+		testGormDB, err := db.NewTestDB(h.logger, testSQLDB, h.testConf.Logger.Level)
 		if err != nil {
 			panic(err)
 		}
@@ -76,8 +76,8 @@ func (h *Helper) Registry() repository.Registry {
 }
 
 func (h *Helper) ClearDB(ctx context.Context) error {
-	if testSqlDB != nil {
-		return errors.New("Db connection is not initalized")
+	if testSQLDB == nil {
+		return errors.New("Db connection is not initialized")
 	}
 
 	h.DB().Exec("SET FOREIGN_KEY_CHECKS=0")

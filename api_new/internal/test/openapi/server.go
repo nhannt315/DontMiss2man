@@ -3,7 +3,9 @@ package openapi
 import (
 	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"github.com/nhannt315/real_estate_api/pkg/errors"
 	"net/http"
 	"net/http/httptest"
 
@@ -64,6 +66,19 @@ func (s *TestServer) PostJSON(path, body string, opts ...TestRequestOption) *htt
 	}
 
 	return s.InvokeRequest(req)
+}
+
+func ParseResponse(res *httptest.ResponseRecorder, resData interface{}, resError interface{}) error {
+	rawResBody := res.Body.Bytes()
+	err := json.Unmarshal(rawResBody, resData)
+	if err != nil {
+		return errors.Wrap(err, "Unmarshal response data")
+	}
+	err = json.Unmarshal(rawResBody, resError)
+	if err != nil {
+		return errors.Wrap(err, "Unmarshal response error")
+	}
+	return nil
 }
 
 // TestRequestOption requestへの option指定用func
