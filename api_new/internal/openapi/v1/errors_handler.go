@@ -24,6 +24,7 @@ func NewErrorHandler(logger logs.Logger) openapi.ErrorHandler {
 		if !IsV1Request(ectx.Request()) {
 			return false
 		}
+		// nolint:errorlint
 		if _, ok := err.(*echo.HTTPError); ok {
 			// request path 不正(404 Not Foundなど)の echo のエラーは、そのまま
 			return false
@@ -33,6 +34,7 @@ func NewErrorHandler(logger logs.Logger) openapi.ErrorHandler {
 		statusCode := http.StatusInternalServerError
 		e := openAPIErrorInternal
 
+		// nolint:errorlint
 		if a, ok := err.(errors.APIError); ok {
 			e = newOpenAPIError(a)
 			statusCode = a.ErrorType().HTTPStatusCode()

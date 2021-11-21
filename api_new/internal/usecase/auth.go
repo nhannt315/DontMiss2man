@@ -2,11 +2,11 @@ package usecase
 
 import (
 	"context"
-
 	apperrors "github.com/nhannt315/real_estate_api/internal/errors"
 	"github.com/nhannt315/real_estate_api/internal/model"
 	"github.com/nhannt315/real_estate_api/internal/services/jwt"
 	"github.com/nhannt315/real_estate_api/pkg/errors"
+	"gorm.io/gorm"
 
 	"github.com/nhannt315/real_estate_api/internal/repository"
 	"github.com/nhannt315/real_estate_api/pkg/password"
@@ -57,6 +57,15 @@ func (u *auth) LoginUser(ctx context.Context, email, pwd string) (user *model.Us
 func (u *auth) RegisterUser(ctx context.Context, email, pwd, pwdConfirmation string) (user *model.User, err error) {
 	if pwd != pwdConfirmation {
 		return nil, apperrors.New(apperrors.ErrorTypeBadRequest, "Password not match")
+	}
+
+	// Confirm if email is already used
+	user, err = u.userRepo.WithContext(ctx).FindByEmail(email)
+	if err != nil && !errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
+	}
+	if user != nil {
+		return nil, apperrors.New(apperrors.ErrorTypeBadRequest, "Email can't be used for registration")
 	}
 
 	hashedPassword, err := password.HashPassword(pwd)

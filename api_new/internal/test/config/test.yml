@@ -1,0 +1,38 @@
+logger:
+  level: info
+  format: console
+app_location: "Asia/Tokyo"
+rollbar:
+  token: # tokenを空にしておけばrollbarは無効になる
+  environment: local
+db:
+  driver: mysql
+  port: 63306
+  host: localhost
+  schema: real_estate
+  username: root
+  password:
+  location: "Asia/Tokyo"
+  parse_time: true
+  interpolate_params: true
+  # available tls value: "skip-verify", "true", "false" or ""
+  tls: "false"
+  # Host can be set via env var named DB_HOST
+  # Username can be set via env var named DB_USERNAME
+  # Password can be set via env var named DB_PASSWORD
+  # Ca cert patch can be set via env var named DB_CA_CERT_PATH
+  # mysql max-connections
+  # https://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_max_connections
+  max_open_conn: 5
+  max_idle_conn: 2
+  # Avoid packet error: https://github.com/go-sql-driver/mysql/issues/674
+  conn_max_lifetime: 60s
+openapi:
+  address: ":4000"
+key_id: "real-estate"
+jwt:
+  key_id: "real-estate"
+  private_key: "LS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLQpNSUlDV2dJQkFBS0JnSElDcUk3MFNBaGEzMlJna0pxUWZNRmdoUlIxdUFXUEdGYnpsdWFxMmx0MFIreXp5RTB4CmFyRTFSMXRqY2dYbUZHbzV3enFUK0o2amVPcFNRNVV0TmxGSllib2pGTHZ1VWtaT1d3WkNJWFFyaHpUelp6Qm4KdzZldlA5UFd5OW4vZWZOLzR1TlA5K29yM0U2bUd6Q1R6Q1FvSzNYZXZrd1ZKTzJSQmlrTm9kUVJBZ01CQUFFQwpnWUJ3Nm9rZTdIbmJMSVZMMlFmZXpYT0I0cUpyWFJ2aEJaUkpxZit1ZlZDK2V6QXhFdTR5NWRxUm4vOElXRG01CjllSUtReU5FaFFFYnZUUW9mMGxJR2Z0TXU3dzU5S3Vhdzd3NHRVSFgrVTBmTkpPNnZTc0FuOUk0bFJXUlBwRTQKUW94ZmQ5VG9xMVJnVjAzVnVrNkhHQ3VrcXdEanhiMUhuMmhXV0swd040NExBUUpCQUxTeXR3dzFDWXdCZG40ZApieHlReUNpbkFCZWVieTBzSnBySkVKODdIS0dycllka1dOVVZMd0JWZVBGQ3daZDcrRlhoVjhqTFlwR0lCckMxCkhLWGl1RWtDUVFDaGhZdXRDb1A5S2E5ak41Y3lpMnFjdnJ0cy96MFhudDYrN3N0WFhFWFV6WTR4ZGVqT0Nhc0UKT0R2YlNuMWc3RDNYMmpURy9DYlJUNHRheWZRYlpZMkpBa0JIeEZjNUxQTnV2TUlBRXRhbmhNVktpQkZjVUJ1ZAoyRlE0MDdTYldWSGswQmVxbDJ0RXJoWXR6c1NySmJWWDRlL2V4QkltZU1qY1BpZFNGWXljUWZDcEFrQU0yNVduCjI3dHdEcjV3ZG45cHZhRnFBdURtcDFiVXA0Znh5UTZVMExxYVd4YWpwMUExL3AwSGcvWjMyWEVyb3dLMVNTQ0UKYXBRb2UxMkxoNklRQUVDSkFrQUt3VURJV3BRUUdoNlYwNzhiSS9oYlFuaTV5K2Q5NU93ZUVLU0M4aFB5L1ZJSQpqSzdvWEJLRlhBWm9ENnlaWlFNWFZzWU1DMW1GQU5FK2swbzFCTTlQCi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0t"
+  expiration: 3600
+  issuer: "real-estate"
+  singing_alg: RS256

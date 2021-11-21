@@ -168,6 +168,18 @@ func buildMySQLConnectionString(dbConfig *Config) (string, error) {
 	return ret, nil
 }
 
+// NewTestDB テスト用のDBインスタンスをつくる
+func NewTestDB(logger logs.Logger, conn *sql.DB, logLevel logs.Level) (*gorm.DB, error) {
+	return gorm.Open(gormMySQLDriver.New(gormMySQLDriver.Config{
+		Conn: conn,
+	}), &gorm.Config{
+		Logger: gormLogger.New(logger,
+			gormLogger.Config{
+				LogLevel: logLevelToGormLogLevel(logLevel), // 開発用にSQLログを出力
+			}),
+	})
+}
+
 // nolint: gosec
 func registerTLSConfig(caCertPath string) error {
 	caCertPool := x509.NewCertPool()

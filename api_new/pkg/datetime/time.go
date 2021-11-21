@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-const iso8601Layout = "2006-01-02T15:04:05Z0700"
+const defaultTimeLayout = time.RFC3339
 
 // Time 時間
 type Time struct {
@@ -25,7 +25,7 @@ func (t *Time) Scan(value interface{}) error {
 		return err
 	}
 
-	timeValue, err := time.Parse(iso8601Layout, wrapper.String)
+	timeValue, err := time.Parse(defaultTimeLayout, wrapper.String)
 	if err != nil {
 		return err
 	}
@@ -42,7 +42,7 @@ func (t Time) Value() (driver.Value, error) {
 
 	timeToSave := t.value.In(getDBLocation())
 
-	return timeToSave.Format(iso8601Layout), nil
+	return timeToSave.Format(defaultTimeLayout), nil
 }
 
 // ToTime converts Date to time.Time in UTC location.
@@ -67,11 +67,11 @@ func (t *Time) FormatISO8601() string {
 	if !t.IsValid() {
 		return ""
 	}
-	return t.Format(iso8601Layout)
+	return t.Format(defaultTimeLayout)
 }
 
 func (t *Time) String() string {
-	return t.FormatISO8601()
+	return t.Format(defaultLayout)
 }
 
 func (t Time) MarshalJSON() ([]byte, error) {

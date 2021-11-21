@@ -35,6 +35,20 @@ func (m *MockClock) EXPECT() *MockClockMockRecorder {
 	return m.recorder
 }
 
+// FromNow mocks base method.
+func (m *MockClock) FromNow(seconds int) *datetime.Time {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "FromNow", seconds)
+	ret0, _ := ret[0].(*datetime.Time)
+	return ret0
+}
+
+// FromNow indicates an expected call of FromNow.
+func (mr *MockClockMockRecorder) FromNow(seconds interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "FromNow", reflect.TypeOf((*MockClock)(nil).FromNow), seconds)
+}
+
 // NewTime mocks base method.
 func (m *MockClock) NewTime(year int, month time.Month, day, hour, min, sec, nsec int) *datetime.Time {
 	m.ctrl.T.Helper()
