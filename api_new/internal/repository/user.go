@@ -45,7 +45,7 @@ func (r *user) FindByEmail(email string) (*model.User, error) {
 }
 
 func (r *user) Create(user *model.User) error {
-	err := r.db.Create(user).Error
+	err := r.db.Omit("created_at", "updated_at").Create(user).Error
 	if err != nil {
 		return errors.Wrap(err, "Create user")
 	}

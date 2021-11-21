@@ -7,7 +7,7 @@ CREATE TABLE `users` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`)
-) ENGINE = InnoDB AUTO_INCREMENT = 5 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 CREATE TABLE `agents` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE `agents` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_agents_on_name` (`name`)
-) ENGINE = InnoDB AUTO_INCREMENT = 150 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 CREATE TABLE `buildings` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
@@ -45,7 +45,7 @@ CREATE TABLE `buildings` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_buildings_on_name` (`name`)
-) ENGINE = InnoDB AUTO_INCREMENT = 93 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 CREATE TABLE `rooms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `suumo_id` varchar(255) DEFAULT NULL,
@@ -80,7 +80,7 @@ CREATE TABLE `rooms` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`building_id`) REFERENCES `buildings`(`id`),
   FOREIGN KEY (`agent_id`) REFERENCES `agents`(`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 661 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 CREATE TABLE `images` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `url` varchar(255) DEFAULT NULL,
@@ -90,7 +90,7 @@ CREATE TABLE `images` (
   `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   FOREIGN KEY (`room_id`) REFERENCES `rooms`(`id`)
-) ENGINE = InnoDB AUTO_INCREMENT = 11483 DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 CREATE TABLE `user_rooms` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `user_id` bigint(20) DEFAULT NULL,
@@ -100,7 +100,7 @@ CREATE TABLE `user_rooms` (
   PRIMARY KEY (`id`),
   FOREIGN KEY (`user_id`) REFERENCES `users`(`id`),
   FOREIGN KEY (`room_id`) REFERENCES `rooms`(`id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4;
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_bin ROW_FORMAT = DYNAMIC;
 -- SQL in this section is executed when the migration is applied.
 -- +goose Down
 DROP TABLE IF EXISTS `images`;

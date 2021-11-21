@@ -70,7 +70,7 @@ func (u *auth) RegisterUser(ctx context.Context, email, pwd, pwdConfirmation str
 
 	err = u.userRepo.WithContext(ctx).Create(user)
 	if err != nil {
-		return nil, apperrors.Wrap(err, apperrors.ErrorTypeBadRequest, "Create user")
+		return nil, apperrors.Wrap(err, apperrors.ErrorTypeBadRequest, err.Error())
 	}
 
 	accessToken, err := u.jwtGenerator.GenerateJWTString(user.ID)

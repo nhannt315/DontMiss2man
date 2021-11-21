@@ -11,8 +11,8 @@ type User struct {
 
 	AccessToken string `gorm:"-"`
 
-	CreatedAt datetime.NullTime `gorm:"column:created_at"`
-	UpdatedAt datetime.NullTime `gorm:"column:updated_at"`
+	CreatedAt *datetime.Time `gorm:"column:created_at"`
+	UpdatedAt *datetime.Time `gorm:"column:updated_at"`
 }
 
 func (i User) TableName() string {

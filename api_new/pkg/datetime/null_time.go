@@ -1,6 +1,8 @@
 package datetime
 
-import "database/sql/driver"
+import (
+	"database/sql/driver"
+)
 
 type NullTime struct {
 	Time  *Time
