@@ -15,6 +15,9 @@ type ServerInterface interface {
 	// register user
 	// (POST /auth/register)
 	Register(ctx echo.Context) error
+	// get user info
+	// (GET /users/info)
+	GetUserInfo(ctx echo.Context) error
 }
 
 // ServerInterfaceWrapper converts echo contexts to parameters.
@@ -37,6 +40,17 @@ func (w *ServerInterfaceWrapper) Register(ctx echo.Context) error {
 
 	// Invoke the callback with all the unmarshalled arguments
 	err = w.Handler.Register(ctx)
+	return err
+}
+
+// GetUserInfo converts echo context to params.
+func (w *ServerInterfaceWrapper) GetUserInfo(ctx echo.Context) error {
+	var err error
+
+	ctx.Set(BearerAuthScopes, []string{""})
+
+	// Invoke the callback with all the unmarshalled arguments
+	err = w.Handler.GetUserInfo(ctx)
 	return err
 }
 
@@ -70,5 +84,6 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 
 	router.POST(baseURL+"/auth/login", wrapper.Login)
 	router.POST(baseURL+"/auth/register", wrapper.Register)
+	router.GET(baseURL+"/users/info", wrapper.GetUserInfo)
 
 }
