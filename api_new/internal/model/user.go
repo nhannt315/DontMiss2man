@@ -9,8 +9,10 @@ type User struct {
 
 	PasswordDigest string `gorm:"column:password_digest"`
 
-	CreatedAt *datetime.Time `gorm:"column:created_at"`
-	UpdatedAt *datetime.Time `gorm:"column:updated_at"`
+	AccessToken string `gorm:"-"`
+
+	CreatedAt datetime.NullTime `gorm:"column:created_at"`
+	UpdatedAt datetime.NullTime `gorm:"column:updated_at"`
 }
 
 func (i User) TableName() string {

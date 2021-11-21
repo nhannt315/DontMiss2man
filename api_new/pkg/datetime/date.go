@@ -92,7 +92,7 @@ func (m *Date) Scan(value interface{}) error {
 
 // Value implements sql/types/Valuer interface
 // to convert date to sql value in string format.
-func (m *Date) Value() (driver.Value, error) {
+func (m Date) Value() (driver.Value, error) {
 	if !m.IsValid() {
 		return nil, nil
 	}

@@ -29,4 +29,6 @@ var (
 	ErrorTypeDataNotFound = &ErrorType{http.StatusNotFound, "data_not_found", "Data Not Found"}
 	// ErrorTypeInternal is the error type for internal errors.
 	ErrorTypeInternal = &ErrorType{http.StatusInternalServerError, "internal", "Internal"}
+	// ErrorTypeBadRequest is the error type for bad requests.
+	ErrorTypeBadRequest = &ErrorType{http.StatusBadRequest, "bad_request", "Bad Request"}
 )

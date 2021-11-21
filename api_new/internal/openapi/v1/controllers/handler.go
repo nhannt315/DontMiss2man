@@ -36,4 +36,6 @@ func RegisterHandler(ictx *InitializeContext, server *openapi.Server) {
 
 	handler := newHandler(ictx)
 	openapiv1.RegisterHandlers(g, handler)
+
+	openapi.RegisterErrorHandler(openapiv1.NewErrorHandler(ictx.Logger))
 }
