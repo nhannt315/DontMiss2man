@@ -10,7 +10,9 @@ require (
 	github.com/jinzhu/configor v1.2.1
 	github.com/labstack/echo/v4 v4.6.1
 	github.com/pkg/errors v0.9.1
+	github.com/pressly/goose v2.7.0+incompatible // indirect
 	github.com/rollbar/rollbar-go v1.4.2
+	github.com/stretchr/testify v1.7.0
 	go.uber.org/zap v1.19.1
 	golang.org/x/crypto v0.0.0-20211108221036-ceb1ce70b4fa
 	gopkg.in/square/go-jose.v2 v2.6.0

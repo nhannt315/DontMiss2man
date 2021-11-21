@@ -20,7 +20,7 @@ type Config struct {
 	Port              uint                    `default:"3306" yaml:"port" env:"DB_PORT"`
 	Location          string                  `required:"true" default:"auto" yaml:"location"`
 	ParseTime         bool                    `default:"true" yaml:"parse_time"`
-	Schema            string                  `required:"true" default:"consumption_tax" yaml:"schema"`
+	Schema            string                  `required:"true" default:"real_estate" yaml:"schema"`
 	TLS               string                  `default:"skip-verify" yaml:"tls"`
 	CACertPath        string                  `yaml:"ca_cert_path" env:"DB_CA_CERT_PATH"`
 	Collation         string                  `default:"utf8mb4_bin" yaml:"collation"`

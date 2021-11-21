@@ -1,0 +1,38 @@
+logger:
+  level: info
+  format: console
+app_location: "Asia/Tokyo"
+rollbar:
+  token: # tokenを空にしておけばrollbarは無効になる
+  environment: local
+db:
+  driver: mysql
+  port: 63306
+  host: localhost
+  schema: real_estate
+  username: root
+  password:
+  location: "Asia/Tokyo"
+  parse_time: true
+  interpolate_params: true
+  # available tls value: "skip-verify", "true", "false" or ""
+  tls: "false"
+  # Host can be set via env var named DB_HOST
+  # Username can be set via env var named DB_USERNAME
+  # Password can be set via env var named DB_PASSWORD
+  # Ca cert patch can be set via env var named DB_CA_CERT_PATH
+  # mysql max-connections
+  # https://dev.mysql.com/doc/refman/5.5/en/server-system-variables.html#sysvar_max_connections
+  max_open_conn: 5
+  max_idle_conn: 2
+  # Avoid packet error: https://github.com/go-sql-driver/mysql/issues/674
+  conn_max_lifetime: 60s
+openapi:
+  address: ":4000"
+key_id: "real-estate"
+jwt:
+  key_id: "real-estate"
+  private_key: ""
+  expiration: 3600
+  issuer: "real-estate"
+  singing_alg: RS256
