@@ -14,7 +14,7 @@ import (
 type Helper struct {
 	keyID, rawPrivateKey string
 	rsaPrivateKey        *rsa.PrivateKey
-	jsonWebKeySet        jose.JSONWebKeySet
+	jsonWebKeySet        *jose.JSONWebKeySet
 }
 
 func NewHelper(keyID string, encodedPrivateKey string) (*Helper, error) {
@@ -46,7 +46,7 @@ func NewHelper(keyID string, encodedPrivateKey string) (*Helper, error) {
 		keyID:         keyID,
 		rawPrivateKey: string(privateKeyPem),
 		rsaPrivateKey: privateKey,
-		jsonWebKeySet: jsonWebKeySet,
+		jsonWebKeySet: &jsonWebKeySet,
 	}, nil
 }
 
@@ -56,4 +56,8 @@ func (h *Helper) JSONWebKeySetJSON() ([]byte, error) {
 
 func (h *Helper) RSAPrivateKey() *rsa.PrivateKey {
 	return h.rsaPrivateKey
+}
+
+func (h *Helper) JSONWebKeySet() *jose.JSONWebKeySet {
+	return h.jsonWebKeySet
 }
