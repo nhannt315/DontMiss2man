@@ -13,6 +13,7 @@ import (
 type handler struct {
 	*RegistrationController
 	*AuthenticationController
+	*UserController
 }
 
 type InitializeContext struct {
@@ -20,6 +21,7 @@ type InitializeContext struct {
 	AppConf         *config.Config
 	Reg             repository.Registry
 	JWTGenerator    jwt.Generator
+	JWTVerifier     jwt.Verifier
 	DateTimeManager datetime.Manager
 }
 
@@ -27,6 +29,7 @@ func newHandler(ictx *InitializeContext) *handler {
 	return &handler{
 		RegistrationController:   NewRegistrationController(ictx),
 		AuthenticationController: NewAuthenticationController(ictx),
+		UserController:           NewUserController(ictx),
 	}
 }
 

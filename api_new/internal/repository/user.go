@@ -12,6 +12,7 @@ import (
 type User interface {
 	WithContext(ctx context.Context) User
 	WithGormDB(db *gorm.DB) User
+	FindByID(id uint64) (*model.User, error)
 	FindByEmail(email string) (*model.User, error)
 	Create(user *model.User) error
 }
@@ -42,6 +43,15 @@ func (r *user) FindByEmail(email string) (*model.User, error) {
 		return nil, errors.Wrap(err, "Find user by email")
 	}
 	return &user, err
+}
+
+func (r *user) FindByID(id uint64) (*model.User, error) {
+	var user model.User
+	err := r.db.Where("id = ?", id).First(&user).Error
+	if err != nil {
+		return nil, errors.Wrap(err, "Find user by id")
+	}
+	return &user, nil
 }
 
 func (r *user) Create(user *model.User) error {

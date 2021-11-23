@@ -56,6 +56,7 @@ func Initialize(
 		Reg:             reg,
 		AppConf:         appConfig,
 		JWTGenerator:    jwtGenerator,
+		JWTVerifier:     jwt.NewVerifier(jwkHelper),
 		DateTimeManager: dateTimeManager,
 	}
 

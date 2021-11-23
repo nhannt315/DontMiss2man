@@ -16,13 +16,13 @@ func Test_verifier_VerifyJWT(t *testing.T) {
 	tests := []struct {
 		name    string
 		token   string
-		want    string
+		want    uint64
 		wantErr bool
 	}{
 		{
 			name: "Verify jwt token",
 			token: "eyJhbGciOiJSUzI1NiIsImtpZCI6InJlYWwtZXN0YXRlIiwidHlwIjoiSldUIn0.eyJhdWQiOlsicmVhbC1lc3RhdGUiXSwiZXhwIjoxNjM3NDk3NjI1LCJpYXQiOjE2Mzc0OTQwMjUsImlzcyI6InJlYWwtZXN0YXRlIiwic3ViIjoiMSJ9.R1ViEdSmNEcrEh9lpRYAVivfjP4xvfpSwdx2XNgerpcBTxBOJBL_RBD84S_QG_4yvsQwNnTjMuA3biy_i3bYWNc2S_u3uL_jdoYLHf_GKZQR6pKwuKOj2T9rg95UIujTdNttiGsEJ4ehiMzLDFD7JIfWMGj2C5So48RrELN-JAI",
-			want: "1",
+			want: 1,
 		},
 	}
 	for _, tt := range tests {
