@@ -62,8 +62,33 @@ paths:
                 $ref: "#/components/schemas/AuthenticationResponse"
         "400":
           $ref: "#/components/responses/BadRequest"
-
+  /users/info:
+    get:
+      operationId: getUserInfo
+      summary: get user info
+      description: Get user info from token
+      security:
+        - bearerAuth: [ ]
+      responses:
+        "200":
+          description: Data retrieving sucessfully
+          content:
+            appplication/json:
+              schema:
+                $ref: "#/components/schemas/UserInfoResponse"
+        "401":
+          $ref: "#/components/responses/InvalidCredential"
+        "404":
+          $ref: "#/components/responses/NotFound"
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: string
+    basicAuth:
+      type: http
+      scheme: basic
   schemas:
     LoginRequest:
       description: Login request data
@@ -107,6 +132,15 @@ components:
           type: string
       required:
         - token
+        - email
+    UserInfoResponse:
+      description: User info response data
+      type: object
+      properties:
+        email:
+          description: "User email"
+          type: string
+      required:
         - email
     Error:
       description: エラー

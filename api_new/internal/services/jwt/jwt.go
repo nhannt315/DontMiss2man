@@ -22,7 +22,7 @@ type generator struct {
 	dateTimeManager datetime.Manager
 }
 
-func NewGenerator(config *Config, jwkHelper *jwk.Helper, dateTimeManager datetime.Manager) (Generator, error) {
+func NewGenerator(config *Config, jwkHelper jwk.Helper, dateTimeManager datetime.Manager) (Generator, error) {
 	headerOptions := make(map[jose.HeaderKey]interface{})
 	headerOptions["typ"] = "JWT"
 	headerOptions["kid"] = config.KeyID

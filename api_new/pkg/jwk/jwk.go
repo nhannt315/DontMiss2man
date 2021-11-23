@@ -11,13 +11,19 @@ import (
 	"gopkg.in/square/go-jose.v2"
 )
 
-type Helper struct {
-	keyID, rawPrivateKey string
-	rsaPrivateKey        *rsa.PrivateKey
-	jsonWebKeySet        jose.JSONWebKeySet
+type Helper interface {
+	JSONWebKeySetJSON() ([]byte, error)
+	RSAPrivateKey() *rsa.PrivateKey
+	JSONWebKeySet() *jose.JSONWebKeySet
 }
 
-func NewHelper(keyID string, encodedPrivateKey string) (*Helper, error) {
+type helper struct {
+	keyID, rawPrivateKey string
+	rsaPrivateKey        *rsa.PrivateKey
+	jsonWebKeySet        *jose.JSONWebKeySet
+}
+
+func NewHelper(keyID string, encodedPrivateKey string) (Helper, error) {
 	// Decode base64 private key
 	privateKeyPem, err := base64.StdEncoding.DecodeString(encodedPrivateKey)
 	if err != nil {
@@ -42,18 +48,22 @@ func NewHelper(keyID string, encodedPrivateKey string) (*Helper, error) {
 	}
 	jsonWebKeySet := jose.JSONWebKeySet{Keys: []jose.JSONWebKey{jsonWebKey}}
 
-	return &Helper{
+	return &helper{
 		keyID:         keyID,
 		rawPrivateKey: string(privateKeyPem),
 		rsaPrivateKey: privateKey,
-		jsonWebKeySet: jsonWebKeySet,
+		jsonWebKeySet: &jsonWebKeySet,
 	}, nil
 }
 
-func (h *Helper) JSONWebKeySetJSON() ([]byte, error) {
+func (h *helper) JSONWebKeySetJSON() ([]byte, error) {
 	return json.Marshal(h.jsonWebKeySet)
 }
 
-func (h *Helper) RSAPrivateKey() *rsa.PrivateKey {
+func (h *helper) RSAPrivateKey() *rsa.PrivateKey {
 	return h.rsaPrivateKey
+}
+
+func (h *helper) JSONWebKeySet() *jose.JSONWebKeySet {
+	return h.jsonWebKeySet
 }
